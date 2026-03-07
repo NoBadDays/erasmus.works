@@ -6,13 +6,15 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/NoBadDays/erasmus.works
+    repoURL: https://github.com/NoBadDays/erasmus.works.git
     targetRevision: main
     path: kubernetes/infra
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: argocd
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
