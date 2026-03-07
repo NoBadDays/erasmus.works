@@ -1,0 +1,87 @@
+# AGENTS.md
+
+## Purpose
+
+This repository manages my personal homelab Kubernetes cluster.
+
+The goal is to keep the setup simple, reproducible, and low-maintenance.
+Prefer incremental improvements over large rewrites.
+
+## Current state
+
+Currently in place:
+
+- Talos Linux
+- Single-node Kubernetes cluster
+- Flannel CNI
+- Argo CD
+- MetalLB
+- GitOps structure under `kubernetes/`
+
+Not yet installed:
+
+- Envoy Gateway
+- external-dns
+- Longhorn
+- Postgres operator
+- external-secrets
+- kube-prometheus-stack
+
+Do not assume planned components are already installed.
+
+## Principles
+
+- Keep it KISS
+- Prefer low-maintenance solutions
+- Do not add tools unless clearly needed
+- Prefer GitOps-managed changes where appropriate
+- Avoid unnecessary abstraction
+- Avoid premature HA or production-style complexity
+- Preserve working setup unless a change is clearly required
+
+## Repo structure
+
+- `talos/` contains Talos machine configs and node-specific files
+- `kubernetes/` contains GitOps-managed Kubernetes manifests
+- `docs/` contains practical runbooks and setup notes
+- `linux/` contains local workstation/helper setup files
+
+## Change rules
+
+When making changes:
+
+1. Inspect the existing structure first
+2. Reuse existing folders and patterns where possible
+3. Keep changes minimal and obvious
+4. Do not rename or move files unless there is a clear benefit
+5. Do not add new tooling like Terraform, Flux, Helmfile, Ansible, or scripts unless explicitly requested
+6. Do not replace Flannel unless explicitly requested
+7. Do not introduce unnecessary docs
+8. Do not claim something is installed unless it is already in the repo or explicitly being added now
+
+## Kubernetes / GitOps rules
+
+- Argo CD is the GitOps controller
+- `kubernetes/clusters/homelab/root-app.yaml` is the root application entrypoint
+- Infra components should live under `kubernetes/infra/`
+- Keep manifests plain and readable
+- Prefer simple Kustomize usage over introducing more tooling
+
+## Documentation rules
+
+- Root `README.md` should stay short and act as a project overview
+- Command-heavy instructions belong in docs, not in the root README
+- Add short practical notes rather than large architecture essays
+- Avoid creating new docs unless there is a real need
+
+## Naming guidance
+
+- Use clear, literal names
+- Match filenames to actual contents
+- Avoid vague names like `stuff.yaml`, `test2.yaml`, `misc.md`
+- Prefer consistency over cleverness
+
+## If unsure
+
+Prefer the simpler option.
+Do not overengineer.
