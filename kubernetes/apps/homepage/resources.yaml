@@ -19,13 +19,13 @@ spec:
           command:
             - sh
             - -c
-            - |
-              cat > /app/config/settings.yaml <<'EOF'
-              title: Homelab
-              EOF
+            - cp /config-src/settings.yaml /app/config/settings.yaml && cp /config-src/services.yaml /app/config/services.yaml
           volumeMounts:
             - name: config
               mountPath: /app/config
+            - name: config-src
+              mountPath: /config-src
+              readOnly: true
       containers:
         - name: homepage
           image: ghcr.io/gethomepage/homepage:latest
@@ -40,6 +40,9 @@ spec:
       volumes:
         - name: config
           emptyDir: {}
+        - name: config-src
+          configMap:
+            name: homepage-config
 ---
 apiVersion: v1
 kind: Service
