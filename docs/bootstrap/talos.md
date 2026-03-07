@@ -74,3 +74,8 @@ talosctl health \
   --endpoints 192.168.20.33 \
   --talosconfig ./talosconfig
 ```
+
+## Single-Node Talos + MetalLB Note
+
+For single-node clusters using MetalLB in L2 mode, do not set the node label `node.kubernetes.io/exclude-from-external-load-balancers` in Talos machine config.  
+If Talos owns that label via `machine.nodeLabels`, it will be reapplied and MetalLB traffic to `LoadBalancer` services can stop working.
