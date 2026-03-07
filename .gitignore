@@ -5,7 +5,7 @@ secrets.yaml
 talosconfig
 
 # Talos generated files (per-node)
-talos/node-*/kubeconfig
+talos/kubeconfig
 talos/node-*/talosconfig
 talos/node-*/secrets.yaml
 

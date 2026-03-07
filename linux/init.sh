@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-step() { printf "\n==> %s\n" "$1"; }
+# Add colour 
+step() { printf "\n\033[1;36m==> %s\033[0m\n" "$1"; }
 
 step "Updating apt package index"
 sudo apt-get update
+
+step "Install ripgrep"
+sudo apt install ripgrep
 
 step "Installing required packages (apt-transport-https, ca-certificates, curl, cryptomator, fuse3, gpg)"
 sudo apt-get install -y apt-transport-https ca-certificates curl cryptomator fuse3 gpg
@@ -29,6 +33,9 @@ curl -sL https://talos.dev/install | sh
 step "Configuring talos1 alias"
 sed -i "/^alias talos1/d" "$HOME/.bashrc"
 echo "alias talos1='talosctl dashboard -n 192.168.20.33 -e 192.168.20.33 --talosconfig \$HOME/code/erasmus.works/talos/node-01/talosconfig'" >> "$HOME/.bashrc"
+
+step "Configuring default KUBECONFIG"
+sed -i '/^export KUBECONFIG=/d; $a export KUBECONFIG=$HOME/code/erasmus.works/talos/kubeconfig' "$HOME/.bashrc"
 
 step "Done"
 echo "Run this once in your current shell:"

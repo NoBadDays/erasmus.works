@@ -58,21 +58,21 @@ talosctl dashboard -n "$CONTROL_PLANE_IP" -e "$CONTROL_PLANE_IP" --talosconfig .
 ## Generate Kubeconfig and Verify
 
 ```bash
-cd ~/code/erasmus.works/talos/node-01
+cd ~/code/erasmus.works/talos
 
 talosctl kubeconfig . \
   --nodes 192.168.20.33 \
   --endpoints 192.168.20.33 \
-  --talosconfig ./talosconfig
+  --talosconfig ./node-01/talosconfig
 
-export KUBECONFIG=./kubeconfig
+export KUBECONFIG=~/code/erasmus.works/talos/kubeconfig
 
 kubectl get nodes -o wide
 kubectl get pods -A
 talosctl health \
   --nodes 192.168.20.33 \
   --endpoints 192.168.20.33 \
-  --talosconfig ./talosconfig
+  --talosconfig ./node-01/talosconfig
 ```
 
 ## Single-Node Talos + MetalLB Note
