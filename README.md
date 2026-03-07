@@ -1,6 +1,6 @@
 # erasmus.works
 
-Homelab Kubernetes repo for a single-node Talos cluster, with a simple GitOps workflow using Argo CD.
+Homelab Kubernetes repo for a Talos cluster, with a simple GitOps workflow using Argo CD.
 
 ## Repository Structure
 

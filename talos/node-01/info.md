@@ -5,4 +5,3 @@
 - iGPU: Intel UHD Graphics
 - RAM: 16 GB
 - Storage: 512 GB SSD
-- Notes: Compact desktop system
