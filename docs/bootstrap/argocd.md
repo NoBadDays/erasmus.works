@@ -56,8 +56,13 @@ kubectl -n argocd port-forward svc/argocd-server 8080:443
 kubectl apply -f kubernetes/clusters/homelab/root-app.yaml
 ```
 
-The root app currently targets:
+The root app now targets:
 
 - Repo: `https://github.com/NoBadDays/erasmus.works`
 - Branch: `main`
-- Path: `kubernetes/infra`
+- Path: `kubernetes/clusters/homelab`
+
+That cluster-level path registers child Argo CD Applications, including:
+
+- `infra` -> `kubernetes/infra`
+- `homepage` -> `kubernetes/apps/homepage`

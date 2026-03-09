@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/NoBadDays/erasmus.works.git
     targetRevision: main
-    path: kubernetes/infra
+    path: kubernetes/clusters/homelab
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
