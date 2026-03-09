@@ -2,7 +2,7 @@
   <img src="./Erasmus-Works-Logo.png" alt="erasmus.works logo" width="400">
 </p>
 
-Homelab Kubernetes repo for a Talos cluster, with a simple GitOps workflow using Argo CD.
+<p align="center">My Homelab Kubernetes repo for a Talos cluster, with a simple GitOps workflow using Argo CD.</p>
 
 ## Overview
 
