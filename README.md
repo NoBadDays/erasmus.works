@@ -38,15 +38,15 @@ This repository manages a single-node homelab Kubernetes cluster built around Ta
 
 ```text
 .
-├── kubernetes/
-│   ├── bootstrap/argocd/      # Argo CD install bootstrap
-│   ├── clusters/homelab/      # Cluster entrypoint (root app + cluster-level Argo CD Applications)
-│   ├── infra/                 # Infra-only manifests and infra-related Argo CD Application objects
-│   └── apps/                  # App runtime manifests
-├── talos/
-│   └── node-01/               # Talos node-specific generated configs
-├── linux/                     # Local workstation bootstrap helpers
-└── docs/                      # Project docs and runbooks
+├── 📁 kubernetes/
+│   ├── 📁 bootstrap/argocd/   # Argo CD install bootstrap
+│   ├── 📁 clusters/homelab/   # Cluster entrypoint
+│   ├── 📁 infra/              # Infra manifests and infra-related Argo CD Applications
+│   └── 📁 apps/               # App runtime manifests
+├── 📁 talos/
+│   └── 📁 node-01/            # Talos node-specific generated configs
+├── 📁 linux/                  # Local workstation bootstrap helpers
+└── 📁 docs/                   # Project docs and runbooks
 ```
 
 ## Documentation
