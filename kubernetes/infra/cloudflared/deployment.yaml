@@ -13,9 +13,18 @@ spec:
       labels:
         app: cloudflared
     spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: cloudflared
-          image: cloudflare/cloudflared:2026.2.0
+          image: cloudflare/cloudflared:2026.3.0
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           args:
             - tunnel
             - --no-autoupdate
