@@ -13,19 +13,6 @@ spec:
       labels:
         app: homepage
     spec:
-      initContainers:
-        - name: init-config
-          image: busybox:1.36
-          command:
-            - sh
-            - -c
-            - cp /config-src/settings.yaml /app/config/settings.yaml && cp /config-src/services.yaml /app/config/services.yaml
-          volumeMounts:
-            - name: config
-              mountPath: /app/config
-            - name: config-src
-              mountPath: /config-src
-              readOnly: true
       containers:
         - name: homepage
           image: ghcr.io/gethomepage/homepage:latest
@@ -35,11 +22,10 @@ spec:
           ports:
             - containerPort: 3000
           volumeMounts:
-            - name: config
+            - name: config-src
               mountPath: /app/config
+              readOnly: true
       volumes:
-        - name: config
-          emptyDir: {}
         - name: config-src
           configMap:
             name: homepage-config
