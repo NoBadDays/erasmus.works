@@ -1,3 +1,20 @@
+- Projects:
+    - Argo CD:
+        icon: argo-cd.png
+        href: https://argocd.erasmus.works
+        description: GitOps dashboard
+    - Bitwarden Vault:
+        icon: bitwarden.png
+        href: https://vault.bitwarden.eu
+        description: Password manager vault
+    - Cloudflare Dashboard:
+        icon: cloudflare.png
+        href: https://dash.cloudflare.com
+        description: DNS and tunnel management
+    - erasmus.works:
+        icon: https://raw.githubusercontent.com/NoBadDays/erasmus.works/main/Erasmus-Works-Logo.png
+        href: https://github.com/NoBadDays/erasmus.works
+        description: Erasmus Works GitHub repository
 - Cloud:
     - Nextcloud:
         icon: nextcloud.png
@@ -21,8 +38,3 @@
         icon: https://piefed.social/static/media/logo_zI2kw_152.png
         href: https://piefed.social
         description: Federated community platform
-- Projects:
-    - erasmus.works:
-        icon: https://raw.githubusercontent.com/NoBadDays/erasmus.works/main/Erasmus-Works-Logo.png
-        href: https://github.com/NoBadDays/erasmus.works
-        description: Erasmus Works GitHub repository
