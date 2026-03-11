@@ -58,7 +58,7 @@ kubectl apply -f kubernetes/clusters/homelab/homelab-root.yaml
 
 The root app now targets:
 
-- Repo: `https://github.com/NoBadDays/erasmus.works`
+- Repo: `https://github.com/NoBadDays/erasmus.works.git`
 - Branch: `main`
 - Path: `kubernetes/clusters/homelab`
 

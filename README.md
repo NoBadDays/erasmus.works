@@ -6,18 +6,70 @@
 
 ## Overview
 
-This repository manages a single-node homelab Kubernetes cluster built around Talos Linux and Argo CD. Homepage is the current example application and is exposed publicly at `https://home.erasmus.works`.
+This repository manages my single-node homelab Kubernetes cluster with a small
+GitOps setup built around Talos Linux, Kubernetes, and Argo CD.
 
 | Area | Choice |
 | --- | --- |
 | OS | Talos Linux |
 | Orchestration | Kubernetes |
 | GitOps | Argo CD |
-| CNI | Flannel |
 | Load balancing | MetalLB |
 | In-cluster ingress | Envoy Gateway |
 | Public access | Cloudflare Tunnel |
 | Secret sync | External Secrets Operator + Bitwarden Secrets Manager |
+
+## Core Components
+
+**Platform:** [Talos Linux](https://www.talos.dev/) runs the node and
+[Kubernetes](https://kubernetes.io/) provides the cluster runtime.
+
+**GitOps:** [Argo CD](https://argo-cd.readthedocs.io/) manages the repo with an
+app-of-apps layout rooted at `kubernetes/clusters/homelab`.
+
+**Networking:** [MetalLB](https://metallb.io/) provides `LoadBalancer` IPs, and
+[Envoy Gateway](https://gateway.envoyproxy.io/) handles in-cluster ingress.
+
+**Edge Access:** [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)
+publishes selected services externally.
+
+**Secrets:** [External Secrets Operator](https://external-secrets.io/) reads
+from Bitwarden Secrets Manager and creates in-cluster Kubernetes secrets.
+
+## Cloud Dependencies
+
+This setup is mostly self-hosted, but it still depends on a few cloud services.
+
+| Service | Use |
+| --- | --- |
+| [Cloudflare](https://www.cloudflare.com/) | DNS, public edge access, Cloudflare Tunnel |
+| [Bitwarden Secrets Manager](https://bitwarden.com/products/secrets-manager/) | External secret source for Kubernetes |
+| [GitHub](https://github.com/) | Git hosting and Argo CD source of truth |
+
+## Repository Structure
+
+```text
+.
+├── 📁 kubernetes/
+│   ├── 📁 bootstrap/argocd/   # Argo CD bootstrap
+│   ├── 📁 clusters/homelab/   # Cluster entrypoint and child apps
+│   ├── 📁 infra/              # Infra manifests and infra-level Argo apps
+│   └── 📁 apps/               # App manifests
+├── 📁 talos/                  # Talos configs
+├── 📁 linux/                  # Local workstation helpers
+└── 📁 docs/                   # Runbooks and notes
+```
+
+## GitOps Flow
+
+1. Install Argo CD with `kubernetes/bootstrap/argocd/bootstrap-argocd.sh`.
+2. Apply `kubernetes/clusters/homelab/homelab-root.yaml`.
+3. The `homelab-root` app syncs `kubernetes/clusters/homelab`, which registers cluster-level child Applications.
+4. Child Applications sync:
+   - `homelab-infra` -> `kubernetes/infra` for infra components.
+   - `homepage` -> `kubernetes/apps/homepage`.
+
+`homepage` is the current example application exposed at `https://home.erasmus.works`.
 
 ## Hardware
 
@@ -30,34 +82,6 @@ This repository manages a single-node homelab Kubernetes cluster built around Ta
 | Storage | 512 GB SSD |
 | Router | UniFi Express 7 (UX7) |
 | Switch | 2.5 Gbps switch |
-
-
-
-## Repository Structure
-
-```text
-.
-├── 📁 kubernetes/
-│   ├── 📁 bootstrap/argocd/   # Argo CD install bootstrap
-│   ├── 📁 clusters/homelab/   # Cluster entrypoint
-│   ├── 📁 infra/              # Infra manifests and infra-related Argo CD Applications
-│   └── 📁 apps/               # App runtime manifests
-├── 📁 talos/
-│   └── 📁 node-01/            # Talos node-specific generated configs
-├── 📁 linux/                  # Local workstation bootstrap helpers
-└── 📁 docs/                   # Project docs and runbooks
-```
-
-## GitOps Flow
-
-1. Install Argo CD with `kubernetes/bootstrap/argocd/bootstrap-argocd.sh`.
-2. Apply `kubernetes/clusters/homelab/homelab-root.yaml`.
-3. The `homelab-root` app syncs `kubernetes/clusters/homelab`, which registers cluster-level child Applications.
-4. Child Applications sync:
-   - `homelab-infra` -> `kubernetes/infra` for infra components.
-   - `homepage` -> `kubernetes/apps/homepage`.
-
-Homepage is the current example app managed through Argo CD and exposed at `home.homelab` (`home.erasmus.works`).
 
 ## Documentation
 

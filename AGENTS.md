@@ -13,21 +13,23 @@ Currently in place:
 
 - Talos Linux
 - Single-node Kubernetes cluster
-- Flannel CNI
 - Argo CD
 - MetalLB
+- Envoy Gateway
+- Cloudflare Tunnel
+- External Secrets Operator
 - GitOps structure under `kubernetes/`
 
 Not yet installed:
 
-- Envoy Gateway
 - external-dns
 - Longhorn
 - Postgres operator
-- external-secrets
 - kube-prometheus-stack
 
 Do not assume planned components are already installed.
+Cloudflare may still be used as the external DNS provider even when the
+`external-dns` Kubernetes controller is not installed.
 
 ## Principles
 
@@ -55,17 +57,17 @@ When making changes:
 3. Keep changes minimal and obvious
 4. Do not rename or move files unless there is a clear benefit
 5. Do not add new tooling like Terraform, Flux, Helmfile, Ansible, or scripts unless explicitly requested
-6. Do not replace Flannel unless explicitly requested
-7. Do not introduce unnecessary docs
-8. Do not claim something is installed unless it is already in the repo or explicitly being added now
+6. Do not introduce unnecessary docs
+7. Do not claim something is installed unless it is already in the repo or explicitly being added now
 
 ## Kubernetes / GitOps rules
 
 - Argo CD is the GitOps controller
-- `kubernetes/clusters/homelab/root-app.yaml` is the root application entrypoint
+- `kubernetes/clusters/homelab/homelab-root.yaml` is the root application entrypoint
 - Infra components should live under `kubernetes/infra/`
 - Keep manifests plain and readable
-- Prefer simple Kustomize usage over introducing more tooling
+- Prefer simple manifests and Kustomize where possible
+- Helm is already used through Argo CD Applications where explicitly added
 
 ## Documentation rules
 
