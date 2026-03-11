@@ -60,17 +60,6 @@ This setup is mostly self-hosted, but it still depends on a few cloud services.
 └── 📁 docs/                   # Runbooks and notes
 ```
 
-## GitOps Flow
-
-1. Install Argo CD with `kubernetes/bootstrap/argocd/bootstrap-argocd.sh`.
-2. Apply `kubernetes/clusters/homelab/homelab-root.yaml`.
-3. The `homelab-root` app syncs `kubernetes/clusters/homelab`, which registers cluster-level child Applications.
-4. Child Applications sync:
-   - `homelab-infra` -> `kubernetes/infra` for infra components.
-   - `homepage` -> `kubernetes/apps/homepage`.
-
-`homepage` is the current example application exposed at `https://home.erasmus.works`.
-
 ## Hardware
 
 | Component | Details |
