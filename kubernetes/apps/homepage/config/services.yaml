@@ -21,3 +21,8 @@
         icon: https://piefed.social/static/media/logo_zI2kw_152.png
         href: https://piefed.social
         description: Federated community platform
+- Projects:
+    - erasmus.works:
+        icon: https://raw.githubusercontent.com/NoBadDays/erasmus.works/main/Erasmus-Works-Logo.png
+        href: https://github.com/NoBadDays/erasmus.works
+        description: Erasmus Works GitHub repository

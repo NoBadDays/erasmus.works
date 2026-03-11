@@ -47,6 +47,17 @@ This repository manages a single-node homelab Kubernetes cluster built around Ta
 └── 📁 docs/                   # Project docs and runbooks
 ```
 
+## GitOps Flow
+
+1. Install Argo CD with `kubernetes/bootstrap/argocd/bootstrap-argocd.sh`.
+2. Apply `kubernetes/clusters/homelab/homelab-root.yaml`.
+3. The `homelab-root` app syncs `kubernetes/clusters/homelab`, which registers cluster-level child Applications.
+4. Child Applications sync:
+   - `homelab-infra` -> `kubernetes/infra` for infra components.
+   - `homepage` -> `kubernetes/apps/homepage`.
+
+Homepage is the current example app managed through Argo CD and exposed at `home.homelab` (`home.erasmus.works`).
+
 ## Documentation
 
 - [Talos Bootstrap Runbook](docs/bootstrap/talos.md)
