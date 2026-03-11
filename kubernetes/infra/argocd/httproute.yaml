@@ -11,6 +11,7 @@ spec:
       kind: Gateway
   hostnames:
     - argocd.homelab
+    - argocd.erasmus.works
   rules:
     - matches:
         - path:
