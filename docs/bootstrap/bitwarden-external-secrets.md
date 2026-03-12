@@ -51,6 +51,25 @@ These bootstrap secrets are intentionally not committed to Git.
 4. ESO creates `Secret/cloudflared` in `cloudflare-system`.
 5. The `cloudflared` Deployment consumes `tunnel-token` from that generated secret.
 
+## Cloudflare DNS Vs Tunnel Routing
+
+With the current setup, these are separate:
+
+- DNS records for `*.erasmus.works` can be managed from this repo by `external-dns`
+- public hostname routing for the Cloudflare Tunnel is still managed in the Cloudflare dashboard
+
+That means adding a new public hostname usually needs two pieces:
+
+1. Add the hostname to a Kubernetes `HTTPRoute` so `external-dns` can create the Cloudflare DNS record.
+2. Add the same hostname to the existing Cloudflare Tunnel's `Public Hostnames` so Cloudflare knows where to send that traffic.
+
+For this repo, tunnel public hostnames should point at:
+
+`http://homelab-envoy.envoy-gateway-system.svc.cluster.local:80`
+
+If a `*.erasmus.works` record exists in Cloudflare but the URL still does not work, the
+usual cause is a missing tunnel public-hostname entry, not missing DNS.
+
 ## How To Add Another Secret
 
 1. Add the value in Bitwarden Secrets Manager.
