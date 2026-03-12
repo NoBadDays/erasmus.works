@@ -10,6 +10,8 @@ kind: Gateway
 metadata:
   name: homelab
   namespace: envoy-gateway-system
+  annotations:
+    external-dns.alpha.kubernetes.io/target: 27d05b1e-edcb-4f15-b9d5-b7bd3fa6ccc4.cfargotunnel.com
 spec:
   gatewayClassName: envoy
   listeners:

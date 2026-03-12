@@ -5,6 +5,7 @@ resources:
   - metallb
   - envoy-gateway
   - external-secrets
+  - external-dns
   - kube-prometheus-stack
   - cloudflared
   - argocd
