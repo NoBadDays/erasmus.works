@@ -1,20 +1,28 @@
 - Projects:
-    - Argo CD:
-        icon: argo-cd.png
-        href: https://argocd.erasmus.works
-        description: GitOps dashboard
-    - Bitwarden Vault:
-        icon: bitwarden.png
-        href: https://vault.bitwarden.eu
-        description: Password manager vault
-    - Cloudflare Dashboard:
-        icon: cloudflare.png
-        href: https://dash.cloudflare.com
-        description: DNS and tunnel management
     - erasmus.works:
         icon: https://raw.githubusercontent.com/NoBadDays/erasmus.works/main/Erasmus-Works-Logo.png
         href: https://github.com/NoBadDays/erasmus.works
         description: Erasmus Works GitHub repository
+    - Argo CD:
+        icon: argo-cd.png
+        href: https://argocd.erasmus.works
+        description: GitOps dashboard
+    - Grafana:
+        icon: grafana.png
+        href: https://grafana.erasmus.works
+        description: Metrics dashboards
+    - Prometheus:
+        icon: prometheus.png
+        href: https://prometheus.erasmus.works
+        description: Metrics and monitoring
+    - Alertmanager:
+        icon: alertmanager.png
+        href: https://alertmanager.erasmus.works
+        description: Alert routing
+    - Cloudflare Dashboard:
+        icon: cloudflare.png
+        href: https://dash.cloudflare.com
+        description: DNS and tunnel management
 - Cloud:
     - Nextcloud:
         icon: nextcloud.png
@@ -30,6 +38,10 @@
         href: https://ha.erasmuscloud.com
         description: Home automation
 - Web:
+    - Bitwarden Vault:
+        icon: bitwarden.png
+        href: https://vault.bitwarden.eu
+        description: Password manager vault
     - Tuta:
         icon: tuta.png
         href: https://app.tuta.com/mail
