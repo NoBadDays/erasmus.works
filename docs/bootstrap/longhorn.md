@@ -29,8 +29,7 @@ Longhorn on Talos requires more than just the Kubernetes manifests.
 This repo now includes:
 
 - image-factory schematic: `talos/image-factory/longhorn.yaml`
-- kubelet mount changes in `talos/node-01/controlplane.yaml`
-- kubelet mount changes in `talos/node-01/worker.yaml`
+- Talos machine-config patch: `talos/patches/longhorn-host-path.yaml`
 
 The current node uses a single 512 GB SSD and Talos has already allocated almost the whole disk to `EPHEMERAL` (`/dev/nvme0n1p4` at about 510 GB). Because of that, this repo intentionally keeps Longhorn on `/var/lib/longhorn` on the existing Talos `EPHEMERAL` volume instead of trying to add a new `UserVolumeConfig` that the disk layout cannot currently satisfy without repartitioning or reinstalling the node.
 
@@ -55,8 +54,8 @@ That ID is the value used in the Talos installer image:
 
 ## Apply The Talos Changes
 
-1. The committed Talos configs already reference schematic ID `613e1592b2da41ae5e265e8789429f22e121aab91cb4deb6bc3c0b6262961245`.
-2. Apply the updated machine config.
+1. The committed image-factory schematic already resolves to schematic ID `613e1592b2da41ae5e265e8789429f22e121aab91cb4deb6bc3c0b6262961245`.
+2. Patch the Talos machine config with `talos/patches/longhorn-host-path.yaml`.
 3. Upgrade the node to the custom installer image so the system extensions are actually installed.
 4. Reboot and verify the new image and kubelet mount before expecting Longhorn to become healthy.
 
@@ -71,6 +70,12 @@ talosctl apply-config \
   --endpoints "$CONTROL_PLANE_IP" \
   --talosconfig ./talos/node-01/talosconfig \
   --file ./talos/node-01/controlplane.yaml
+
+talosctl patch machineconfig \
+  --nodes "$CONTROL_PLANE_IP" \
+  --endpoints "$CONTROL_PLANE_IP" \
+  --talosconfig ./talos/node-01/talosconfig \
+  --patch @./talos/patches/longhorn-host-path.yaml
 
 talosctl upgrade \
   --nodes "$CONTROL_PLANE_IP" \

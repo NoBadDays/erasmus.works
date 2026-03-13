@@ -85,3 +85,15 @@ If Talos owns that label via `machine.nodeLabels`, it will be reapplied and Meta
 For this cluster shape, keep `cluster.allowSchedulingOnControlPlanes: true` in the Talos machine config.
 
 If that setting is omitted, Talos leaves the `node-role.kubernetes.io/control-plane:NoSchedule` taint in place. On a single-node cluster that means normal workloads such as Argo CD, Envoy, cloudflared, and app pods can stay `Pending` after a reboot even though the node itself is `Ready`.
+
+This repo tracks the setting as a Talos patch in `talos/patches/single-node-controlplane.yaml`, so it can be applied without committing full machine configs that contain cluster secrets.
+
+Example:
+
+```bash
+talosctl patch machineconfig \
+  --nodes 192.168.20.33 \
+  --endpoints 192.168.20.33 \
+  --talosconfig ./talos/node-01/talosconfig \
+  --patch @./talos/patches/single-node-controlplane.yaml
+```
