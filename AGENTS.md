@@ -64,6 +64,7 @@ When making changes:
 
 - Argo CD is the GitOps controller
 - `kubernetes/clusters/homelab/homelab-root.yaml` is the root application entrypoint
+- All cluster changes must be made through this repo and deployed via GitOps, not by running imperative `kubectl`, `helm`, or similar commands against the cluster
 - Infra components should live under `kubernetes/infra/`
 - Keep manifests plain and readable
 - Prefer simple manifests and Kustomize where possible
