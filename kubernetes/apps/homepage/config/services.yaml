@@ -19,6 +19,10 @@
         icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/alertmanager.png
         href: https://alertmanager.erasmus.works
         description: Alert routing
+    - Longhorn:
+        icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/longhorn.png
+        href: https://longhorn.erasmus.works
+        description: Kubernetes storage dashboard
     - Cloudflare Dashboard:
         icon: cloudflare.png
         href: https://dash.cloudflare.com
