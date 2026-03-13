@@ -11,7 +11,7 @@ Longhorn is registered through Argo CD from `kubernetes/infra/longhorn/applicati
 After the repo change is pushed and synced, verify:
 
 ```bash
-export KUBECONFIG=~/code/erasmus.works/talos/kubeconfig
+export KUBECONFIG="$PWD/talos/kubeconfig"
 
 kubectl -n argocd get applications
 kubectl -n longhorn-system get pods
@@ -38,7 +38,6 @@ The current node uses a single 512 GB SSD and Talos has already allocated almost
 Upload the committed schematic and capture the returned ID:
 
 ```bash
-cd ~/code/erasmus.works
 curl -X POST --data-binary @talos/image-factory/longhorn.yaml https://factory.talos.dev/schematics
 ```
 

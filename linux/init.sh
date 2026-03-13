@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
 # Add colour 
 step() { printf "\n\033[1;36m==> %s\033[0m\n" "$1"; }
 
@@ -32,10 +34,10 @@ curl -sL https://talos.dev/install | sh
 
 step "Configuring talos1 alias"
 sed -i "/^alias talos1/d" "$HOME/.bashrc"
-echo "alias talos1='talosctl dashboard -n 192.168.20.33 -e 192.168.20.33 --talosconfig \$HOME/code/erasmus.works/talos/node-01/talosconfig'" >> "$HOME/.bashrc"
+echo "alias talos1='talosctl dashboard -n 192.168.20.33 -e 192.168.20.33 --talosconfig ${REPO_ROOT}/talos/node-01/talosconfig'" >> "$HOME/.bashrc"
 
 step "Configuring default KUBECONFIG"
-sed -i '/^export KUBECONFIG=/d; $a export KUBECONFIG=$HOME/code/erasmus.works/talos/kubeconfig' "$HOME/.bashrc"
+sed -i "/^export KUBECONFIG=/d; \$a export KUBECONFIG=${REPO_ROOT}/talos/kubeconfig" "$HOME/.bashrc"
 
 step "Done"
 echo "Run this once in your current shell:"

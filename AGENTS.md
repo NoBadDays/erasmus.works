@@ -18,18 +18,11 @@ Currently in place:
 - Envoy Gateway
 - Cloudflare Tunnel
 - External Secrets Operator
+- Longhorn
+- CloudNativePG
+- kube-prometheus-stack
 - GitOps structure under `kubernetes/`
 
-Not yet installed:
-
-- external-dns
-- Longhorn
-- Postgres operator
-- kube-prometheus-stack
-
-Do not assume planned components are already installed.
-Cloudflare may still be used as the external DNS provider even when the
-`external-dns` Kubernetes controller is not installed.
 
 ## Principles
 

@@ -35,6 +35,8 @@ export DISK_NAME=/dev/nvme0n1
 Generate and apply Talos configuration:
 
 ```bash
+cd talos/node-01
+
 talosctl gen secrets -o secrets.yaml
 talosctl gen config --with-secrets secrets.yaml "$CLUSTER_NAME" "https://$CONTROL_PLANE_IP:6443" --install-disk "$DISK_NAME"
 talosctl get disks --nodes 192.168.20.xx --endpoints 192.168.20.xx --insecure
@@ -58,14 +60,14 @@ talosctl dashboard -n "$CONTROL_PLANE_IP" -e "$CONTROL_PLANE_IP" --talosconfig .
 ## Generate Kubeconfig and Verify
 
 ```bash
-cd ~/code/erasmus.works/talos
+cd talos
 
 talosctl kubeconfig . \
   --nodes 192.168.20.33 \
   --endpoints 192.168.20.33 \
   --talosconfig ./node-01/talosconfig
 
-export KUBECONFIG=~/code/erasmus.works/talos/kubeconfig
+export KUBECONFIG="$PWD/kubeconfig"
 
 kubectl get nodes -o wide
 kubectl get pods -A
@@ -117,4 +119,3 @@ Repo paths:
 - Longhorn Argo CD app: `kubernetes/infra/longhorn/application.yaml`
 - Talos image factory schematic: `talos/image-factory/longhorn.yaml`
 - Talos kubelet mount patch: `talos/patches/longhorn-host-path.yaml`
-

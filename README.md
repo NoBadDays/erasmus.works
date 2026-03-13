@@ -17,6 +17,8 @@ GitOps setup built around Talos Linux, Kubernetes, and Argo CD.
 | Load balancing | MetalLB |
 | In-cluster ingress | Envoy Gateway |
 | Public access | Cloudflare Tunnel |
+| Storage | Longhorn |
+| Database operator | CloudNativePG |
 | Secret sync | External Secrets Operator + Bitwarden Secrets Manager |
 
 ## Core Components
@@ -36,12 +38,16 @@ publishes selected services externally.
 **Secrets:** [External Secrets Operator](https://external-secrets.io/) reads
 from Bitwarden Secrets Manager and creates in-cluster Kubernetes secrets.
 
+**Data Services:** [Longhorn](https://longhorn.io/) provides persistent storage,
+and [CloudNativePG](https://cloudnative-pg.io/) manages PostgreSQL workloads.
+
 ## Storage
 
 Longhorn is installed for persistent storage. This is currently a single-node
 setup, so the default replica count is `1` by design. Longhorn data currently
 lives at `/var/lib/longhorn` on the node SSD, and backups are still a required
-next step.
+next step. CloudNativePG is installed as the PostgreSQL operator for in-cluster
+database workloads.
 
 ## Cloud Dependencies
 

@@ -8,12 +8,12 @@ This runbook installs Argo CD on the existing Talos cluster and registers the ro
 
 - Kubernetes cluster is healthy.
 - Kubeconfig exists at `talos/kubeconfig`.
-- You are in the repository root: `~/code/erasmus.works`.
+- You are in the repository root.
 
 Export kubeconfig:
 
 ```bash
-export KUBECONFIG=~/code/erasmus.works/talos/kubeconfig
+export KUBECONFIG="$PWD/talos/kubeconfig"
 ```
 
 ## Install Argo CD (Official Method)
