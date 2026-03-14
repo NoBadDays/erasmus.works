@@ -9,7 +9,7 @@
         description: GitOps dashboard
     - Grafana:
         icon: grafana.png
-        href: https://grafana.erasmus.works
+        href: https://grafana.erasmus.works/dashboards?tag=custom&starred=true
         description: Metrics dashboards
     - Prometheus:
         icon: prometheus.png
