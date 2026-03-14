@@ -12,3 +12,6 @@ configMapGenerator:
   - name: grafana-dashboard-homelab-overview
     files:
       - homelab-overview.json
+  - name: grafana-dashboard-docmost-observability
+    files:
+      - docmost-observability.json
