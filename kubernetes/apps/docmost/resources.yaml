@@ -103,6 +103,21 @@ spec:
     requests:
       storage: 10Gi
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: docmost-redis-data
+  namespace: apps
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 2Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -149,6 +164,13 @@ spec:
             limits:
               cpu: 250m
               memory: 256Mi
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: docmost-redis-data
 ---
 apiVersion: v1
 kind: Service
@@ -197,7 +219,7 @@ spec:
             - until nc -z docmost-redis.apps.svc.cluster.local 6379; do sleep 2; done
       containers:
         - name: docmost
-          image: docmost/docmost:0.23.2
+          image: docmost/docmost:0.70.1
           env:
             - name: APP_URL
               value: https://docmost.erasmus.works
@@ -229,6 +251,8 @@ spec:
                   name: docmost-app-secrets
                   key: smtp-password
             - name: SMTP_SECURE
+              value: "false"
+            - name: SMTP_IGNORETLS
               value: "false"
             - name: MAIL_FROM_ADDRESS
               value: noreply@erasmus.works
