@@ -47,12 +47,19 @@ spec:
       type: Opaque
       data:
         database-url: postgresql://affine:{{ .password }}@affine-postgres-rw.apps.svc.cluster.local:5432/affine
+        smtp-password: "{{ .smtp_password }}"
   data:
     - secretKey: password
       remoteRef:
         conversionStrategy: Default
         decodingStrategy: None
         key: affine-postgres-password
+        metadataPolicy: None
+    - secretKey: smtp_password
+      remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
+        key: affine-smtp2go-password
         metadataPolicy: None
 ---
 apiVersion: postgresql.cnpg.io/v1
@@ -187,6 +194,23 @@ spec:
             - -c
             - node ./scripts/self-host-predeploy.js
           env:
+            - name: MAILER_HOST
+              value: mail-eu.smtp2go.com
+            - name: MAILER_PORT
+              value: "587"
+            - name: MAILER_SECURE
+              value: "false"
+            - name: MAILER_SERVERNAME
+              value: affine.erasmus.works
+            - name: MAILER_SENDER
+              value: noreply@erasmus.works
+            - name: MAILER_USER
+              value: erasmus.works
+            - name: MAILER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: affine-app-secrets
+                  key: smtp-password
             - name: AFFINE_SERVER_HOST
               value: affine.erasmus.works
             - name: AFFINE_SERVER_EXTERNAL_URL
@@ -209,6 +233,23 @@ spec:
         - name: affine
           image: ghcr.io/toeverything/affine:0.26.4
           env:
+            - name: MAILER_HOST
+              value: mail-eu.smtp2go.com
+            - name: MAILER_PORT
+              value: "587"
+            - name: MAILER_SECURE
+              value: "false"
+            - name: MAILER_SERVERNAME
+              value: affine.erasmus.works
+            - name: MAILER_SENDER
+              value: noreply@erasmus.works
+            - name: MAILER_USER
+              value: erasmus.works
+            - name: MAILER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: affine-app-secrets
+                  key: smtp-password
             - name: AFFINE_SERVER_HOST
               value: affine.erasmus.works
             - name: AFFINE_SERVER_EXTERNAL_URL
