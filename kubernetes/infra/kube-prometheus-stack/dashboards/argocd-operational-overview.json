@@ -36,7 +36,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$datasource"
+        "uid": "prometheus"
       },
       "description": "The total number of clusters being managed by ArgoCD.",
       "fieldConfig": {
@@ -71,7 +71,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "expr": "sum(\n  argocd_cluster_info{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n  }\n)\n",
           "instant": false
@@ -83,7 +83,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$datasource"
+        "uid": "prometheus"
       },
       "description": "The total number of Git repositories being monitored by ArgoCD.",
       "fieldConfig": {
@@ -118,7 +118,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "expr": "count(\n  count(\n    argocd_app_info{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }\n  )\n  by (repo)\n)\n",
           "instant": false
@@ -130,7 +130,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$datasource"
+        "uid": "prometheus"
       },
       "description": "The total number of applications being managed by ArgoCD.",
       "fieldConfig": {
@@ -165,7 +165,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\ndest_server=~\"$kubernetes_cluster\",\nproject=~\"$project\"\n\n  }\n)\n",
           "instant": false
@@ -177,7 +177,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$datasource"
+        "uid": "prometheus"
       },
       "description": "The distribution of application health statuses managed by ArgoCD.",
       "fieldConfig": {
@@ -261,7 +261,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\ndest_server=~\"$kubernetes_cluster\",\nproject=~\"$project\"\n\n  }\n) by (health_status)\n",
           "instant": true,
@@ -274,7 +274,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$datasource"
+        "uid": "prometheus"
       },
       "description": "The distribution of application sync statuses managed by ArgoCD.",
       "fieldConfig": {
@@ -358,7 +358,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\ndest_server=~\"$kubernetes_cluster\",\nproject=~\"$project\"\n\n  }\n) by (sync_status)\n",
           "instant": true,
@@ -371,7 +371,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$datasource"
+        "uid": "prometheus"
       },
       "description": "A table listing all applications managed by ArgoCD, along with their health and sync statuses.",
       "fieldConfig": {
@@ -414,7 +414,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "expr": "sum(\n  argocd_app_info{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\ndest_server=~\"$kubernetes_cluster\",\nproject=~\"$project\"\n\n  }\n) by (job, dest_server, project, name, health_status, sync_status)\n",
           "format": "table",
@@ -466,7 +466,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$datasource"
+        "uid": "prometheus"
       },
       "description": "A timeseries panel showing sync activity for applications managed by ArgoCD.",
       "fieldConfig": {
@@ -512,7 +512,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "exemplar": false,
           "expr": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\ndest_server=~\"$kubernetes_cluster\",\nproject=~\"$project\"\n\n      }[$__rate_interval]\n    )\n  )\n) by (job, dest_server, project, name)\n> 0\n",
@@ -525,7 +525,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$datasource"
+        "uid": "prometheus"
       },
       "description": "A timeseries panel showing sync failures for applications managed by ArgoCD.",
       "fieldConfig": {
@@ -571,7 +571,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "exemplar": false,
           "expr": "sum(\n  round(\n    increase(\n      argocd_app_sync_total{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\ndest_server=~\"$kubernetes_cluster\",\nproject=~\"$project\"\n,\n        phase=~\"Error|Failed\"\n      }[$__rate_interval]\n    )\n  )\n) by (job, dest_server, project, name, phase)\n> 0\n",
@@ -594,7 +594,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "A timeseries panel showing reconciliation activity for applications managed by ArgoCD.",
           "fieldConfig": {
@@ -640,7 +640,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "sum(\n  round(\n    increase(\n      argocd_app_reconcile_count{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[$__rate_interval]\n    )\n  )\n) by (namespace, job)\n",
@@ -653,7 +653,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "A heatmap panel showing reconciliation performance for applications managed by ArgoCD.",
           "gridPos": {
@@ -674,7 +674,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "expr": "sum(\n  rate(\n    argocd_app_reconcile_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (le)\n",
               "legendFormat": "{{ le }}"
@@ -686,7 +686,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "A timeseries panel showing Kubernetes API activity for applications managed by ArgoCD.",
           "fieldConfig": {
@@ -732,7 +732,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "sum(\n  round(\n    increase(\n      argocd_app_k8s_request_total{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[$__rate_interval]\n    )\n  )\n) by (job, verb, resource_kind)\n",
@@ -745,7 +745,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "Time to process resource events in batches. Controlled by ARGOCD_CLUSTER_CACHE_BATCH_EVENTS_PROCESSING and related settings.",
           "gridPos": {
@@ -766,7 +766,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "expr": "sum(\n  rate(\n    argocd_resource_events_processing_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (le)\n",
               "legendFormat": "{{ le }}"
@@ -778,7 +778,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "Number of resource events processed per batch. Batch processing improves performance when managing large numbers of resources.",
           "fieldConfig": {
@@ -824,7 +824,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "sum(\n  argocd_resource_events_processed_in_batch{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n  }\n) by (namespace, job)\n",
@@ -851,7 +851,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "A timeseries panel showing pending kubectl runs for ArgoCD.",
           "fieldConfig": {
@@ -897,7 +897,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "sum(\n  argocd_kubectl_exec_pending{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n  }\n) by (job, command)\n",
@@ -910,7 +910,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "Total kubectl executions for manifest generation (Helm, Kustomize, plugins). High counts are expected during sync operations.",
           "fieldConfig": {
@@ -956,7 +956,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "sum(\n  round(\n    increase(\n      argocd_kubectl_exec_total{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[$__rate_interval]\n    )\n  )\n) by (namespace, job, command)\n",
@@ -969,7 +969,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "Rate of kubectl requests by container, method, and code.",
           "fieldConfig": {
@@ -1015,7 +1015,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "sum(\n  rate(\n    argocd_kubectl_requests_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (container, method, code)\n",
@@ -1028,7 +1028,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "Distribution of kubectl requests by host over the last 6 hours.",
           "fieldConfig": {
@@ -1066,7 +1066,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "expr": "topk(20,\n  sum(\n    increase(\n      argocd_kubectl_requests_total{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[6h]\n    )\n  ) by (host)\n)\n",
               "instant": true,
@@ -1079,7 +1079,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "P95 kubectl request duration by container and verb. High values indicate slow kubectl operations against the Kubernetes API.",
           "fieldConfig": {
@@ -1120,7 +1120,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "histogram_quantile(\n  0.95,\n  sum(\n    rate(\n      argocd_kubectl_request_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[$__rate_interval]\n    )\n  ) by (le, container, verb)\n)\n",
@@ -1133,7 +1133,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "Distribution of kubectl request duration by host over the last 24 hours.",
           "fieldConfig": {
@@ -1171,7 +1171,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "expr": "topk(20,\n  histogram_quantile(\n    0.95,\n    sum(\n      increase(\n        argocd_kubectl_request_duration_seconds_bucket{\n          cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n        }[6h]\n      )\n    ) by (le, host)\n  )\n)\n",
               "instant": true,
@@ -1184,7 +1184,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "Rate of kubectl request retries by container, method, and code. Elevated retry rates indicate transient Kubernetes API errors or throttling.",
           "fieldConfig": {
@@ -1230,7 +1230,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "sum(\n  rate(\n    argocd_kubectl_request_retries_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (container, method, code)\n",
@@ -1243,7 +1243,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "Distribution of kubectl request retries by host over the last 24 hours.",
           "fieldConfig": {
@@ -1281,7 +1281,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "expr": "topk(20,\n  sum(\n    increase(\n      argocd_kubectl_request_retries_total{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[6h]\n    )\n  ) by (host)\n)\n",
               "instant": true,
@@ -1294,7 +1294,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "P95 time spent waiting in the kubectl client-side rate limiter per host. High values indicate the Kubernetes API server is throttling ArgoCD requests.",
           "fieldConfig": {
@@ -1335,7 +1335,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "histogram_quantile(\n  0.95,\n  sum(\n    rate(\n      argocd_kubectl_rate_limiter_duration_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[$__rate_interval]\n    )\n  ) by (le, verb)\n)\n",
@@ -1348,7 +1348,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "Distribution of P95 kubectl rate limiter duration by host over the last 6 hours.",
           "fieldConfig": {
@@ -1386,7 +1386,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "expr": "topk(20,\n  histogram_quantile(\n    0.95,\n    sum(\n      increase(\n        argocd_kubectl_rate_limiter_duration_seconds_bucket{\n          cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n        }[6h]\n      )\n    ) by (le, host)\n  )\n)\n",
               "instant": true,
@@ -1399,7 +1399,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "Distribution of kubectl request payload sizes. Large request sizes may impact API server performance.",
           "gridPos": {
@@ -1420,7 +1420,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "expr": "sum(\n  rate(\n    argocd_kubectl_request_size_bytes_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (le)\n",
               "legendFormat": "{{ le }}"
@@ -1432,7 +1432,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "Distribution of kubectl response payload sizes. Large response sizes may indicate wide resource fetches and can impact controller memory usage.",
           "gridPos": {
@@ -1453,7 +1453,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "expr": "sum(\n  rate(\n    argocd_kubectl_response_size_bytes_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (le)\n",
               "legendFormat": "{{ le }}"
@@ -1465,7 +1465,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "Total kubectl exec plugin calls by call status and exit code. Failed call statuses or non-zero codes indicate credential plugin authentication issues.",
           "fieldConfig": {
@@ -1511,7 +1511,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "sum(\n  round(\n    increase(\n      argocd_kubectl_exec_plugin_call_total{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[$__rate_interval]\n    )\n  )\n) by (call_status, code)\n",
@@ -1524,7 +1524,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "Total number of kubectl transport create calls. High values may indicate frequent transport recreation due to credential rotation or connection churn.",
           "fieldConfig": {
@@ -1570,7 +1570,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "sum(\n  round(\n    increase(\n      argocd_kubectl_transport_create_calls_total{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[$__rate_interval]\n    )\n  )\n) by (namespace, job)\n",
@@ -1597,7 +1597,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "Total number of gRPC RPCs completed on the API server by service, method, and response code.",
           "fieldConfig": {
@@ -1643,7 +1643,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "sum(\n  rate(\n    grpc_server_handled_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (namespace, job, grpc_service, grpc_method, grpc_code)\n> 0\n",
@@ -1656,7 +1656,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "Total number of gRPC stream messages sent by the API server.",
           "fieldConfig": {
@@ -1702,7 +1702,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "sum(\n  rate(\n    grpc_server_msg_sent_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (namespace, job, grpc_service, grpc_method)\n> 0\n",
@@ -1715,7 +1715,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "P50 server-side gRPC handling duration by service and method.",
           "fieldConfig": {
@@ -1756,7 +1756,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "histogram_quantile(\n  0.5,\n  sum(\n    rate(\n      grpc_server_handling_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[$__rate_interval]\n    )\n  ) by (le, grpc_service, grpc_method)\n)\nand\nsum(\n  rate(\n    grpc_server_handling_seconds_count{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (grpc_service, grpc_method) > 0\n",
@@ -1769,7 +1769,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "P95 server-side gRPC handling duration by service and method.",
           "fieldConfig": {
@@ -1810,7 +1810,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "histogram_quantile(\n  0.95,\n  sum(\n    rate(\n      grpc_server_handling_seconds_bucket{\n        cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n      }[$__rate_interval]\n    )\n  ) by (le, grpc_service, grpc_method)\n)\nand\nsum(\n  rate(\n    grpc_server_handling_seconds_count{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (grpc_service, grpc_method) > 0\n",
@@ -1837,7 +1837,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "A timeseries panel showing the connection status of each cluster managed by ArgoCD. Failed connections indicate cluster connectivity or authentication issues.",
           "fieldConfig": {
@@ -1880,7 +1880,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "sum(\n  argocd_cluster_connection_status{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n    server=~\"$kubernetes_cluster\"\n  }\n) by (namespace, job, server, k8s_version)\n",
@@ -1893,7 +1893,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "Age of the cluster cache in seconds. Stale caches (high values) can cause reconciliation delays and performance issues.",
           "fieldConfig": {
@@ -1934,7 +1934,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "argocd_cluster_cache_age_seconds{\n  cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n  server=~\"$kubernetes_cluster\"\n}\n",
@@ -1947,7 +1947,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "A timeseries panel showing the number of resource objects in each cluster managed by ArgoCD.",
           "fieldConfig": {
@@ -1993,7 +1993,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "sum(\n  argocd_cluster_api_resource_objects{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n    server=~\"$kubernetes_cluster\"\n  }\n) by (namespace, job, server)\n",
@@ -2006,7 +2006,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "A timeseries panel showing the number of API resources in each cluster managed by ArgoCD.",
           "fieldConfig": {
@@ -2052,7 +2052,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "sum(\n  argocd_cluster_api_resources{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n    server=~\"$kubernetes_cluster\"\n  }\n) by (namespace, job, server)\n",
@@ -2065,7 +2065,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "A timeseries panel showing cluster events for clusters managed by ArgoCD.",
           "fieldConfig": {
@@ -2111,7 +2111,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "sum(\n  increase(\n    argocd_cluster_events_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n      server=~\"$kubernetes_cluster\"\n    }[$__rate_interval]\n  )\n) by (namespace, job, server)\n",
@@ -2138,7 +2138,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "A timeseries panel showing pending requests in the ArgoCD repo server queue. High values may indicate the repo server needs scaling.",
           "fieldConfig": {
@@ -2184,7 +2184,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "sum(\n  argocd_repo_pending_request_total{\n    cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n  }\n) by (namespace, job)\n",
@@ -2197,7 +2197,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "A timeseries panel showing git fetch failures for repositories monitored by ArgoCD. High values may indicate git repository connectivity or authentication issues.",
           "fieldConfig": {
@@ -2243,7 +2243,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "sum(\n  increase(\n    argocd_git_fetch_fail_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (namespace, job, repo)\n",
@@ -2256,7 +2256,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "A timeseries panel showing git ls-remote requests made by ArgoCD.",
           "fieldConfig": {
@@ -2302,7 +2302,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "sum(\n  increase(\n    argocd_git_request_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n      request_type=\"ls-remote\"\n    }[$__rate_interval]\n  )\n) by (namespace, job, repo)\n",
@@ -2315,7 +2315,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "A timeseries panel showing git checkout requests made by ArgoCD.",
           "fieldConfig": {
@@ -2361,7 +2361,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "sum(\n  increase(\n    argocd_git_request_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n      request_type=\"fetch\"\n    }[$__rate_interval]\n  )\n) by (namespace, job, repo)\n",
@@ -2374,7 +2374,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "A heatmap panel showing git fetch performance for ArgoCD.",
           "gridPos": {
@@ -2395,7 +2395,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "expr": "sum(\n  rate(\n    argocd_git_request_duration_seconds_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n      request_type=\"fetch\"\n    }[$__rate_interval]\n  )\n) by (le)\n",
               "legendFormat": "{{ le }}"
@@ -2407,7 +2407,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "A heatmap panel showing git ls-remote performance for ArgoCD.",
           "gridPos": {
@@ -2428,7 +2428,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "expr": "sum(\n  rate(\n    argocd_git_request_duration_seconds_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n,\n      request_type=\"ls-remote\"\n    }[$__rate_interval]\n  )\n) by (le)\n",
               "legendFormat": "{{ le }}"
@@ -2454,7 +2454,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "Rate of Redis requests by ArgoCD component. High rates may indicate Redis becoming a bottleneck at scale.",
           "fieldConfig": {
@@ -2500,7 +2500,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "exemplar": false,
               "expr": "sum(\n  rate(\n    argocd_redis_request_total{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (namespace, job, initiator)\n",
@@ -2513,7 +2513,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "$datasource"
+            "uid": "prometheus"
           },
           "description": "Redis request latency distribution. High latencies indicate Redis performance issues that can affect controller scalability.",
           "gridPos": {
@@ -2534,7 +2534,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "$datasource"
+                "uid": "prometheus"
               },
               "expr": "sum(\n  rate(\n    argocd_redis_request_duration_seconds_bucket{\n      cluster=\"$cluster\",\nnamespace=~\"$namespace\",\njob=~\"$job\"\n\n\n    }[$__rate_interval]\n  )\n) by (le)\n",
               "legendFormat": "{{ le }}"
