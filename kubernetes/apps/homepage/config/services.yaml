@@ -36,6 +36,10 @@
         icon: immich.png
         href: https://immich.erasmuscloud.com
         description: Photo and video library
+    - AFFiNE:
+        icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/affine.png
+        href: https://affine.erasmus.works
+        description: Collaborative workspace
 - Home:
     - Home Assistant:
         icon: home-assistant.png
