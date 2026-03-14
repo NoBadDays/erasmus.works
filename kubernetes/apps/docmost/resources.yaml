@@ -1,7 +1,7 @@
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
-  name: affine-postgres-auth
+  name: docmost-postgres-auth
   namespace: apps
   annotations:
     argocd.argoproj.io/sync-wave: "0"
@@ -11,26 +11,26 @@ spec:
     name: bitwarden-secrets-manager
     kind: ClusterSecretStore
   target:
-    name: affine-postgres-auth
+    name: docmost-postgres-auth
     creationPolicy: Owner
     deletionPolicy: Retain
     template:
       type: kubernetes.io/basic-auth
       data:
-        username: affine
+        username: docmost
         password: "{{ .password }}"
   data:
     - secretKey: password
       remoteRef:
         conversionStrategy: Default
         decodingStrategy: None
-        key: affine-postgres-password
+        key: docmost-postgres-password
         metadataPolicy: None
 ---
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
-  name: affine-app-secrets
+  name: docmost-app-secrets
   namespace: apps
   annotations:
     argocd.argoproj.io/sync-wave: "0"
@@ -40,32 +40,39 @@ spec:
     name: bitwarden-secrets-manager
     kind: ClusterSecretStore
   target:
-    name: affine-app-secrets
+    name: docmost-app-secrets
     creationPolicy: Owner
     deletionPolicy: Retain
     template:
       type: Opaque
       data:
-        database-url: postgresql://affine:{{ .password }}@affine-postgres-rw.apps.svc.cluster.local:5432/affine
+        app-secret: "{{ .app_secret }}"
+        database-url: postgresql://docmost:{{ .password }}@docmost-postgres-rw.apps.svc.cluster.local:5432/docmost?schema=public
         smtp-password: "{{ .smtp_password }}"
   data:
+    - secretKey: app_secret
+      remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
+        key: docmost-app-secret
+        metadataPolicy: None
     - secretKey: password
       remoteRef:
         conversionStrategy: Default
         decodingStrategy: None
-        key: affine-postgres-password
+        key: docmost-postgres-password
         metadataPolicy: None
     - secretKey: smtp_password
       remoteRef:
         conversionStrategy: Default
         decodingStrategy: None
-        key: affine-smtp2go-password
+        key: smtp2go-password
         metadataPolicy: None
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: affine-postgres
+  name: docmost-postgres
   namespace: apps
   annotations:
     argocd.argoproj.io/sync-wave: "1"
@@ -76,15 +83,15 @@ spec:
     storageClass: longhorn
   bootstrap:
     initdb:
-      database: affine
-      owner: affine
+      database: docmost
+      owner: docmost
       secret:
-        name: affine-postgres-auth
+        name: docmost-postgres-auth
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: affine-data
+  name: docmost-data
   namespace: apps
   annotations:
     argocd.argoproj.io/sync-wave: "1"
@@ -99,7 +106,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: affine-redis
+  name: docmost-redis
   namespace: apps
   annotations:
     argocd.argoproj.io/sync-wave: "1"
@@ -107,20 +114,21 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: affine-redis
+      app: docmost-redis
   template:
     metadata:
       labels:
-        app: affine-redis
+        app: docmost-redis
     spec:
       containers:
         - name: redis
-          image: redis:7.4-alpine
+          image: redis:8-alpine
           args:
-            - --save
-            - ""
+            - redis-server
             - --appendonly
-            - "no"
+            - "yes"
+            - --maxmemory-policy
+            - noeviction
           ports:
             - name: redis
               containerPort: 6379
@@ -145,13 +153,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: affine-redis
+  name: docmost-redis
   namespace: apps
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
   selector:
-    app: affine-redis
+    app: docmost-redis
   ports:
     - name: redis
       port: 6379
@@ -160,7 +168,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: affine
+  name: docmost
   namespace: apps
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -168,11 +176,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: affine
+      app: docmost
   template:
     metadata:
       labels:
-        app: affine
+        app: docmost
     spec:
       initContainers:
         - name: wait-for-postgres
@@ -180,106 +188,67 @@ spec:
           command:
             - sh
             - -c
-            - until nc -z affine-postgres-rw.apps.svc.cluster.local 5432; do sleep 2; done
+            - until nc -z docmost-postgres-rw.apps.svc.cluster.local 5432; do sleep 2; done
         - name: wait-for-redis
           image: busybox:1.36
           command:
             - sh
             - -c
-            - until nc -z affine-redis.apps.svc.cluster.local 6379; do sleep 2; done
-        - name: affine-predeploy
-          image: ghcr.io/toeverything/affine:0.26.4
-          command:
-            - sh
-            - -c
-            - node ./scripts/self-host-predeploy.js
-          env:
-            - name: MAILER_HOST
-              value: mail-eu.smtp2go.com
-            - name: MAILER_PORT
-              value: "587"
-            - name: MAILER_SECURE
-              value: "false"
-            - name: MAILER_SERVERNAME
-              value: affine.erasmus.works
-            - name: MAILER_SENDER
-              value: noreply@erasmus.works
-            - name: MAILER_USER
-              value: erasmus.works
-            - name: MAILER_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: affine-app-secrets
-                  key: smtp-password
-            - name: AFFINE_SERVER_HOST
-              value: affine.erasmus.works
-            - name: AFFINE_SERVER_EXTERNAL_URL
-              value: https://affine.erasmus.works
-            - name: AFFINE_SERVER_HTTPS
-              value: "true"
-            - name: REDIS_SERVER_HOST
-              value: affine-redis.apps.svc.cluster.local
-            - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: affine-app-secrets
-                  key: database-url
-            - name: AFFINE_INDEXER_ENABLED
-              value: "false"
-          volumeMounts:
-            - name: data
-              mountPath: /root/.affine
+            - until nc -z docmost-redis.apps.svc.cluster.local 6379; do sleep 2; done
       containers:
-        - name: affine
-          image: ghcr.io/toeverything/affine:0.26.4
+        - name: docmost
+          image: docmost/docmost:0.23.2
           env:
-            - name: MAILER_HOST
-              value: mail-eu.smtp2go.com
-            - name: MAILER_PORT
-              value: "587"
-            - name: MAILER_SECURE
-              value: "false"
-            - name: MAILER_SERVERNAME
-              value: affine.erasmus.works
-            - name: MAILER_SENDER
-              value: noreply@erasmus.works
-            - name: MAILER_USER
-              value: erasmus.works
-            - name: MAILER_PASSWORD
+            - name: APP_URL
+              value: https://docmost.erasmus.works
+            - name: APP_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: affine-app-secrets
-                  key: smtp-password
-            - name: AFFINE_SERVER_HOST
-              value: affine.erasmus.works
-            - name: AFFINE_SERVER_EXTERNAL_URL
-              value: https://affine.erasmus.works
-            - name: AFFINE_SERVER_HTTPS
-              value: "true"
-            - name: REDIS_SERVER_HOST
-              value: affine-redis.apps.svc.cluster.local
+                  name: docmost-app-secrets
+                  key: app-secret
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
-                  name: affine-app-secrets
+                  name: docmost-app-secrets
                   key: database-url
-            - name: AFFINE_INDEXER_ENABLED
+            - name: REDIS_URL
+              value: redis://docmost-redis.apps.svc.cluster.local:6379
+            - name: STORAGE_DRIVER
+              value: local
+            - name: MAIL_DRIVER
+              value: smtp
+            - name: SMTP_HOST
+              value: mail-eu.smtp2go.com
+            - name: SMTP_PORT
+              value: "587"
+            - name: SMTP_USERNAME
+              value: erasmus.works
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: docmost-app-secrets
+                  key: smtp-password
+            - name: SMTP_SECURE
               value: "false"
+            - name: MAIL_FROM_ADDRESS
+              value: noreply@erasmus.works
+            - name: MAIL_FROM_NAME
+              value: Docmost
           ports:
             - name: http
-              containerPort: 3010
+              containerPort: 3000
           volumeMounts:
             - name: data
-              mountPath: /root/.affine
+              mountPath: /app/data/storage
           readinessProbe:
             httpGet:
-              path: /info
+              path: /api/health
               port: http
             initialDelaySeconds: 20
             periodSeconds: 10
           livenessProbe:
             httpGet:
-              path: /info
+              path: /api/health
               port: http
             initialDelaySeconds: 60
             periodSeconds: 20
@@ -293,27 +262,27 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: affine-data
+            claimName: docmost-data
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: affine
+  name: docmost
   namespace: apps
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
   selector:
-    app: affine
+    app: docmost
   ports:
     - name: http
-      port: 3010
+      port: 3000
       targetPort: http
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: affine
+  name: docmost
   namespace: apps
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -325,16 +294,16 @@ spec:
       group: gateway.networking.k8s.io
       kind: Gateway
   hostnames:
-    - affine.homelab
-    - affine.erasmus.works
+    - docmost.homelab
+    - docmost.erasmus.works
   rules:
     - matches:
         - path:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: affine
+        - name: docmost
           group: ""
           kind: Service
-          port: 3010
+          port: 3000
           weight: 1

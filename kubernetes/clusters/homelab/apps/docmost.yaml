@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: affine
+  name: docmost
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "10"
@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/NoBadDays/erasmus.works.git
     targetRevision: main
-    path: kubernetes/apps/affine
+    path: kubernetes/apps/docmost
   destination:
     server: https://kubernetes.default.svc
     namespace: apps
