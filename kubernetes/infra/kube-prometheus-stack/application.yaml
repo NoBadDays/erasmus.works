@@ -13,6 +13,10 @@ spec:
       releaseName: kube-prometheus-stack
       values: |
         grafana:
+          admin:
+            existingSecret: kube-prometheus-stack-grafana
+            userKey: admin-user
+            passwordKey: admin-password
           persistence:
             enabled: true
             type: pvc
@@ -24,12 +28,6 @@ spec:
     server: https://kubernetes.default.svc
     namespace: monitoring
   ignoreDifferences:
-    - group: ""
-      kind: Secret
-      name: kube-prometheus-stack-grafana
-      namespace: monitoring
-      jsonPointers:
-        - /data/admin-password
     - group: apps
       kind: Deployment
       name: kube-prometheus-stack-grafana
