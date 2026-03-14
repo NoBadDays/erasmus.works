@@ -394,6 +394,7 @@
   "refresh": "30s",
   "schemaVersion": 41,
   "tags": [
+    "custom",
     "homelab"
   ],
   "templating": {

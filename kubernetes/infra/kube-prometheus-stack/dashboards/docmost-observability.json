@@ -540,6 +540,7 @@
   "refresh": "30s",
   "schemaVersion": 41,
   "tags": [
+    "custom",
     "apps",
     "docmost",
     "logs"

@@ -62,7 +62,7 @@ Example:
 
 ```bash
 export CONTROL_PLANE_IP=192.168.20.33
-export SCHEMATIC_ID=replace_me
+export SCHEMATIC_ID=613e1592b2da41ae5e265e8789429f22e121aab91cb4deb6bc3c0b6262961245
 
 talosctl apply-config \
   --nodes "$CONTROL_PLANE_IP" \

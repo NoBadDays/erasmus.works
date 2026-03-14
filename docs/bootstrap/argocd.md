@@ -65,4 +65,5 @@ The root app now targets:
 That cluster-level path registers child Argo CD Applications, including:
 
 - `homelab-infra` -> `kubernetes/infra`
+- `docmost` -> `kubernetes/apps/docmost`
 - `homepage` -> `kubernetes/apps/homepage`
