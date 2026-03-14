@@ -16,8 +16,6 @@ The following files were imported from Grafana community dashboards and kept sto
   - Source: https://grafana.com/grafana/dashboards/1860-node-exporter-full
 - `argocd-operational-overview.json`
   - Source: https://grafana.com/grafana/dashboards/19993-argocd-operational-overview/
-- `envoy-gateway-overview.json`
-  - Source: https://grafana.com/grafana/dashboards/24460-envoy-gateway-overview/
 
 ## Local tags
 

@@ -2560,8 +2560,8 @@
       {
         "current": {
           "selected": true,
-          "text": "default",
-          "value": "default"
+          "text": "prometheus",
+          "value": "prometheus"
         },
         "label": "Data source",
         "name": "datasource",
@@ -2571,26 +2571,13 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "${datasource}"
-        },
-        "hide": 2,
-        "label": "Cluster",
-        "name": "cluster",
-        "query": "label_values(argocd_app_info{}, cluster)",
-        "refresh": 2,
-        "sort": 1,
-        "type": "query"
-      },
-      {
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${datasource}"
+          "uid": "prometheus"
         },
         "includeAll": false,
         "label": "Namespace",
         "multi": false,
         "name": "namespace",
-        "query": "label_values(argocd_app_info{cluster=\"$cluster\"}, namespace)",
+        "query": "label_values(argocd_app_info, namespace)",
         "refresh": 2,
         "sort": 1,
         "type": "query"
@@ -2599,7 +2586,7 @@
         "allValue": ".*",
         "datasource": {
           "type": "prometheus",
-          "uid": "${datasource}"
+          "uid": "prometheus"
         },
         "includeAll": true,
         "label": "Job",
@@ -2614,13 +2601,13 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "${datasource}"
+          "uid": "prometheus"
         },
         "includeAll": true,
         "label": "Kubernetes Cluster",
         "multi": true,
         "name": "kubernetes_cluster",
-        "query": "label_values(argocd_app_info{cluster=\"$cluster\", namespace=~\"$namespace\", job=~\"$job\"}, dest_server)",
+        "query": "label_values(argocd_app_info{namespace=~\"$namespace\", job=~\"$job\"}, dest_server)",
         "refresh": 2,
         "sort": 1,
         "type": "query"
@@ -2628,13 +2615,13 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "${datasource}"
+          "uid": "prometheus"
         },
         "includeAll": true,
         "label": "Project",
         "multi": true,
         "name": "project",
-        "query": "label_values(argocd_app_info{cluster=\"$cluster\", namespace=~\"$namespace\", job=~\"$job\", dest_server=~\"$kubernetes_cluster\"}, project)",
+        "query": "label_values(argocd_app_info{namespace=~\"$namespace\", job=~\"$job\", dest_server=~\"$kubernetes_cluster\"}, project)",
         "refresh": 2,
         "sort": 1,
         "type": "query"
