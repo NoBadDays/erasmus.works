@@ -2573,6 +2573,11 @@
           "type": "prometheus",
           "uid": "prometheus"
         },
+        "current": {
+          "selected": true,
+          "text": "argocd",
+          "value": "argocd"
+        },
         "includeAll": false,
         "label": "Namespace",
         "multi": false,
@@ -2584,6 +2589,13 @@
       },
       {
         "allValue": ".*",
+        "current": {
+          "selected": true,
+          "text": "argocd-metrics",
+          "value": [
+            "argocd-metrics"
+          ]
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "prometheus"
@@ -2599,6 +2611,13 @@
         "type": "query"
       },
       {
+        "current": {
+          "selected": true,
+          "text": "https://kubernetes.default.svc",
+          "value": [
+            "https://kubernetes.default.svc"
+          ]
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "prometheus"
@@ -2613,6 +2632,13 @@
         "type": "query"
       },
       {
+        "current": {
+          "selected": true,
+          "text": "default",
+          "value": [
+            "default"
+          ]
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "prometheus"
