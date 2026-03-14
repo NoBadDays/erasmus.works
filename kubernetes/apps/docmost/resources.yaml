@@ -135,9 +135,15 @@ spec:
       labels:
         app: docmost-redis
     spec:
+      securityContext:
+        fsGroup: 999
+        fsGroupChangePolicy: OnRootMismatch
       containers:
         - name: redis
           image: redis:8-alpine
+          securityContext:
+            runAsUser: 999
+            runAsGroup: 999
           args:
             - redis-server
             - --appendonly
