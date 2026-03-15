@@ -19,6 +19,8 @@ spec:
             existingSecret: kube-prometheus-stack-grafana
             userKey: admin-user
             passwordKey: admin-password
+          plugins:
+            - victoriametrics-logs-datasource 0.26.3
           persistence:
             enabled: true
             type: pvc

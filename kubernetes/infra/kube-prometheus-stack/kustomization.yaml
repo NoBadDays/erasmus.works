@@ -5,5 +5,5 @@ resources:
   - externalsecret.yaml
   - application.yaml
   - httproutes.yaml
-  - loki-datasource.yaml
+  - victorialogs-datasource.yaml
   - dashboards

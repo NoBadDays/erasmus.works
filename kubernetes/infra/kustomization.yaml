@@ -9,7 +9,7 @@ resources:
   - cloudnative-pg
   - longhorn
   - kube-prometheus-stack
-  - loki
-  - alloy
+  - victorialogs
+  - fluent-bit
   - cloudflared
   - argocd

@@ -21,7 +21,7 @@ GitOps setup built around Talos Linux, Kubernetes, and Argo CD.
 | Database operator | CloudNativePG |
 | Secret sync | External Secrets Operator + Bitwarden Secrets Manager |
 | Metrics | kube-prometheus-stack |
-| Logs | Loki + Alloy |
+| Logs | VictoriaLogs + Fluent Bit |
 
 ## Core Components
 
@@ -44,9 +44,9 @@ from Bitwarden Secrets Manager and creates in-cluster Kubernetes secrets.
 and [CloudNativePG](https://cloudnative-pg.io/) manages PostgreSQL workloads.
 
 **Observability:** [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack)
-provides Prometheus, Grafana, and Alertmanager. [Loki](https://grafana.com/oss/loki/)
-and [Alloy](https://grafana.com/oss/alloy/) handle in-cluster log collection and
-search through Grafana.
+provides Prometheus, Grafana, and Alertmanager. [VictoriaLogs](https://docs.victoriametrics.com/victorialogs/)
+stores in-cluster logs, and [Fluent Bit](https://fluentbit.io/) collects and
+forwards them for search through Grafana.
 
 ## Storage
 

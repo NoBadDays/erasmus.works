@@ -1,18 +1,18 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-datasource-loki
+  name: grafana-datasource-victorialogs
   namespace: monitoring
   labels:
     grafana_datasource: "1"
     app.kubernetes.io/part-of: kube-prometheus-stack
 data:
-  loki-datasource.yaml: |-
+  victorialogs-datasource.yaml: |-
     apiVersion: 1
     datasources:
-      - name: Loki
-        type: loki
-        uid: loki
+      - name: VictoriaLogs
+        type: victoriametrics-logs-datasource
+        uid: victorialogs
         access: proxy
-        url: http://loki-gateway.monitoring.svc.cluster.local/
+        url: http://victorialogs.monitoring.svc.cluster.local:9428
         isDefault: false
