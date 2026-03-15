@@ -45,6 +45,10 @@
         icon: cloudflare.png
         href: https://dash.cloudflare.com
         description: DNS and tunnel management
+    - UniFi:
+        icon: unifi.png
+        href: https://unifi.ui.com
+        description: UniFi network management
 - Monitoring:
     - Grafana:
         icon: grafana.png
