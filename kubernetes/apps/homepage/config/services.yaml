@@ -23,6 +23,10 @@
         icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/longhorn.png
         href: https://longhorn.erasmus.works
         description: Kubernetes storage dashboard
+    - TrueNAS:
+        icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/truenas-scale.png
+        href: http://truenas.homelab
+        description: NAS management
     - Cloudflare Dashboard:
         icon: cloudflare.png
         href: https://dash.cloudflare.com
