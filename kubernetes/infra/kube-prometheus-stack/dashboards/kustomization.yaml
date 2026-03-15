@@ -24,3 +24,6 @@ configMapGenerator:
   - name: grafana-dashboard-argocd
     files:
       - argocd.json
+  - name: grafana-dashboard-victorialogs-explorer
+    files:
+      - victorialogs-explorer.json

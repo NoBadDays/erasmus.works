@@ -9,6 +9,7 @@ metadata:
 data:
   victorialogs-datasource.yaml: |-
     apiVersion: 1
+    prune: true
     datasources:
       - name: VictoriaLogs
         type: victoriametrics-logs-datasource

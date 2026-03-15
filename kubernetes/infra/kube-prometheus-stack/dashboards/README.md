@@ -16,6 +16,9 @@ The following files were imported from Grafana community dashboards and kept sto
   - Source: https://grafana.com/grafana/dashboards/1860-node-exporter-full
 - `argocd.json`
   - Source: https://grafana.com/grafana/dashboards/14584-argocd/
+- `victorialogs-explorer.json`
+  - Source: https://grafana.com/grafana/dashboards/22759-victorialogs-explorer/
+  - Adjusted to match this repo's Fluent Bit -> VictoriaLogs field names
 
 ## Local tags
 
