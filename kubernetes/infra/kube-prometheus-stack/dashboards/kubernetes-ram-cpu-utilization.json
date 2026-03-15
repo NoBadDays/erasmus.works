@@ -363,7 +363,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "count by (node) (node_cpu_seconds_total{mode=\"idle\"})",
+          "expr": "count by (instance) (node_cpu_seconds_total{mode=\"idle\"})",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -378,7 +378,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (node) (node_memory_MemTotal_bytes)",
+          "expr": "sum by (instance) (node_memory_MemTotal_bytes)",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -392,7 +392,7 @@
         {
           "id": "seriesToColumns",
           "options": {
-            "byField": "node"
+            "byField": "instance"
           }
         },
         {
@@ -429,20 +429,20 @@
               "instance": true,
               "job": true,
               "namespace": true,
-              "node": false,
-              "nodename": true,
+              "node": true,
+              "nodename": false,
               "release": false,
               "service": true,
               "sysname": true,
               "version": true
             },
             "indexByName": {
-              "Memory (GB)": 23,
+              "Memory (GB)": 2,
               "Time 1": 1,
               "Time 2": 19,
               "Time 3": 21,
               "Value #A": 18,
-              "Value #B": 20,
+              "Value #B": 1,
               "Value #C": 22,
               "__name__": 2,
               "app": 3,
@@ -451,13 +451,13 @@
               "component": 6,
               "domainname": 7,
               "heritage": 8,
-              "instance": 9,
+              "instance": 0,
               "job": 10,
-              "machine": 14,
+              "machine": 3,
               "namespace": 11,
-              "node": 0,
-              "nodename": 12,
-              "release": 13,
+              "node": 12,
+              "nodename": 0,
+              "release": 4,
               "service": 15,
               "sysname": 16,
               "version": 17
@@ -471,8 +471,7 @@
               "Value #C": "",
               "instance": "",
               "machine": "Arch",
-              "node": "Hostname",
-              "nodename": "",
+              "nodename": "Hostname",
               "release": "Linux version",
               "version": ""
             }
