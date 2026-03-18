@@ -437,7 +437,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "volsync_volume_out_of_sync{obj_namespace=~\"$namespace\",obj_name!~\"$replicationDestName\"}!=0",
+          "expr": "max by (obj_namespace, obj_name, role, method) (volsync_volume_out_of_sync{obj_namespace=~\"$namespace\",obj_name!~\"$replicationDestName\"})",
           "format": "table",
           "instant": true,
           "legendFormat": "{{label_name}}",
@@ -445,14 +445,13 @@
           "refId": "A"
         }
       ],
-      "title": "Volumes Out of Sync",
+      "title": "Volumes",
       "transformations": [
         {
           "id": "organize",
           "options": {
             "excludeByName": {
               "Time": true,
-              "Value": true,
               "__name__": true,
               "container": true,
               "endpoint": true,
@@ -465,6 +464,7 @@
             "includeByName": {},
             "indexByName": {},
             "renameByName": {
+              "Value": "Out Of Sync",
               "method": "Method",
               "obj_name": "Name",
               "obj_namespace": "Namespace",
