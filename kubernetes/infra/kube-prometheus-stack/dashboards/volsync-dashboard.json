@@ -492,8 +492,8 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 3,
-        "x": 15,
+        "w": 2,
+        "x": 16,
         "y": 0
       },
       "id": 11,
@@ -566,7 +566,7 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 15,
+        "w": 18,
         "x": 0,
         "y": 3
       },
@@ -610,6 +610,9 @@
               "Value": true,
               "__name__": true,
               "container": true,
+              "customresource_group": true,
+              "customresource_kind": true,
+              "customresource_version": true,
               "endpoint": true,
               "instance": true,
               "job": true,
@@ -618,7 +621,15 @@
               "service": true
             },
             "includeByName": {},
-            "indexByName": {},
+            "indexByName": {
+              "source_pvc": 0,
+              "obj_name": 1,
+              "obj_namespace": 2,
+              "last_sync_time": 3,
+              "next_sync_time": 4,
+              "last_sync_duration": 5,
+              "latest_result": 6
+            },
             "renameByName": {
               "last_sync_duration": "Last Duration",
               "last_sync_time": "Last Backup",
