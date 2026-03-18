@@ -20,8 +20,6 @@ spec:
           disableAuth: true
           serviceMonitor:
             enabled: true
-            labels:
-              release: kube-prometheus-stack
   destination:
     server: https://kubernetes.default.svc
     namespace: volsync-system
