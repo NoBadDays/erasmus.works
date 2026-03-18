@@ -39,6 +39,8 @@ spec:
   trigger:
     schedule: "0 3 * * *"
   restic:
+    # Reuse the same policy for other app PVCs and only change the PVC name
+    # and RESTIC_REPOSITORY path in the companion ExternalSecret above.
     repository: docmost-data-restic-config
     copyMethod: Direct
     pruneIntervalDays: 7

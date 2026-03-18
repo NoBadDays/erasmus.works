@@ -63,7 +63,13 @@ The Restic repository path for it is:
 /mnt/repo/docmost-data
 ```
 
-Future apps can reuse the same Bitwarden password secret and write to their own repository path.
+Future app backups should reuse the same pattern:
+
+- one shared Bitwarden secret: `volsync-restic-password`
+- one app-specific `ExternalSecret`
+- one `ReplicationSource`
+- same backup schedule and retention unless there is a reason to differ
+- a different PVC name and repository path
 
 ## Notes
 
