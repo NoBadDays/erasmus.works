@@ -3,10 +3,12 @@ kind: Application
 metadata:
   name: homepage
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
+  project: apps
   source:
     repoURL: https://github.com/NoBadDays/erasmus.works.git
     targetRevision: main
