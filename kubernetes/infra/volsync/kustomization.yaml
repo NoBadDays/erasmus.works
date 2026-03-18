@@ -5,3 +5,4 @@ resources:
   - application.yaml
   - nfs-backup-pv.yaml
   - nfs-backup-pvc.yaml
+  - metrics-servicemonitor.yaml
