@@ -18,6 +18,7 @@ metadata:
   namespace: apps
 spec:
   trigger:
+    # Change this to any new value to trigger another restore.
     manual: restore-once
   restic:
     repository: docmost-data-restic-config
