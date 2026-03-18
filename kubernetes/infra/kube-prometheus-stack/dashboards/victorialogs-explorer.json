@@ -1,15 +1,5 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_VICTORIALOGS",
-      "label": "VictoriaLogs",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "victoriametrics-logs-datasource",
-      "pluginName": "VictoriaLogs"
-    }
-  ],
-  "__elements": {},
+    "__elements": {},
   "__requires": [
     {
       "type": "grafana",
@@ -93,7 +83,7 @@
     {
       "datasource": {
         "type": "victoriametrics-logs-datasource",
-        "uid": "${DS_VICTORIALOGS}"
+        "uid": "victorialogs"
       },
       "fieldConfig": {
         "defaults": {
@@ -178,7 +168,7 @@
         {
           "datasource": {
             "type": "victoriametrics-logs-datasource",
-            "uid": "${DS_VICTORIALOGS}"
+            "uid": "victorialogs"
           },
           "editorMode": "code",
           "expr": "_stream: {kubernetes.container_name=~\"$container\",kubernetes.namespace_name=\"$namespace\",kubernetes.pod_name=~\"$pod\"} $query | stats count()",
@@ -193,7 +183,7 @@
     {
       "datasource": {
         "type": "victoriametrics-logs-datasource",
-        "uid": "${DS_VICTORIALOGS}"
+        "uid": "victorialogs"
       },
       "fieldConfig": {
         "defaults": {
@@ -244,7 +234,7 @@
         {
           "datasource": {
             "type": "victoriametrics-logs-datasource",
-            "uid": "${DS_VICTORIALOGS}"
+            "uid": "victorialogs"
           },
           "editorMode": "code",
           "expr": "_stream: {kubernetes.container_name=~\"$container\",kubernetes.namespace_name=\"$namespace\",kubernetes.pod_name=~\"$pod\"} $query | stats by (\"$count_by\") count() c | sort by (c desc) | limit 50",
@@ -259,7 +249,7 @@
     {
       "datasource": {
         "type": "victoriametrics-logs-datasource",
-        "uid": "${DS_VICTORIALOGS}"
+        "uid": "victorialogs"
       },
       "gridPos": {
         "h": 23,
@@ -284,7 +274,7 @@
         {
           "datasource": {
             "type": "victoriametrics-logs-datasource",
-            "uid": "${DS_VICTORIALOGS}"
+            "uid": "victorialogs"
           },
           "editorMode": "code",
           "expr": "_stream: {kubernetes.container_name=~\"$container\",kubernetes.namespace_name=\"$namespace\",kubernetes.pod_name=~\"$pod\"} $query | sort desc | limit $limit",
@@ -321,7 +311,7 @@
         "current": {},
         "datasource": {
           "type": "victoriametrics-logs-datasource",
-          "uid": "${DS_VICTORIALOGS}"
+          "uid": "victorialogs"
         },
         "definition": "",
         "includeAll": false,
@@ -343,7 +333,7 @@
         "current": {},
         "datasource": {
           "type": "victoriametrics-logs-datasource",
-          "uid": "${DS_VICTORIALOGS}"
+          "uid": "victorialogs"
         },
         "definition": "{kubernetes.namespace_name=\"$namespace\"}",
         "includeAll": true,
@@ -366,7 +356,7 @@
         "current": {},
         "datasource": {
           "type": "victoriametrics-logs-datasource",
-          "uid": "${DS_VICTORIALOGS}"
+          "uid": "victorialogs"
         },
         "definition": "{kubernetes.namespace_name=\"$namespace\",kubernetes.pod_name=~\"$pod\"}",
         "includeAll": true,
