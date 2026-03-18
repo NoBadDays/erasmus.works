@@ -452,6 +452,7 @@
           "options": {
             "excludeByName": {
               "Time": true,
+              "Value": true,
               "__name__": true,
               "container": true,
               "endpoint": true,
@@ -464,7 +465,6 @@
             "includeByName": {},
             "indexByName": {},
             "renameByName": {
-              "Value": "Out Of Sync",
               "method": "Method",
               "obj_name": "Name",
               "obj_namespace": "Namespace",
