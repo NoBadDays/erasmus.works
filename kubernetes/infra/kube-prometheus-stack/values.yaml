@@ -1,6 +1,7 @@
 prometheus:
   prometheusSpec:
     serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
 kube-state-metrics:
   customResourceState:
     enabled: true
