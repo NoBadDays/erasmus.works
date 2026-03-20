@@ -7,6 +7,8 @@ metadata:
     argocd.argoproj.io/sync-wave: "1"
 spec:
   instances: 1
+  monitoring:
+    enablePodMonitor: true
   storage:
     size: 10Gi
     storageClass: longhorn

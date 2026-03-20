@@ -21,6 +21,9 @@ configMapGenerator:
   - name: grafana-dashboard-garage-dashboard
     files:
       - garage-dashboard.json
+  - name: grafana-dashboard-cloudnative-pg-dashboard
+    files:
+      - cloudnative-pg-dashboard.json
   - name: grafana-dashboard-node-exporter-full
     files:
       - node-exporter-full.json
