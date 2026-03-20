@@ -68,3 +68,18 @@ This cluster has already been bootstrapped with:
 
 - zone: `homelab`
 - capacity: `100G`
+
+## CNPG Credentials
+
+Per-cluster CNPG backups should use their own Garage S3 key and a separate path
+inside the shared `cnpg-backups` bucket.
+
+For Docmost, the repo expects these Bitwarden secrets:
+
+- `docmost-cnpg-backup-secret-access-key`
+
+The Garage access key ID for Docmost is stored directly in the manifest, and
+only the secret access key is stored in Bitwarden.
+
+Those values map to the `ExternalSecret` in
+`kubernetes/apps/docmost/externalsecrets.yaml`.

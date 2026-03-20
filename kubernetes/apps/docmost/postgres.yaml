@@ -1,0 +1,47 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: docmost-postgres
+  namespace: apps
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  instances: 1
+  storage:
+    size: 10Gi
+    storageClass: longhorn
+  backup:
+    barmanObjectStore:
+      destinationPath: s3://cnpg-backups/docmost
+      endpointURL: http://garage.garage.svc.cluster.local:3900
+      serverName: docmost-postgres
+      s3Credentials:
+        accessKeyId:
+          name: docmost-postgres-backup-s3
+          key: ACCESS_KEY_ID
+        secretAccessKey:
+          name: docmost-postgres-backup-s3
+          key: ACCESS_SECRET_KEY
+      wal:
+        compression: gzip
+    retentionPolicy: "30d"
+  bootstrap:
+    initdb:
+      database: docmost
+      owner: docmost
+      secret:
+        name: docmost-postgres-auth
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: docmost-postgres-backup
+  namespace: apps
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  schedule: "0 0 3 * * *"
+  immediate: true
+  backupOwnerReference: cluster
+  cluster:
+    name: docmost-postgres

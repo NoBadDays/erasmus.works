@@ -1,0 +1,157 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: docmost-data
+  namespace: apps
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docmost
+  namespace: apps
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docmost
+  template:
+    metadata:
+      labels:
+        app: docmost
+    spec:
+      initContainers:
+        - name: wait-for-postgres
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - until nc -z docmost-postgres-rw.apps.svc.cluster.local 5432; do sleep 2; done
+        - name: wait-for-redis
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - until nc -z docmost-redis.apps.svc.cluster.local 6379; do sleep 2; done
+      containers:
+        - name: docmost
+          image: docmost/docmost:0.70.1
+          env:
+            - name: APP_URL
+              value: https://docmost.erasmus.works
+            - name: APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: docmost-app-secrets
+                  key: app-secret
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: docmost-app-secrets
+                  key: database-url
+            - name: REDIS_URL
+              value: redis://docmost-redis.apps.svc.cluster.local:6379
+            - name: STORAGE_DRIVER
+              value: local
+            - name: MAIL_DRIVER
+              value: smtp
+            - name: SMTP_HOST
+              value: mail-eu.smtp2go.com
+            - name: SMTP_PORT
+              value: "587"
+            - name: SMTP_USERNAME
+              value: erasmus.works
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: docmost-app-secrets
+                  key: smtp-password
+            - name: SMTP_SECURE
+              value: "false"
+            - name: SMTP_FROM_ADDRESS
+              value: notifications@erasmus.works
+            - name: SMTP_FROM_NAME
+              value: Docmost
+          ports:
+            - name: http
+              containerPort: 3000
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
+          volumeMounts:
+            - name: data
+              mountPath: /app/data/storage
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: docmost-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: docmost
+  namespace: apps
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  selector:
+    app: docmost
+  ports:
+    - name: http
+      port: 3000
+      targetPort: http
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: docmost
+  namespace: apps
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+spec:
+  parentRefs:
+    - name: homelab
+      namespace: envoy-gateway-system
+      group: gateway.networking.k8s.io
+      kind: Gateway
+  hostnames:
+    - docmost.homelab
+    - docmost.erasmus.works
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: docmost
+          group: ""
+          kind: Service
+          port: 3000
+          weight: 1
