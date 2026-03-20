@@ -18,6 +18,9 @@ configMapGenerator:
   - name: grafana-dashboard-longhorn-dashboard
     files:
       - longhorn-dashboard.json
+  - name: grafana-dashboard-garage-dashboard
+    files:
+      - garage-dashboard.json
   - name: grafana-dashboard-node-exporter-full
     files:
       - node-exporter-full.json

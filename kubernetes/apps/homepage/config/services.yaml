@@ -37,6 +37,10 @@
         icon: argo-cd.png
         href: https://argocd.erasmus.works
         description: GitOps dashboard
+    - Garage:
+        icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/minio.png
+        href: https://garage.erasmus.works
+        description: S3 object storage admin UI
     - TrueNAS:
         icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/truenas-scale.png
         href: http://truenas.homelab

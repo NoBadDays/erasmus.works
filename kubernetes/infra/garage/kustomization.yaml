@@ -12,4 +12,5 @@ generatorOptions:
 resources:
   - namespace.yaml
   - externalsecret.yaml
+  - metrics-servicemonitor.yaml
   - application.yaml

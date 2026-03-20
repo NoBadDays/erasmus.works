@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: garage
+  namespace: garage
+  labels:
+    release: kube-prometheus-stack
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: garage
+      app.kubernetes.io/name: garage
+  endpoints:
+    - port: admin
+      path: /metrics
+      interval: 30s

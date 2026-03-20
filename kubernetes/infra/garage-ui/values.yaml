@@ -1,0 +1,55 @@
+controllers:
+  garage-webui:
+    containers:
+      app:
+        image:
+          repository: khairul169/garage-webui
+          tag: 1.1.0@sha256:17c793551873155065bf9a022dabcde874de808a1f26e648d4b82e168806439c
+        env:
+          API_BASE_URL: http://garage.garage.svc.cluster.local:3903
+          S3_ENDPOINT_URL: http://garage.garage.svc.cluster.local:3900
+        envFrom:
+          - secretRef:
+              name: garage-ui-secrets
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+              - ALL
+        resources:
+          requests:
+            cpu: 10m
+            memory: 64Mi
+          limits:
+            memory: 512Mi
+
+service:
+  app:
+    controller: garage-webui
+    ports:
+      http:
+        port: 3909
+
+route:
+  app:
+    enabled: true
+    kind: HTTPRoute
+    annotations:
+      external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+    parentRefs:
+      - name: homelab
+        namespace: envoy-gateway-system
+        group: gateway.networking.k8s.io
+        kind: Gateway
+    hostnames:
+      - garage.homelab
+      - garage.erasmus.works
+    rules:
+      - backendRefs:
+          - name: garage-ui
+            port: 3909
+        matches:
+          - path:
+              type: PathPrefix
+              value: /
