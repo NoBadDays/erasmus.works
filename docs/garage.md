@@ -33,3 +33,38 @@ Use these formats:
 - `garage-rpc-secret`: 32-byte hex string, for example `openssl rand -hex 32`
 - `garage-admin-token`: long random token, for example `openssl rand -base64 32`
 
+## Bootstrap
+
+Garage deployment is GitOps-managed, but the initial cluster layout is a
+one-time runtime bootstrap step.
+
+Check the current node status and copy the node ID:
+
+```bash
+kubectl --kubeconfig talos/kubeconfig -n garage exec deploy/garage -c app -- /garage status
+```
+
+Assign the single node a role and capacity:
+
+```bash
+kubectl --kubeconfig talos/kubeconfig -n garage exec deploy/garage -c app -- \
+  /garage layout assign -z homelab -c 100G <node-id>
+```
+
+Apply the initial layout:
+
+```bash
+kubectl --kubeconfig talos/kubeconfig -n garage exec deploy/garage -c app -- \
+  /garage layout apply --version 1
+```
+
+Verify that the node has a zone and capacity instead of `NO ROLE ASSIGNED`:
+
+```bash
+kubectl --kubeconfig talos/kubeconfig -n garage exec deploy/garage -c app -- /garage status
+```
+
+This cluster has already been bootstrapped with:
+
+- zone: `homelab`
+- capacity: `100G`
