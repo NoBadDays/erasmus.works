@@ -15,9 +15,6 @@ controllers:
           capabilities:
             drop:
               - ALL
-        volumeMounts:
-          - name: storage
-            mountPath: /var/lib/garage
     containers:
       app:
         image:
