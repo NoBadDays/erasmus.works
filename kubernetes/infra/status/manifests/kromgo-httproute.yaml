@@ -18,30 +18,75 @@ spec:
         - path:
             type: Exact
             value: /talos_version
+          method: GET
+        - path:
+            type: Exact
+            value: /talos_version
+          method: HEAD
         - path:
             type: Exact
             value: /kubernetes_version
+          method: GET
+        - path:
+            type: Exact
+            value: /kubernetes_version
+          method: HEAD
         - path:
             type: Exact
             value: /cluster_age_days
+          method: GET
+        - path:
+            type: Exact
+            value: /cluster_age_days
+          method: HEAD
         - path:
             type: Exact
             value: /cluster_uptime_days
+          method: GET
+        - path:
+            type: Exact
+            value: /cluster_uptime_days
+          method: HEAD
         - path:
             type: Exact
             value: /cluster_node_count
+          method: GET
+        - path:
+            type: Exact
+            value: /cluster_node_count
+          method: HEAD
         - path:
             type: Exact
             value: /cluster_pod_count
+          method: GET
+        - path:
+            type: Exact
+            value: /cluster_pod_count
+          method: HEAD
         - path:
             type: Exact
             value: /cluster_cpu_usage
+          method: GET
+        - path:
+            type: Exact
+            value: /cluster_cpu_usage
+          method: HEAD
         - path:
             type: Exact
             value: /cluster_memory_usage
+          method: GET
+        - path:
+            type: Exact
+            value: /cluster_memory_usage
+          method: HEAD
         - path:
             type: Exact
             value: /cluster_alert_count
+          method: GET
+        - path:
+            type: Exact
+            value: /cluster_alert_count
+          method: HEAD
       backendRefs:
         - name: kromgo
           group: ""

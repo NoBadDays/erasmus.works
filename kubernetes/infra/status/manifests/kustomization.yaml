@@ -6,7 +6,9 @@ resources:
   - kromgo-deployment.yaml
   - kromgo-service.yaml
   - kromgo-httproute.yaml
+  - kromgo-backendtrafficpolicy.yaml
   - gatus-configmap.yaml
   - gatus-deployment.yaml
   - gatus-service.yaml
   - gatus-httproute.yaml
+  - gatus-backendtrafficpolicy.yaml

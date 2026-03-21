@@ -32,30 +32,6 @@
 
 </div>
 
-
-## Overview
-
-This repository manages my single-node homelab Kubernetes cluster with a small
-GitOps setup built around Talos Linux, Kubernetes, and Argo CD.
-
-| Area | Choice |
-| --- | --- |
-| OS | Talos Linux |
-| Orchestration | Kubernetes |
-| GitOps | Argo CD |
-| Load balancing | MetalLB |
-| In-cluster ingress | Envoy Gateway |
-| DNS automation | ExternalDNS |
-| Public access | Cloudflare Tunnel |
-| Storage | Longhorn |
-| Object Storage | Garage |
-| Backup | VolSync |
-| Volume snapshots | CSI external snapshotter |
-| Database operator | CloudNativePG |
-| Secret sync | External Secrets Operator + Bitwarden Secrets Manager |
-| Metrics | kube-prometheus-stack |
-| Logs | VictoriaLogs + Fluent Bit |
-
 ## Core Components
 
 **Platform:** [Talos Linux](https://www.talos.dev/) runs the node and
@@ -86,6 +62,30 @@ provides Prometheus, Grafana, and Alertmanager. [VictoriaLogs](https://docs.vict
 stores in-cluster logs, and [Fluent Bit](https://fluentbit.io/) collects and
 forwards them for search through Grafana.
 
+
+## Overview
+
+This repository manages my single-node homelab Kubernetes cluster with a small
+GitOps setup built around Talos Linux, Kubernetes, and Argo CD.
+
+| Area | Choice |
+| --- | --- |
+| OS | Talos Linux |
+| Orchestration | Kubernetes |
+| GitOps | Argo CD |
+| Load balancing | MetalLB |
+| In-cluster ingress | Envoy Gateway |
+| DNS automation | ExternalDNS |
+| Public access | Cloudflare Tunnel |
+| Storage | Longhorn |
+| Object Storage | Garage |
+| Backup | VolSync |
+| Volume snapshots | CSI external snapshotter |
+| Database operator | CloudNativePG |
+| Secret sync | External Secrets Operator + Bitwarden Secrets Manager |
+| Metrics | kube-prometheus-stack |
+| Logs | VictoriaLogs + Fluent Bit |
+
 ## Storage
 
 Longhorn is installed for persistent storage. This is currently a single-node
@@ -100,11 +100,12 @@ and stores its backup objects on a dedicated TrueNAS NFS export.
 
 This setup is mostly self-hosted, but it still depends on a few cloud services.
 
-| Service | Use |
-| --- | --- |
-| [Cloudflare](https://www.cloudflare.com/) | DNS, public edge access, Cloudflare Tunnel |
-| [Bitwarden Secrets Manager](https://bitwarden.com/products/secrets-manager/) | External secret source for Kubernetes |
-| [GitHub](https://github.com/) | Git hosting and Argo CD source of truth |
+| Service | Use | Cost |
+| --- | --- | --- |
+| [Cloudflare](https://www.cloudflare.com/) | Domain, DNS, Zero Trust Tunnel | ~€22/yr |
+| [Bitwarden Secrets Manager](https://bitwarden.com/products/secrets-manager/) | External secret source for Kubernetes | ~€18/yr |
+| [GitHub](https://github.com/) | Git hosting and Argo CD source of truth | Free |
+|  |  | Total: ~€3.35/mo |
 
 ## Repository Structure
 
