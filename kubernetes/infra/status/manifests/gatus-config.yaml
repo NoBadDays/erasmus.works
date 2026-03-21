@@ -1,0 +1,31 @@
+endpoints:
+  - name: argocd
+    group: internal
+    url: http://argocd-server.argocd.svc.cluster.local/healthz
+    interval: 1m
+    conditions:
+      - "[STATUS] == 200"
+  - name: grafana
+    group: internal
+    url: http://kube-prometheus-stack-grafana.monitoring.svc.cluster.local/api/health
+    interval: 1m
+    conditions:
+      - "[STATUS] == 200"
+  - name: prometheus
+    group: internal
+    url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/-/ready
+    interval: 1m
+    conditions:
+      - "[STATUS] == 200"
+  - name: alertmanager
+    group: internal
+    url: http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local:9093/-/ready
+    interval: 1m
+    conditions:
+      - "[STATUS] == 200"
+storage:
+  type: sqlite
+  caching: true
+  path: /data/gatus.db
+web:
+  port: 8080
