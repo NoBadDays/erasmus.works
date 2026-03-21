@@ -96,7 +96,7 @@ data:
         title: Uptime
       - name: cluster_alert_count
         hidden: false
-        query: "count(ALERTS{alertstate=\"firing\"}) or vector(0)"
+        query: "count(ALERTS{alertstate=\"firing\",alertname!=\"Watchdog\",alertname!=\"InfoInhibitor\"}) or vector(0)"
         colors:
           - color: "green"
             min: 0

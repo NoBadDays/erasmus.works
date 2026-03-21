@@ -104,6 +104,7 @@ This setup is mostly self-hosted, but it still depends on a few cloud services.
 | --- | --- | --- |
 | [Cloudflare](https://www.cloudflare.com/) | Domain, DNS, Zero Trust Tunnel | ~€22/yr |
 | [Bitwarden Secrets Manager](https://bitwarden.com/products/secrets-manager/) | External secret source for Kubernetes | ~€18/yr |
+| [SMTP2GO](https://www.smtp2go.com/) | Outbound email delivery for cluster apps | Free |
 | [GitHub](https://github.com/) | Git hosting and Argo CD source of truth | Free |
 |  |  | Total: ~€3.35/mo |
 
