@@ -13,6 +13,7 @@ resources:
   - volume-snapshots
   - volsync
   - kube-prometheus-stack
+  - status
   - victorialogs
   - fluent-bit
   - cloudflared

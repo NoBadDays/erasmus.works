@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gatus-config
+data:
+  config.yaml: |
+    endpoints:
+      - name: Grafana
+        group: internal
+        url: http://kube-prometheus-stack-grafana.monitoring.svc.cluster.local/api/health
+        interval: 1m
+        conditions:
+          - "[STATUS] == 200"
+      - name: Prometheus
+        group: internal
+        url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/-/ready
+        interval: 1m
+        conditions:
+          - "[STATUS] == 200"
+      - name: Alertmanager
+        group: internal
+        url: http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local:9093/-/ready
+        interval: 1m
+        conditions:
+          - "[STATUS] == 200"
+    storage:
+      type: sqlite
+      caching: true
+      path: /data/gatus.db
+    web:
+      port: 8080

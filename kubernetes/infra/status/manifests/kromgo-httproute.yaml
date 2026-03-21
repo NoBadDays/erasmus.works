@@ -1,0 +1,50 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: kromgo
+  annotations:
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+spec:
+  parentRefs:
+    - name: homelab
+      namespace: envoy-gateway-system
+      group: gateway.networking.k8s.io
+      kind: Gateway
+  hostnames:
+    - kromgo.homelab
+    - kromgo.erasmus.works
+  rules:
+    - matches:
+        - path:
+            type: Exact
+            value: /talos_version
+        - path:
+            type: Exact
+            value: /kubernetes_version
+        - path:
+            type: Exact
+            value: /cluster_age_days
+        - path:
+            type: Exact
+            value: /cluster_uptime_days
+        - path:
+            type: Exact
+            value: /cluster_node_count
+        - path:
+            type: Exact
+            value: /cluster_pod_count
+        - path:
+            type: Exact
+            value: /cluster_cpu_usage
+        - path:
+            type: Exact
+            value: /cluster_memory_usage
+        - path:
+            type: Exact
+            value: /cluster_alert_count
+      backendRefs:
+        - name: kromgo
+          group: ""
+          kind: Service
+          port: 80
+          weight: 1
