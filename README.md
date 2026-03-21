@@ -2,8 +2,6 @@
   <img src="./Erasmus-Works-Logo.png" alt="erasmus.works logo" width="400">
 </p>
 
-<p align="center">My Homelab Kubernetes repo for a Talos cluster, with a simple GitOps workflow using Argo CD.</p>
-
 <div align="center">
 
 [![Kubernetes](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.erasmus.works%2Fkubernetes_version&style=for-the-badge&logo=kubernetes&color=grey&label=%20)](https://kubernetes.io/)&nbsp;&nbsp;
@@ -29,6 +27,8 @@
 [![CPU-Usage](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.erasmus.works%2Fcluster_cpu_usage&style=flat-square&label=CPU)](https://kromgo.erasmus.works/cluster_cpu_usage)&nbsp;&nbsp;
 [![Memory-Usage](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.erasmus.works%2Fcluster_memory_usage&style=flat-square&label=Memory)](https://kromgo.erasmus.works/cluster_memory_usage)&nbsp;&nbsp;
 [![Alerts](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.erasmus.works%2Fcluster_alert_count&style=flat-square&label=Alerts)](https://kromgo.erasmus.works/cluster_alert_count)
+
+<p align="center">My Homelab Kubernetes repo for a Talos cluster, with a simple GitOps workflow using Argo CD.</p>
 
 </div>
 
