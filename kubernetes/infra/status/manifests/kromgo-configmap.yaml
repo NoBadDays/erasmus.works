@@ -10,8 +10,8 @@ data:
     metrics:
       - name: talos_version
         hidden: false
-        query: "count by (os_image) (kube_node_info)"
-        label: os_image
+        query: "node_os_info{id=\"talos\"}"
+        label: version_id
         title: Talos
       - name: kubernetes_version
         hidden: false
