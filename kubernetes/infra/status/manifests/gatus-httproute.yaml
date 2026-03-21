@@ -17,14 +17,6 @@ spec:
     - matches:
         - path:
             type: Exact
-            value: /api/v1/endpoints/internal_argocd/health/badge.shields
-          method: GET
-        - path:
-            type: Exact
-            value: /api/v1/endpoints/internal_argocd/health/badge.shields
-          method: HEAD
-        - path:
-            type: Exact
             value: /api/v1/endpoints/internal_grafana/health/badge.shields
           method: GET
         - path:

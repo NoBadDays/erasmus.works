@@ -33,6 +33,14 @@ spec:
           method: HEAD
         - path:
             type: Exact
+            value: /argocd_version
+          method: GET
+        - path:
+            type: Exact
+            value: /argocd_version
+          method: HEAD
+        - path:
+            type: Exact
             value: /cluster_age_days
           method: GET
         - path:

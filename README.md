@@ -6,7 +6,7 @@
 
 [![Kubernetes](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.erasmus.works%2Fkubernetes_version&style=for-the-badge&logo=kubernetes&color=grey&label=%20)](https://kubernetes.io/)&nbsp;&nbsp;
 [![Talos](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.erasmus.works%2Ftalos_version&style=for-the-badge&logo=talos&color=grey&label=%20)](https://www.talos.dev/)&nbsp;&nbsp;
-[![ArgoCD](https://img.shields.io/endpoint?url=https%3A%2F%2Fstatus.erasmus.works%2Fapi%2Fv1%2Fendpoints%2Finternal_argocd%2Fhealth%2Fbadge.shields&style=for-the-badge&logo=argo&logoColor=white&label=%20)](https://argocd.erasmus.works/)
+[![ArgoCD](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.erasmus.works%2Fargocd_version&style=for-the-badge&logo=argo&color=grey&label=%20)](https://argocd.erasmus.works/)
 
 </div>
 

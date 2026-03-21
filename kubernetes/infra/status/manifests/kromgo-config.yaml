@@ -12,6 +12,11 @@ metrics:
     query: "kubernetes_build_info{service=\"kubernetes\"}"
     label: git_version
     title: Kubernetes
+  - name: argocd_version
+    hidden: false
+    query: "argocd_info"
+    label: version
+    title: Argo CD
   - name: cluster_node_count
     hidden: false
     query: "count(kube_node_info)"
