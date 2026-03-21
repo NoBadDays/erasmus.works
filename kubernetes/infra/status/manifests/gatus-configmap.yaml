@@ -5,6 +5,12 @@ metadata:
 data:
   config.yaml: |
     endpoints:
+      - name: ArgoCD
+        group: internal
+        url: http://argocd-server.argocd.svc.cluster.local/healthz
+        interval: 1m
+        conditions:
+          - "[STATUS] == 200"
       - name: Grafana
         group: internal
         url: http://kube-prometheus-stack-grafana.monitoring.svc.cluster.local/api/health

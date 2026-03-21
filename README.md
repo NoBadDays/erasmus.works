@@ -5,7 +5,8 @@
 <div align="center">
 
 [![Kubernetes](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.erasmus.works%2Fkubernetes_version&style=for-the-badge&logo=kubernetes&color=grey&label=%20)](https://kubernetes.io/)&nbsp;&nbsp;
-[![Talos](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.erasmus.works%2Ftalos_version&style=for-the-badge&logo=talos&color=grey&label=%20)](https://www.talos.dev/)
+[![Talos](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.erasmus.works%2Ftalos_version&style=for-the-badge&logo=talos&color=grey&label=%20)](https://www.talos.dev/)&nbsp;&nbsp;
+[![ArgoCD](https://img.shields.io/endpoint?url=https%3A%2F%2Fstatus.erasmus.works%2Fapi%2Fv1%2Fendpoints%2Finternal_argocd%2Fhealth%2Fbadge.shields&style=for-the-badge&logo=argo&logoColor=white&label=%20)](https://argocd.erasmus.works/)
 
 </div>
 
@@ -19,7 +20,6 @@
 
 <div align="center">
 
-![Cluster](https://img.shields.io/badge/Cluster-grey?style=flat-square&logo=kubernetes)&nbsp;&nbsp;
 [![Age-Days](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.erasmus.works%2Fcluster_age_days&style=flat-square&label=Age)](https://kromgo.erasmus.works/cluster_age_days)&nbsp;&nbsp;
 [![Uptime-Days](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.erasmus.works%2Fcluster_uptime_days&style=flat-square&label=Uptime)](https://kromgo.erasmus.works/cluster_uptime_days)&nbsp;&nbsp;
 [![Node-Count](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.erasmus.works%2Fcluster_node_count&style=flat-square&label=Nodes)](https://kromgo.erasmus.works/cluster_node_count)&nbsp;&nbsp;
