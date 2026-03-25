@@ -85,7 +85,7 @@ jobs:
       - name: Process Requested State
         id: process_dispatch
         shell: bash
-        run: .github/scripts/docmost-restore-drill-process.sh
+        run: bash .github/scripts/docmost-restore-drill-process.sh
 
       - name: Commit And Push Generated Changes
         if: steps.process_dispatch.outputs.changed == 'true'
@@ -112,7 +112,7 @@ jobs:
       - name: Process Restore Drill State
         id: process
         shell: bash
-        run: .github/scripts/docmost-restore-drill-process.sh
+        run: bash .github/scripts/docmost-restore-drill-process.sh
 
       - name: Commit And Push Generated Changes
         if: steps.process.outputs.changed == 'true'
