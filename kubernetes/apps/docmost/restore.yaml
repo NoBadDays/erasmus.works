@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: docmost-data-restore
   namespace: apps
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
 spec:
   accessModes:
     - ReadWriteOnce
@@ -16,6 +18,8 @@ kind: ReplicationDestination
 metadata:
   name: docmost-data-restore
   namespace: apps
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
 spec:
   trigger:
     # Change this to any new value to trigger another restore.

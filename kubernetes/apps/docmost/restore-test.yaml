@@ -1,8 +1,38 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: docmost-restore-test-secrets
+  namespace: apps
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: bitwarden-secrets-manager
+    kind: ClusterSecretStore
+  target:
+    name: docmost-restore-test-secrets
+    creationPolicy: Owner
+    deletionPolicy: Retain
+    template:
+      type: Opaque
+      data:
+        database-url: postgresql://docmost:{{ .password }}@docmost-postgres-restore-rw.apps.svc.cluster.local:5432/docmost?schema=public
+  data:
+    - secretKey: password
+      remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
+        key: docmost-postgres-password
+        metadataPolicy: None
+---
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: docmost-postgres-restore
   namespace: apps
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
 spec:
   instances: 1
   storage:
@@ -36,6 +66,8 @@ kind: Deployment
 metadata:
   name: docmost-restore-test
   namespace: apps
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
 spec:
   replicas: 1
   selector:
@@ -71,12 +103,10 @@ spec:
                   name: docmost-app-secrets
                   key: app-secret
             - name: DATABASE_URL
-              value: postgresql://docmost:$(POSTGRES_PASSWORD)@docmost-postgres-restore-rw.apps.svc.cluster.local:5432/docmost?schema=public
-            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: docmost-postgres-auth
-                  key: password
+                  name: docmost-restore-test-secrets
+                  key: database-url
             - name: REDIS_URL
               value: redis://docmost-redis.apps.svc.cluster.local:6379
             - name: STORAGE_DRIVER
@@ -135,6 +165,8 @@ kind: Service
 metadata:
   name: docmost-restore-test
   namespace: apps
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
 spec:
   selector:
     app: docmost-restore-test
