@@ -81,7 +81,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "count(volsync_missed_intervals_total{role=\"source\"} != 0)",
+          "expr": "count(volsync_missed_intervals_total{role=\"source\"} != 0) or on() vector(0)",
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
@@ -148,7 +148,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "count(volsync_replicationsource_info{last_sync_time=\"\"})",
+          "expr": "count(volsync_replicationsource_info{last_sync_time=\"\"}) or on() vector(0)",
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
@@ -361,7 +361,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(increase(controller_runtime_reconcile_total{namespace=\"cnpg-system\", result=\"error\", controller=\"backup\"}[24h])) + sum(increase(controller_runtime_reconcile_total{namespace=\"cnpg-system\", result=\"error\", controller=~\"scheduledbackup|scheduled-backup\"}[24h]))",
+          "expr": "(sum(increase(controller_runtime_reconcile_total{namespace=\"cnpg-system\", result=\"error\", controller=\"backup\"}[24h])) or on() vector(0)) + (sum(increase(controller_runtime_reconcile_total{namespace=\"cnpg-system\", result=\"error\", controller=~\"scheduledbackup|scheduled-backup\"}[24h])) or on() vector(0))",
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
@@ -376,6 +376,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
+      "description": "Uses kubelet PVC volume stats for apps/volsync-repository. If this panel shows no data, the PVC exists but the storage driver or kubelet is not exposing kubelet_volume_stats metrics for it.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -434,14 +435,14 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "100 * max(1 - kubelet_volume_stats_available_bytes{namespace=\"apps\", persistentvolumeclaim=\"volsync-repository\"} / kubelet_volume_stats_capacity_bytes{namespace=\"apps\", persistentvolumeclaim=\"volsync-repository\"})",
+          "expr": "100 * max(kubelet_volume_stats_used_bytes{namespace=\"apps\", persistentvolumeclaim=\"volsync-repository\"} / kubelet_volume_stats_capacity_bytes{namespace=\"apps\", persistentvolumeclaim=\"volsync-repository\"})",
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
           "refId": "A"
         }
       ],
-      "title": "VolSync Repository PVC Usage",
+      "title": "VolSync Repository PVC Usage (kubelet volume stats)",
       "type": "stat"
     },
     {
