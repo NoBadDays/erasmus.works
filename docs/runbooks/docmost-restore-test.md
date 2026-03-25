@@ -17,8 +17,8 @@ This procedure does not cut production over. It restores into throwaway resource
 
 ## Repo Files Used
 
-- [kubernetes/apps/docmost/restore.yaml](/home/andre/code/ew/erasmus.works/kubernetes/apps/docmost/restore.yaml)
-- [kubernetes/apps/docmost/restore-test.yaml](/home/andre/code/ew/erasmus.works/kubernetes/apps/docmost/restore-test.yaml)
+- [kubernetes/apps/docmost/restore-drill/restore.yaml](/home/andre/code/ew/erasmus.works/kubernetes/apps/docmost/restore-drill/restore.yaml)
+- [kubernetes/apps/docmost/restore-drill/restore-test.yaml](/home/andre/code/ew/erasmus.works/kubernetes/apps/docmost/restore-drill/restore-test.yaml)
 - [kubernetes/apps/docmost/app.yaml](/home/andre/code/ew/erasmus.works/kubernetes/apps/docmost/app.yaml)
 - [kubernetes/apps/docmost/postgres.yaml](/home/andre/code/ew/erasmus.works/kubernetes/apps/docmost/postgres.yaml)
 - [kubernetes/apps/docmost/volsync.yaml](/home/andre/code/ew/erasmus.works/kubernetes/apps/docmost/volsync.yaml)
@@ -79,15 +79,15 @@ resources:
   - redis.yaml
   - app.yaml
   - volsync.yaml
-  - restore.yaml
-  - restore-test.yaml
+  - restore-drill/restore.yaml
+  - restore-drill/restore-test.yaml
 ```
 
 Commit and push that temporary change, then wait for Argo CD to sync it.
 
 ## Step 1: Restore The VolSync PVC Backup
 
-The restore target is defined in [kubernetes/apps/docmost/restore.yaml](/home/andre/code/ew/erasmus.works/kubernetes/apps/docmost/restore.yaml):
+The restore target is defined in [kubernetes/apps/docmost/restore-drill/restore.yaml](/home/andre/code/ew/erasmus.works/kubernetes/apps/docmost/restore-drill/restore.yaml):
 
 - PVC `docmost-data-restore`
 - `ReplicationDestination` `docmost-data-restore`
@@ -126,7 +126,7 @@ If you need another restore run later, change `spec.trigger.manual` to a new str
 
 ## Step 2: Restore The CNPG Backup Into A Throwaway Cluster
 
-The throwaway database cluster is defined in [kubernetes/apps/docmost/restore-test.yaml](/home/andre/code/ew/erasmus.works/kubernetes/apps/docmost/restore-test.yaml) as `docmost-postgres-restore`.
+The throwaway database cluster is defined in [kubernetes/apps/docmost/restore-drill/restore-test.yaml](/home/andre/code/ew/erasmus.works/kubernetes/apps/docmost/restore-drill/restore-test.yaml) as `docmost-postgres-restore`.
 
 It restores from the same Garage backup location used by production:
 
@@ -159,7 +159,7 @@ If the pod name differs, use `kubectl -n apps get pods -l cnpg.io/cluster=docmos
 
 ## Step 3: Start A Temporary Docmost Instance Against The Restored Data
 
-The temporary app is also defined in [kubernetes/apps/docmost/restore-test.yaml](/home/andre/code/ew/erasmus.works/kubernetes/apps/docmost/restore-test.yaml):
+The temporary app is also defined in [kubernetes/apps/docmost/restore-drill/restore-test.yaml](/home/andre/code/ew/erasmus.works/kubernetes/apps/docmost/restore-drill/restore-test.yaml):
 
 - Deployment `docmost-restore-test`
 - Service `docmost-restore-test`
@@ -215,8 +215,8 @@ kubectl -n apps logs docmost-postgres-restore-1 --tail=100
 After the test, remove the temporary resources through GitOps.
 
 1. Revert [kubernetes/apps/docmost/kustomization.yaml](/home/andre/code/ew/erasmus.works/kubernetes/apps/docmost/kustomization.yaml) so it no longer includes:
-   - `restore.yaml`
-   - `restore-test.yaml`
+   - `restore-drill/restore.yaml`
+   - `restore-drill/restore-test.yaml`
 2. Commit and push the revert.
 3. Wait for Argo CD to prune:
    - `docmost-data-restore`
@@ -239,6 +239,6 @@ kubectl -n apps get svc docmost-restore-test
   - production deployment `docmost`
   - production cluster `docmost-postgres`
   - production PVC `docmost-data`
-- `restore.yaml` uses a manual VolSync trigger. Re-running the drill requires a new trigger string.
+- `restore-drill/restore.yaml` uses a manual VolSync trigger. Re-running the drill requires a new trigger string.
 - The temporary app reuses the existing Redis service. This is acceptable for a restore test because no production traffic is routed to the temporary app.
 - The temporary app reuses the existing Docmost app secret and database credentials. No new secrets are required for the drill.
