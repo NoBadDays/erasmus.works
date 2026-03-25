@@ -1,2 +1,3 @@
-state: started
+# Set state to `start` to create the restore objects, and set to `cleanup` to delete them after the drill.
+state: cleanup
 note: "First restore drill"
