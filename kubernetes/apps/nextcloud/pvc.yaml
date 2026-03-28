@@ -4,7 +4,7 @@ metadata:
   name: nextcloud-html
   namespace: apps
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   accessModes:
     - ReadWriteOnce

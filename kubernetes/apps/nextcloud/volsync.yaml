@@ -4,7 +4,7 @@ metadata:
   name: nextcloud-html-restic-config
   namespace: apps
   annotations:
-    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   refreshInterval: 24h
   secretStoreRef:
@@ -33,7 +33,7 @@ metadata:
   name: nextcloud-html
   namespace: apps
   annotations:
-    argocd.argoproj.io/sync-wave: "4"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   sourcePVC: nextcloud-html
   trigger:
