@@ -56,7 +56,7 @@
 - Monitoring:
     - Grafana:
         icon: grafana.png
-        href: https://grafana.erasmus.works/dashboards?tag=custom&starred=true
+        href: https://grafana.erasmus.works/dashboards?tag=custom
         description: Metrics dashboards
     - Prometheus:
         icon: prometheus.png
