@@ -48,7 +48,7 @@ spec:
       weekly: 4
       monthly: 3
     moverVolumes:
-      - mountPath: /mnt/repo
+      - mountPath: repo
         volumeSource:
           persistentVolumeClaim:
             claimName: volsync-repository
