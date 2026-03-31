@@ -1,0 +1,17 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: nextcloud
+  namespace: apps
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: nextcloud
+  rateLimit:
+    type: Local
+    local:
+      rules:
+        - limit:
+            requests: 1200
+            unit: Minute

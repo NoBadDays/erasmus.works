@@ -1,3 +1,6 @@
+defaultPodOptions:
+  automountServiceAccountToken: false
+
 immich:
   metrics:
     enabled: true
@@ -15,6 +18,8 @@ server:
           env:
             TZ: Europe/Amsterdam
             IMMICH_TRUSTED_PROXIES: 10.244.0.0/16
+          securityContext:
+            allowPrivilegeEscalation: false
           envFrom:
             - secret: immich-app-secrets
 
@@ -31,6 +36,8 @@ machine-learning:
             tag: v2.6.3
           env:
             TZ: Europe/Amsterdam
+          securityContext:
+            allowPrivilegeEscalation: false
           resources:
             requests:
               cpu: 500m
@@ -51,4 +58,6 @@ valkey:
   controllers:
     main:
       containers:
-        main: {}
+        main:
+          securityContext:
+            allowPrivilegeEscalation: false
