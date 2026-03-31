@@ -14,7 +14,7 @@ spec:
     storageClass: longhorn
   backup:
     barmanObjectStore:
-      destinationPath: s3://cnpg-backups/nextcloud
+      destinationPath: s3://cnpg-nextcloud
       endpointURL: http://garage.garage.svc.cluster.local:3900
       serverName: nextcloud-postgres
       s3Credentials:

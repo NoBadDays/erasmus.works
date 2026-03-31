@@ -14,7 +14,7 @@ spec:
     storageClass: longhorn
   backup:
     barmanObjectStore:
-      destinationPath: s3://cnpg-backups/docmost
+      destinationPath: s3://cnpg-docmost
       endpointURL: http://garage.garage.svc.cluster.local:3900
       serverName: docmost-postgres
       s3Credentials:

@@ -18,7 +18,7 @@ spec:
     storageClass: longhorn
   backup:
     barmanObjectStore:
-      destinationPath: s3://cnpg-backups/immich
+      destinationPath: s3://cnpg-immich
       endpointURL: http://garage.garage.svc.cluster.local:3900
       serverName: immich-postgres
       s3Credentials:
