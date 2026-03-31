@@ -72,7 +72,7 @@ This cluster has already been bootstrapped with:
 ## CNPG Credentials
 
 Per-cluster CNPG backups should use their own Garage S3 key and a separate path
-inside the shared `cnpg-backups` bucket.
+inside per-app CNPG buckets such as `cnpg-nextcloud`, `cnpg-docmost`, and `cnpg-immich`.
 
 For Docmost, the repo expects these Bitwarden secrets:
 
