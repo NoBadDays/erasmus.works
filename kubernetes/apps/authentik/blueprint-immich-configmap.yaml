@@ -43,4 +43,5 @@ data:
         attrs:
           name: Immich
           slug: immich
+          launch_url: https://immich.erasmus.works
           provider: !KeyOf immich-provider
