@@ -40,9 +40,15 @@ worker:
     - name: media
       persistentVolumeClaim:
         claimName: authentik-media
+    - name: blueprint-immich
+      configMap:
+        name: authentik-blueprint-immich
   volumeMounts:
     - name: media
       mountPath: /data
+    - name: blueprint-immich
+      mountPath: /blueprints/immich.yaml
+      subPath: immich.yaml
   metrics:
     enabled: true
     serviceMonitor:
