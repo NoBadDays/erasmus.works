@@ -6,17 +6,11 @@ metadata:
     blueprints.goauthentik.io/description: "GitOps-managed Argo CD OAuth application, provider, and access groups."
 entries:
   - model: authentik_core.group
-    id: argocd-admins-group
+    id: erasmusworks-admin-group
     identifiers:
-      name: ArgoCD Admins
+      name: ErasmusWorksAdmin
     attrs:
-      name: ArgoCD Admins
-  - model: authentik_core.group
-    id: argocd-viewers-group
-    identifiers:
-      name: ArgoCD Viewers
-    attrs:
-      name: ArgoCD Viewers
+      name: ErasmusWorksAdmin
   - model: authentik_providers_oauth2.oauth2provider
     id: argocd-provider
     identifiers:
