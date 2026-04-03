@@ -19,8 +19,8 @@ Short reference for what is deployed in this repo.
   - Helm based
   - CNPG
   - Database Backups (CNPG)
-  - No volume backups 
-  // TODO backup volumes
+  - No volume backups
+  - Media stored on NAS
 
 - `nextcloud`
   - Helm based
