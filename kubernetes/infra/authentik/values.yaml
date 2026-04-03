@@ -40,33 +40,35 @@ worker:
     - name: media
       persistentVolumeClaim:
         claimName: authentik-media
-    - name: blueprint-argocd
-      configMap:
-        name: authentik-blueprint-argocd
-    - name: blueprint-grafana
-      configMap:
-        name: authentik-blueprint-grafana
-    - name: blueprint-immich
-      configMap:
-        name: authentik-blueprint-immich
-    - name: blueprint-nextcloud
-      configMap:
-        name: authentik-blueprint-nextcloud
+    - name: blueprints
+      projected:
+        sources:
+          - configMap:
+              name: authentik-blueprint-argocd
+              items:
+                - key: argocd.yaml
+                  path: argocd.yaml
+          - configMap:
+              name: authentik-blueprint-grafana
+              items:
+                - key: grafana.yaml
+                  path: grafana.yaml
+          - configMap:
+              name: authentik-blueprint-immich
+              items:
+                - key: immich.yaml
+                  path: immich.yaml
+          - configMap:
+              name: authentik-blueprint-nextcloud
+              items:
+                - key: nextcloud.yaml
+                  path: nextcloud.yaml
   volumeMounts:
     - name: media
       mountPath: /data
-    - name: blueprint-argocd
-      mountPath: /blueprints/argocd.yaml
-      subPath: argocd.yaml
-    - name: blueprint-grafana
-      mountPath: /blueprints/grafana.yaml
-      subPath: grafana.yaml
-    - name: blueprint-immich
-      mountPath: /blueprints/immich.yaml
-      subPath: immich.yaml
-    - name: blueprint-nextcloud
-      mountPath: /blueprints/nextcloud.yaml
-      subPath: nextcloud.yaml
+    - name: blueprints
+      mountPath: /blueprints
+      readOnly: true
   metrics:
     enabled: true
     serviceMonitor:

@@ -13,6 +13,7 @@ Keep it GitOps-managed where possible.
 3. If the blueprint needs a client secret, add it to `kubernetes/infra/authentik/externalsecrets.yaml`.
 4. Mount the blueprint into the Authentik worker in `kubernetes/infra/authentik/values.yaml`.
    If it is not mounted into `/blueprints/...`, Authentik will not import it.
+   Prefer a projected volume mounted at `/blueprints` instead of `subPath` mounts so ConfigMap updates propagate without restarting the worker.
 5. Add the app-side OIDC config in the target app manifests.
 6. If the app needs its own Kubernetes secret, wire it with External Secrets.
 
