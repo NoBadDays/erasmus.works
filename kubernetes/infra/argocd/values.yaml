@@ -116,6 +116,11 @@ applicationController:
   metrics:
     enabled: true
 
+redis:
+  serviceAccount:
+    create: true
+    name: argocd-redis
+
 server:
   metrics:
     enabled: true
