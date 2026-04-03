@@ -116,6 +116,7 @@ applicationController:
   metrics:
     enabled: true
 
+# Keep Redis on the existing service account during Helm-managed upgrades.
 redis:
   serviceAccount:
     create: true
