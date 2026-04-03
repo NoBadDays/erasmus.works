@@ -56,3 +56,4 @@ Example Bitwarden secret names:
 
 - Do not manually create the Authentik app/provider if the blueprint is meant to manage it.
 - If the app does not appear in Authentik after sync, first check the worker blueprint mount in `kubernetes/infra/authentik/values.yaml`.
+- TODO: Revisit managing Authentik applications/providers with Terraform instead of mounted blueprints if the repo moves toward the more standard community IaC path.

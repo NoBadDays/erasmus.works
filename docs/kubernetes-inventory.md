@@ -25,7 +25,7 @@ Short reference for what is deployed in this repo.
 | `garage` | Helm based | Yes |  |  |
 | `garage-ui` | Helm based |  |  |  |
 | `kube-prometheus-stack` | Helm based | Yes | Yes |  |
-| `longhorn` | Helm based | Yes |  |  |
+| `longhorn` | Helm based | Yes | Yes | Envoy Gateway OIDC |
 | `victorialogs` | Helm based |  |  |  |
 | `volsync` | Helm based | Yes |  |  |
 | `volume-snapshots` | Helm based |  |  |  |
