@@ -97,9 +97,9 @@ This Git repository contains the following directories.
 ```text
 .
 ├── 📁 kubernetes/
-│   ├── 📁 clusters/homelab/   # Root app and child applications
-│   ├── 📁 infra/              # Cluster infrastructure
-│   └── 📁 apps/               # Workload applications
+│   ├── 📁 clusters/homelab/   # Cluster root and top-level Argo CD applications
+│   ├── 📁 infra/              # Shared platform services
+│   └── 📁 apps/               # User-facing workloads
 ├── 📁 talos/                  # Talos machine config and patches
 ├── 📁 docs/                   # Practical runbooks and notes
 └── 📁 linux/                  # Local workstation/helper files
@@ -145,6 +145,7 @@ simple and inexpensive while still being enough for the workloads in this repo.
 - [Talos Bootstrap Runbook](/home/andre/code/ew/erasmus.works/docs/bootstrap/talos.md)
 - [Bitwarden External Secrets Bootstrap](/home/andre/code/ew/erasmus.works/docs/bootstrap/bitwarden-external-secrets.md)
 - [Longhorn Bootstrap Notes](/home/andre/code/ew/erasmus.works/docs/bootstrap/longhorn.md)
+- [Kubernetes Layout Notes](/home/andre/code/ew/erasmus.works/docs/kubernetes-layout.md)
 - [VolSync Restic Notes](/home/andre/code/ew/erasmus.works/docs/volsync-restic.md)
 - [Garage Notes](/home/andre/code/ew/erasmus.works/docs/garage.md)
 - [Linux Init Notes](/home/andre/code/ew/erasmus.works/linux/init.md)

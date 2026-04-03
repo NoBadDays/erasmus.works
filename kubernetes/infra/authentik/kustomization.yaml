@@ -15,6 +15,7 @@ configMapGenerator:
       - blueprints/nextcloud.yaml
 resources:
   # Core
+  - application.yaml
   - externalsecrets.yaml
   - postgres.yaml
   - blueprint-immich-configmap.yaml

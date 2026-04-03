@@ -8,10 +8,10 @@ Keep it GitOps-managed where possible.
 
 ## Repo Steps
 
-1. Add an Authentik blueprint under `kubernetes/apps/authentik/blueprints/`.
-2. Add the generated ConfigMap in `kubernetes/apps/authentik/kustomization.yaml`.
-3. If the blueprint needs a client secret, add it to `kubernetes/apps/authentik/externalsecrets.yaml`.
-4. Mount the blueprint into the Authentik worker in `kubernetes/apps/authentik/values.yaml`.
+1. Add an Authentik blueprint under `kubernetes/infra/authentik/blueprints/`.
+2. Add the generated ConfigMap in `kubernetes/infra/authentik/kustomization.yaml`.
+3. If the blueprint needs a client secret, add it to `kubernetes/infra/authentik/externalsecrets.yaml`.
+4. Mount the blueprint into the Authentik worker in `kubernetes/infra/authentik/values.yaml`.
    If it is not mounted into `/blueprints/...`, Authentik will not import it.
 5. Add the app-side OIDC config in the target app manifests.
 6. If the app needs its own Kubernetes secret, wire it with External Secrets.
@@ -26,14 +26,14 @@ Typical blueprint contents:
 
 Current examples:
 
-- `kubernetes/apps/authentik/blueprints/argocd.yaml`
-- `kubernetes/apps/authentik/blueprints/nextcloud.yaml`
-- `kubernetes/apps/authentik/blueprint-immich-configmap.yaml`
+- `kubernetes/infra/authentik/blueprints/argocd.yaml`
+- `kubernetes/infra/authentik/blueprints/nextcloud.yaml`
+- `kubernetes/infra/authentik/blueprint-immich-configmap.yaml`
 
 ## Secret Pattern
 
 - Keep the OAuth client secret in Bitwarden
-- Reference it from `kubernetes/apps/authentik/externalsecrets.yaml`
+- Reference it from `kubernetes/infra/authentik/externalsecrets.yaml`
 - Reference it from the target app secret/config as needed
 
 Example Bitwarden secret names:
@@ -52,4 +52,4 @@ Example Bitwarden secret names:
 ## Notes
 
 - Do not manually create the Authentik app/provider if the blueprint is meant to manage it.
-- If the app does not appear in Authentik after sync, first check the worker blueprint mount in `kubernetes/apps/authentik/values.yaml`.
+- If the app does not appear in Authentik after sync, first check the worker blueprint mount in `kubernetes/infra/authentik/values.yaml`.
