@@ -97,7 +97,6 @@ This Git repository contains the following directories.
 ```text
 .
 ├── 📁 kubernetes/
-│   ├── 📁 bootstrap/argocd/   # Argo CD bootstrap
 │   ├── 📁 clusters/homelab/   # Root app and child applications
 │   ├── 📁 infra/              # Cluster infrastructure
 │   └── 📁 apps/               # Workload applications
@@ -144,7 +143,6 @@ simple and inexpensive while still being enough for the workloads in this repo.
 ## Documentation
 
 - [Talos Bootstrap Runbook](/home/andre/code/ew/erasmus.works/docs/bootstrap/talos.md)
-- [Argo CD Bootstrap Runbook](/home/andre/code/ew/erasmus.works/docs/bootstrap/argocd.md)
 - [Bitwarden External Secrets Bootstrap](/home/andre/code/ew/erasmus.works/docs/bootstrap/bitwarden-external-secrets.md)
 - [Longhorn Bootstrap Notes](/home/andre/code/ew/erasmus.works/docs/bootstrap/longhorn.md)
 - [VolSync Restic Notes](/home/andre/code/ew/erasmus.works/docs/volsync-restic.md)
