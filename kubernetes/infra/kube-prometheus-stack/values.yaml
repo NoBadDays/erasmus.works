@@ -69,7 +69,6 @@ grafana:
       auth_url: https://authentik.erasmus.works/application/o/authorize/
       token_url: https://authentik.erasmus.works/application/o/token/
       api_url: https://authentik.erasmus.works/application/o/userinfo/
-      role_attribute_path: "'Viewer'"
   plugins:
     - victoriametrics-logs-datasource@0.26.3
   persistence:
