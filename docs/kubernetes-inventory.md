@@ -4,79 +4,30 @@ Short reference for what is deployed in this repo.
 
 ## Apps
 
-- `docmost`
-  - Plain manifests
-  - CNPG
-  - Volume Backups (VolSync)
-  - Database Backups (CNPG)
-
-- `homepage`
-  - Plain manifests
-  - No Database
-  - No Volumes
-
-- `immich`
-  - Helm based
-  - CNPG
-  - Database Backups (CNPG)
-  - No volume backups
-  - Media stored on NAS
-
-- `nextcloud`
-  - Helm based
-  - CNPG
-  - Volume Backups (VolSync)
-  - Database Backups (CNPG)
+| App | Type | Database | Volume Backup | Database Backup | Metrics | SSO | Notes |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `docmost` | Plain manifests | CNPG | VolSync | CNPG |  |  |  |
+| `homepage` | Plain manifests | N/A | N/A | N/A |  |  |  |
+| `immich` | Helm based | CNPG | None | CNPG | Yes | Yes | Media stored on NAS |
+| `nextcloud` | Helm based | CNPG | VolSync | CNPG |  | Yes |  |
 
 ## Infra
 
-- `argocd`
-  - Helm based
-  - Metrics
-  - SSO
-
-- `authentik`
-  - Helm based
-  - Database Backups (CNPG)
-
-- `cloudnative-pg`
-  - Helm based
-
-- `envoy-gateway`
-  - Helm based
-
-- `external-dns`
-  - Helm based
-
-- `external-secrets`
-  - Helm based
-
-- `fluent-bit`
-  - Helm based
-
-- `garage`
-  - Helm based
-
-- `garage-ui`
-  - Helm based
-
-- `kube-prometheus-stack`
-  - Helm based
-
-- `longhorn`
-  - Helm based
-
-- `metallb`
-  - Upstream manifests
-
-- `status`
-  - Plain manifests
-
-- `victorialogs`
-  - Helm based
-
-- `volsync`
-  - Helm based
-
-- `volume-snapshots`
-  - Helm based
+| Component | Type | Metrics | SSO | Notes |
+| --- | --- | --- | --- | --- |
+| `argocd` | Helm based | Yes | Yes |  |
+| `authentik` | Helm based | Yes |  | Database Backups (CNPG) |
+| `cloudnative-pg` | Helm based | Yes |  |  |
+| `envoy-gateway` | Helm based | Yes |  |  |
+| `external-dns` | Helm based |  |  |  |
+| `external-secrets` | Helm based |  |  |  |
+| `fluent-bit` | Helm based | Yes |  |  |
+| `garage` | Helm based | Yes |  |  |
+| `garage-ui` | Helm based |  |  |  |
+| `kube-prometheus-stack` | Helm based | Yes |  |  |
+| `longhorn` | Helm based | Yes |  |  |
+| `victorialogs` | Helm based |  |  |  |
+| `volsync` | Helm based | Yes |  |  |
+| `volume-snapshots` | Helm based |  |  |  |
+| `metallb` | Plain manifests |  |  |  |
+| `status` | Plain manifests | Yes |  |  |
