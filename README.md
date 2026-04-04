@@ -128,16 +128,19 @@ avoids making the cluster responsible for every critical dependency.
 
 ## Hardware
 
-This cluster runs on a single small-form-factor node, which keeps the setup
-simple and inexpensive while still being enough for the workloads in this repo.
+This cluster currently runs on two small-form-factor nodes.
 
 | Component | Details |
 | --- | --- |
-| Kubernetes node | MINIS FORUM UN1245 Mini-PC |
-| CPU | Intel Core i5-12450H |
-| iGPU | Intel UHD Graphics |
-| Memory | 16 GB RAM |
-| Storage | 512 GB SSD |
+| Kubernetes node 1 | MINIS FORUM UN1245 Mini-PC |
+| Node 1 CPU | Intel Core i5-12450H |
+| Node 1 iGPU | Intel UHD Graphics |
+| Node 1 Memory | 16 GB RAM |
+| Node 1 Storage | 512 GB SSD |
+| Kubernetes node 2 | Blackview MP-80 |
+| Node 2 CPU | Intel Processor N97 |
+| Node 2 Memory | 16 GB LPDDR5 RAM |
+| Node 2 Storage | 512 GB M.2 SSD |
 | Router | UniFi Express 7 (UX7) |
 | Switch | 2.5 Gbps switch |
 
@@ -145,9 +148,9 @@ simple and inexpensive while still being enough for the workloads in this repo.
 
 ## Documentation
 
-- [Talos Bootstrap Runbook](docs/bootstrap/talos.md)
+- [Talos Runbook](docs/bootstrap/talos.md)
 - [Bitwarden External Secrets Bootstrap](docs/bootstrap/bitwarden-external-secrets.md)
-- [Longhorn Bootstrap Notes](docs/bootstrap/longhorn.md)
+- [Longhorn Notes](docs/bootstrap/longhorn.md)
 - [Kubernetes Inventory](docs/kubernetes-inventory.md)
 - [Kubernetes Layout Notes](docs/kubernetes-layout.md)
 - [VolSync Restic Notes](docs/volsync-restic.md)

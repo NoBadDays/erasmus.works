@@ -1,7 +1,7 @@
 defaultSettings:
   concurrentAutomaticEngineUpgradePerNodeLimit: 1
   defaultDataPath: /var/lib/longhorn
-  defaultReplicaCount: 1
+  defaultReplicaCount: 2
   storageReservedPercentageForDefaultDisk: 30
 csi:
   attacherReplicaCount: 1
@@ -11,4 +11,4 @@ csi:
 preUpgradeChecker:
   jobEnabled: false
 persistence:
-  defaultClassReplicaCount: 1
+  defaultClassReplicaCount: 2

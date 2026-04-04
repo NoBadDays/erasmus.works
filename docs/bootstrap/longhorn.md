@@ -1,101 +1,74 @@
-# Longhorn Bootstrap Notes
+# Longhorn Notes
 
-## Scope
+## Current State
 
-This note covers the repo-side Longhorn install and the Talos prerequisites that must exist before the Argo CD application can become healthy.
+- Longhorn is installed from `kubernetes/infra/longhorn/`.
+- Longhorn stores data at `/var/lib/longhorn`.
+- This repo currently targets a 2-node intermediate setup.
+- New Longhorn volumes default to 2 replicas.
+- This improves storage redundancy, but it is not full cluster HA while the cluster still has a single control-plane node.
 
-## Repo-side Install
+## Repo Paths
 
-Longhorn is registered through Argo CD from `kubernetes/infra/longhorn/application.yaml`.
+- `kubernetes/infra/longhorn/application.yaml`
+- `kubernetes/infra/longhorn/values.yaml`
+- `talos/image-factory/longhorn.yaml`
+- `talos/patches/longhorn-host-path.yaml`
 
-After the repo change is pushed and synced, verify:
+## Talos Requirements
 
-```bash
-export KUBECONFIG="$PWD/talos/kubeconfig"
+Every node that should host Longhorn replicas needs:
 
-kubectl -n argocd get applications
-kubectl -n longhorn-system get pods
-kubectl get storageclass
-```
+- Talos system extensions:
+  - `siderolabs/iscsi-tools`
+  - `siderolabs/util-linux-tools`
+- a kubelet bind mount for `/var/lib/longhorn`
 
-## Talos Prerequisites
+This repo keeps Longhorn on the existing Talos `EPHEMERAL` disk path instead of using a separate `UserVolumeConfig`.
 
-Longhorn on Talos requires more than just the Kubernetes manifests.
+## Apply To A Node
 
-- The Talos image must include `siderolabs/iscsi-tools` and `siderolabs/util-linux-tools`.
-- The kubelet must bind-mount `/var/lib/longhorn` so Longhorn can access the host path.
-- The `longhorn-system` namespace must remain `privileged`.
-
-This repo now includes:
-
-- image-factory schematic: `talos/image-factory/longhorn.yaml`
-- Talos machine-config patch: `talos/patches/longhorn-host-path.yaml`
-
-The current node uses a single 512 GB SSD and Talos has already allocated almost the whole disk to `EPHEMERAL` (`/dev/nvme0n1p4` at about 510 GB). Because of that, this repo intentionally keeps Longhorn on `/var/lib/longhorn` on the existing Talos `EPHEMERAL` volume instead of trying to add a new `UserVolumeConfig` that the disk layout cannot currently satisfy without repartitioning or reinstalling the node.
-
-## Generate The Image Factory ID
-
-Upload the committed schematic and capture the returned ID:
+The committed Longhorn image-factory schematic currently resolves to:
 
 ```bash
-curl -X POST --data-binary @talos/image-factory/longhorn.yaml https://factory.talos.dev/schematics
+export SCHEMATIC_ID=613e1592b2da41ae5e265e8789429f22e121aab91cb4deb6bc3c0b6262961245
 ```
-
-The response shape is:
-
-```json
-{"id":"<schematic-id>"}
-```
-
-That ID is the value used in the Talos installer image:
-
-`factory.talos.dev/installer/<schematic-id>:v1.12.4`
-
-## Apply The Talos Changes
-
-1. The committed image-factory schematic already resolves to schematic ID `613e1592b2da41ae5e265e8789429f22e121aab91cb4deb6bc3c0b6262961245`.
-2. Patch the Talos machine config with `talos/patches/longhorn-host-path.yaml`.
-3. Upgrade the node to the custom installer image so the system extensions are actually installed.
-4. Reboot and verify the new image and kubelet mount before expecting Longhorn to become healthy.
 
 Example:
 
 ```bash
 export CONTROL_PLANE_IP=192.168.20.33
+export NODE_IP=192.168.20.xx
 export SCHEMATIC_ID=613e1592b2da41ae5e265e8789429f22e121aab91cb4deb6bc3c0b6262961245
 
-talosctl apply-config \
-  --nodes "$CONTROL_PLANE_IP" \
-  --endpoints "$CONTROL_PLANE_IP" \
-  --talosconfig ./talos/node-01/talosconfig \
-  --file ./talos/node-01/controlplane.yaml
-
 talosctl patch machineconfig \
-  --nodes "$CONTROL_PLANE_IP" \
+  --nodes "$NODE_IP" \
   --endpoints "$CONTROL_PLANE_IP" \
   --talosconfig ./talos/node-01/talosconfig \
   --patch @./talos/patches/longhorn-host-path.yaml
 
 talosctl upgrade \
-  --nodes "$CONTROL_PLANE_IP" \
+  --nodes "$NODE_IP" \
   --endpoints "$CONTROL_PLANE_IP" \
   --talosconfig ./talos/node-01/talosconfig \
   --image "factory.talos.dev/installer/${SCHEMATIC_ID}:v1.12.4"
 ```
 
-## Useful Checks
+Reboot the node after the upgrade and wait for it to return.
 
-Once the Talos changes are applied and the node has rebooted, validate the environment before troubleshooting Longhorn itself:
+## Verify
 
 ```bash
-talosctl get extensions --nodes 192.168.20.33 --endpoints 192.168.20.33 --talosconfig ./talos/node-01/talosconfig
-talosctl mounts --nodes 192.168.20.33 --endpoints 192.168.20.33 --talosconfig ./talos/node-01/talosconfig
+talosctl get extensions --nodes 192.168.20.xx --endpoints 192.168.20.33 --talosconfig ./talos/node-01/talosconfig
+talosctl mounts --nodes 192.168.20.xx --endpoints 192.168.20.33 --talosconfig ./talos/node-01/talosconfig
+
+export KUBECONFIG="$PWD/talos/kubeconfig"
 kubectl -n longhorn-system get pods
 kubectl get nodes -o wide
 ```
 
-Official references:
+## Notes
 
-- https://longhorn.io/docs/latest/deploy/install/install-with-argocd/
-- https://longhorn.io/docs/latest/deploy/install/
-- https://longhorn.io/docs/1.10.0/advanced-resources/os-distro-specific/talos-linux-support/
+- Replica defaults are set in `kubernetes/infra/longhorn/values.yaml`.
+- Current defaults are `defaultSettings.defaultReplicaCount: 2` and `persistence.defaultClassReplicaCount: 2`.
+- Revisit replica count again when adding a third Longhorn-capable node.
