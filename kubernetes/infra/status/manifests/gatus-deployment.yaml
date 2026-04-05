@@ -41,8 +41,6 @@ spec:
             requests:
               cpu: 25m
               memory: 64Mi
-            limits:
-              memory: 256Mi
           volumeMounts:
             - name: config
               mountPath: /config/config.yaml

@@ -151,9 +151,6 @@ spec:
             requests:
               cpu: 100m
               memory: 256Mi
-            limits:
-              cpu: 500m
-              memory: 1Gi
           volumeMounts:
             - name: data
               mountPath: /app/data/storage

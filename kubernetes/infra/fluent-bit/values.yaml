@@ -2,11 +2,8 @@ kind: DaemonSet
 
 resources:
   requests:
-    cpu: 50m
-    memory: 128Mi
-  limits:
-    cpu: 250m
-    memory: 256Mi
+    cpu: 25m
+    memory: 64Mi
 
 daemonSetVolumes:
   - name: varlog
