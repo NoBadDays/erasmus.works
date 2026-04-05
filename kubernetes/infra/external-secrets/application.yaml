@@ -16,7 +16,7 @@ spec:
       helm:
         valueFiles:
           - $values/kubernetes/infra/external-secrets/values.yaml
-    - repoURL: https://github.com/NoBadDays/erasmus.works.git
+    - repoURL: https://github.com/ErasmusAndre/erasmus.works.git
       targetRevision: main
       ref: values
   destination:

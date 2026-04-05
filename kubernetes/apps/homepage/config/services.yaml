@@ -30,8 +30,8 @@
         description: Federated community platform
 - Projects:
     - erasmus.works:
-        icon: https://raw.githubusercontent.com/NoBadDays/erasmus.works/main/Erasmus-Works-Logo.png
-        href: https://github.com/NoBadDays/erasmus.works
+        icon: https://raw.githubusercontent.com/ErasmusAndre/erasmus.works/main/Erasmus-Works-Logo.png
+        href: https://github.com/ErasmusAndre/erasmus.works
         description: Erasmus Works GitHub repository
     - Argo CD:
         icon: argo-cd.png

@@ -17,7 +17,7 @@ spec:
         releaseName: authentik
         valueFiles:
           - $values/kubernetes/infra/authentik/values.yaml
-    - repoURL: https://github.com/NoBadDays/erasmus.works.git
+    - repoURL: https://github.com/ErasmusAndre/erasmus.works.git
       targetRevision: main
       ref: values
   destination:

@@ -10,7 +10,7 @@ metadata:
 spec:
   project: apps
   source:
-    repoURL: https://github.com/NoBadDays/erasmus.works.git
+    repoURL: https://github.com/ErasmusAndre/erasmus.works.git
     targetRevision: main
     path: kubernetes/apps/docmost
   destination:

@@ -15,7 +15,7 @@ spec:
         releaseName: kube-prometheus-stack
         valueFiles:
           - $values/kubernetes/infra/kube-prometheus-stack/values.yaml
-    - repoURL: https://github.com/NoBadDays/erasmus.works.git
+    - repoURL: https://github.com/ErasmusAndre/erasmus.works.git
       targetRevision: main
       ref: values
   destination:

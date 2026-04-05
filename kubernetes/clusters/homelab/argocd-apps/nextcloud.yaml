@@ -17,10 +17,10 @@ spec:
         releaseName: nextcloud
         valueFiles:
           - $values/kubernetes/apps/nextcloud/values.yaml
-    - repoURL: https://github.com/NoBadDays/erasmus.works.git
+    - repoURL: https://github.com/ErasmusAndre/erasmus.works.git
       targetRevision: main
       ref: values
-    - repoURL: https://github.com/NoBadDays/erasmus.works.git
+    - repoURL: https://github.com/ErasmusAndre/erasmus.works.git
       targetRevision: main
       path: kubernetes/apps/nextcloud
   destination:

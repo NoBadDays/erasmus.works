@@ -7,10 +7,10 @@
     ":dependencyDashboard",
     ":semanticCommits",
     ":timezone(Europe/Amsterdam)",
-    "local>NoBadDays/erasmus.works//.renovate/autoMerge.json",
-    "local>NoBadDays/erasmus.works//.renovate/groups.json",
-    "local>NoBadDays/erasmus.works//.renovate/customManagers.json",
-    "local>NoBadDays/erasmus.works//.renovate/overrides.json"
+    "local>ErasmusAndre/erasmus.works//.renovate/autoMerge.json",
+    "local>ErasmusAndre/erasmus.works//.renovate/groups.json",
+    "local>ErasmusAndre/erasmus.works//.renovate/customManagers.json",
+    "local>ErasmusAndre/erasmus.works//.renovate/overrides.json"
   ],
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": [

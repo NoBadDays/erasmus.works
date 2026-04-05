@@ -17,7 +17,7 @@ spec:
         releaseName: victorialogs
         valueFiles:
           - $values/kubernetes/infra/victorialogs/values.yaml
-    - repoURL: https://github.com/NoBadDays/erasmus.works.git
+    - repoURL: https://github.com/ErasmusAndre/erasmus.works.git
       targetRevision: main
       ref: values
   destination:
