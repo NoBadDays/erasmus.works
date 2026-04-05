@@ -7,6 +7,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "-10"
 spec:
   sourceRepos:
+    - https://github.com/NoBadDays/erasmus.works.git
     - https://github.com/ErasmusAndre/erasmus.works.git
     - https://charts.goauthentik.io
     - ghcr.io/immich-app/immich-charts
