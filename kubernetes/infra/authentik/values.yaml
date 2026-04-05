@@ -11,6 +11,7 @@ serviceAccount:
 server:
   deploymentStrategy:
     type: Recreate
+    rollingUpdate: null
   initContainers:
     - name: wait-for-postgres
       image: busybox:1.37
@@ -37,6 +38,7 @@ server:
 worker:
   deploymentStrategy:
     type: Recreate
+    rollingUpdate: null
   initContainers:
     - name: wait-for-postgres
       image: busybox:1.37
