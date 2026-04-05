@@ -9,16 +9,8 @@ serviceAccount:
   create: false
 
 server:
-  affinity:
-    podAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - topologyKey: kubernetes.io/hostname
-          labelSelector:
-            matchExpressions:
-              - key: app.kubernetes.io/instance
-                operator: In
-                values:
-                  - authentik
+  strategy:
+    type: Recreate
   initContainers:
     - name: wait-for-postgres
       image: busybox:1.37
@@ -43,16 +35,8 @@ server:
       memory: 768Mi
 
 worker:
-  affinity:
-    podAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - topologyKey: kubernetes.io/hostname
-          labelSelector:
-            matchExpressions:
-              - key: app.kubernetes.io/instance
-                operator: In
-                values:
-                  - authentik
+  strategy:
+    type: Recreate
   initContainers:
     - name: wait-for-postgres
       image: busybox:1.37
