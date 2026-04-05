@@ -21,8 +21,6 @@ immich:
 server:
   controllers:
     main:
-      annotations:
-        argocd.argoproj.io/sync-options: Replace=true
       strategy: Recreate
       containers:
         main:
