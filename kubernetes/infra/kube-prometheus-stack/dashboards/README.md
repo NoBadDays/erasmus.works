@@ -25,6 +25,8 @@ The following files are provisioned from this directory. Most were imported from
   - Adjusted to match this repo's Fluent Bit -> VictoriaLogs field names
 - `volsync-dashboard.json`
   - Source: https://grafana.com/grafana/dashboards/21356-volsync-dashboard/
+- `resource-requests-tuning.json`
+  - Repo-managed dashboard for comparing pod usage vs resource requests and spotting missing requests
 
 ## Local tags
 
