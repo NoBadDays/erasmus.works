@@ -134,7 +134,7 @@ This cluster currently runs on two small-form-factor nodes.
 | Hardware | Model | CPU | GPU | Memory | Storage |
 | --- | --- | --- | --- | --- | --- |
 | K8s Node 1 | MINIS FORUM UN1245 Mini-PC | Intel Core i5-12450H | Intel UHD Graphics | 16 GB DDR4 RAM | 512 GB SSD |
-| K8s Node 2 | Blackview MP-80 | Intel Processor N97 | Intel UHD Graphics | 16 GB DDR5 RAM | 512 GB M.2 SSD |
+| K8s Node 2 | Blackview MP-80 | Intel Processor N97 | Intel UHD Graphics | 16 GB DDR5 RAM | 512 GB SSD |
 | Router | UniFi Express 7 (UX7) | - | - | - | - |
 | Switch | 2.5 Gbps switch | - | - | - | - |
 
