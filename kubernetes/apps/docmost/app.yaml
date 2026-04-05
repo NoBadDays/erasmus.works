@@ -20,6 +20,7 @@ metadata:
   namespace: apps
   annotations:
     argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: Replace=true
 spec:
   strategy:
     type: Recreate
