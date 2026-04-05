@@ -9,7 +9,7 @@ serviceAccount:
   create: false
 
 server:
-  strategy:
+  deploymentStrategy:
     type: Recreate
   initContainers:
     - name: wait-for-postgres
@@ -35,7 +35,7 @@ server:
       memory: 768Mi
 
 worker:
-  strategy:
+  deploymentStrategy:
     type: Recreate
   initContainers:
     - name: wait-for-postgres
