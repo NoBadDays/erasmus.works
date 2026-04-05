@@ -108,7 +108,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(sum by (namespace, pod) (rate(container_cpu_usage_seconds_total{namespace=~\"$namespace\", pod=~\"$pod\", container!=\"\", container!=\"POD\"}[5m]))) / clamp_min(sum by (namespace, pod) (kube_pod_container_resource_requests{namespace=~\"$namespace\", pod=~\"$pod\", resource=\"cpu\", unit=\"core\"}), 0.001)",
+          "expr": "(sum by (namespace, pod) (rate(container_cpu_usage_seconds_total{namespace=~\"$namespace\", namespace!=\"kube-system\", pod=~\"$pod\", container!=\"\", container!=\"POD\"}[5m]))) / clamp_min(sum by (namespace, pod) (kube_pod_container_resource_requests{namespace=~\"$namespace\", namespace!=\"kube-system\", pod=~\"$pod\", resource=\"cpu\", unit=\"core\"}), 0.001)",
           "legendFormat": "{{namespace}}/{{pod}}",
           "range": true,
           "refId": "A"
@@ -204,7 +204,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(sum by (namespace, pod) (container_memory_working_set_bytes{namespace=~\"$namespace\", pod=~\"$pod\", container!=\"\", container!=\"POD\"})) / clamp_min(sum by (namespace, pod) (kube_pod_container_resource_requests{namespace=~\"$namespace\", pod=~\"$pod\", resource=\"memory\", unit=\"byte\"}), 1)",
+          "expr": "(sum by (namespace, pod) (container_memory_working_set_bytes{namespace=~\"$namespace\", namespace!=\"kube-system\", pod=~\"$pod\", container!=\"\", container!=\"POD\"})) / clamp_min(sum by (namespace, pod) (kube_pod_container_resource_requests{namespace=~\"$namespace\", namespace!=\"kube-system\", pod=~\"$pod\", resource=\"memory\", unit=\"byte\"}), 1)",
           "legendFormat": "{{namespace}}/{{pod}}",
           "range": true,
           "refId": "A"
@@ -281,7 +281,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(sum by (namespace, pod) (rate(container_cpu_usage_seconds_total{namespace=~\"$namespace\", pod=~\"$pod\", container!=\"\", container!=\"POD\"}[5m]))) / clamp_min(sum by (namespace, pod) (kube_pod_container_resource_requests{namespace=~\"$namespace\", pod=~\"$pod\", resource=\"cpu\", unit=\"core\"}), 0.001)",
+          "expr": "(sum by (namespace, pod) (rate(container_cpu_usage_seconds_total{namespace=~\"$namespace\", namespace!=\"kube-system\", pod=~\"$pod\", container!=\"\", container!=\"POD\"}[5m]))) / clamp_min(sum by (namespace, pod) (kube_pod_container_resource_requests{namespace=~\"$namespace\", namespace!=\"kube-system\", pod=~\"$pod\", resource=\"cpu\", unit=\"core\"}), 0.001)",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -360,7 +360,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(sum by (namespace, pod) (container_memory_working_set_bytes{namespace=~\"$namespace\", pod=~\"$pod\", container!=\"\", container!=\"POD\"})) / clamp_min(sum by (namespace, pod) (kube_pod_container_resource_requests{namespace=~\"$namespace\", pod=~\"$pod\", resource=\"memory\", unit=\"byte\"}), 1)",
+          "expr": "(sum by (namespace, pod) (container_memory_working_set_bytes{namespace=~\"$namespace\", namespace!=\"kube-system\", pod=~\"$pod\", container!=\"\", container!=\"POD\"})) / clamp_min(sum by (namespace, pod) (kube_pod_container_resource_requests{namespace=~\"$namespace\", namespace!=\"kube-system\", pod=~\"$pod\", resource=\"memory\", unit=\"byte\"}), 1)",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
