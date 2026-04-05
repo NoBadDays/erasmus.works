@@ -7,6 +7,10 @@ metadata:
     argocd.argoproj.io/sync-wave: "1"
 spec:
   instances: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
   monitoring:
     enablePodMonitor: true
   storage:

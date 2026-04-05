@@ -27,6 +27,10 @@ server:
     enabled: true
     serviceMonitor:
       enabled: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 768Mi
 
 worker:
   initContainers:
@@ -78,3 +82,7 @@ worker:
     enabled: true
     serviceMonitor:
       enabled: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 768Mi

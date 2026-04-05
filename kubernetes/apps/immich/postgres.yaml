@@ -8,6 +8,10 @@ metadata:
 spec:
   imageName: ghcr.io/tensorchord/cloudnative-vectorchord:14.22-1.1.1
   instances: 1
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
   affinity:
     nodeAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:

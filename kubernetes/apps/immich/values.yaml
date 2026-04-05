@@ -32,6 +32,10 @@ server:
             allowPrivilegeEscalation: false
           envFrom:
             - secret: immich-app-secrets
+          resources:
+            requests:
+              cpu: 250m
+              memory: 768Mi
 
 machine-learning:
   persistence:
@@ -71,3 +75,7 @@ valkey:
         main:
           securityContext:
             allowPrivilegeEscalation: false
+          resources:
+            requests:
+              cpu: 25m
+              memory: 64Mi
