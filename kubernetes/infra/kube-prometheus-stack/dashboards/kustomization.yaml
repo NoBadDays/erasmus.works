@@ -9,6 +9,9 @@ generatorOptions:
     app.kubernetes.io/part-of: kube-prometheus-stack
 
 configMapGenerator:
+  - name: grafana-dashboard-master-dashboard
+    files:
+      - master-dashboard.json
   - name: grafana-dashboard-kubernetes-dashboard
     files:
       - kubernetes-dashboard.json

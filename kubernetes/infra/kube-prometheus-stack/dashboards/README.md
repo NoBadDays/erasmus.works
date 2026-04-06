@@ -6,6 +6,8 @@ These dashboards are provisioned into Grafana through the existing `ConfigMap` +
 
 The following files are provisioned from this directory. Most were imported from Grafana community dashboards and kept stock unless noted otherwise:
 
+- `master-dashboard.json`
+  - Repo-managed dashboard for first-stop cluster overview and active alerts
 - `kubernetes-dashboard.json`
   - Source: https://grafana.com/grafana/dashboards/22523-eks-dashboard/
 - `kubernetes-ram-cpu-utilization.json`
