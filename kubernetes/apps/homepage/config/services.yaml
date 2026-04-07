@@ -58,14 +58,6 @@
         href: https://unifi.ui.com
         description: UniFi network management
 - Monitoring:
-    - Node 01:
-        icon: kubernetes.png
-        href: https://grafana.erasmus.works/d/node-exporter-full/node-exporter-full?var-nodename=node-01
-        description: Node 01 CPU and memory dashboard
-    - Node 02:
-        icon: kubernetes.png
-        href: https://grafana.erasmus.works/d/node-exporter-full/node-exporter-full?var-nodename=node-02
-        description: Node 02 CPU and memory dashboard
     - Grafana:
         icon: grafana.png
         href: https://grafana.erasmus.works/dashboards?tag=custom
