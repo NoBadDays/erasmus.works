@@ -447,20 +447,31 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "All currently firing alerts with routing and workload labels surfaced so the dashboard opens directly on actionable issues.",
+      "description": "One banner per firing alert name, colored by severity.",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "inspect": false
-          },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "1": {
+                  "index": 0,
+                  "text": "Warning"
+                },
+                "1.5": {
+                  "index": 1,
+                  "text": "Active"
+                },
+                "2": {
+                  "index": 2,
+                  "text": "Critical"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -469,92 +480,43 @@
                 "value": null
               },
               {
-                "color": "red",
+                "color": "orange",
                 "value": 1
+              },
+              {
+                "color": "red",
+                "value": 2
               }
             ]
           },
           "unit": "none"
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Severity"
-            },
-            "properties": [
-              {
-                "id": "mappings",
-                "value": [
-                  {
-                    "options": {
-                      "warning": {
-                        "color": "orange",
-                        "index": 0,
-                        "text": "warning"
-                      },
-                      "warn": {
-                        "color": "orange",
-                        "index": 1,
-                        "text": "warn"
-                      },
-                      "critical": {
-                        "color": "red",
-                        "index": 2,
-                        "text": "critical"
-                      },
-                      "page": {
-                        "color": "red",
-                        "index": 3,
-                        "text": "page"
-                      }
-                    },
-                    "type": "value"
-                  }
-                ]
-              },
-              {
-                "id": "custom.cellOptions",
-                "value": {
-                  "applyToRow": true,
-                  "mode": "basic",
-                  "type": "color-background"
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 3,
         "w": 24,
         "x": 0,
         "y": 0
       },
       "id": 7,
       "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
           ],
-          "show": false
+          "fields": "",
+          "values": false
         },
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": false,
-            "displayName": "Severity"
-          },
-          {
-            "desc": false,
-            "displayName": "Alert"
-          }
-        ]
+        "textMode": "value"
       },
       "pluginVersion": "10.3.3",
+      "repeat": "firing_alert",
+      "repeatDirection": "v",
       "targets": [
         {
           "datasource": {
@@ -562,85 +524,16 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "ALERTS{alertstate=\"firing\", alertname!=\"Watchdog\"}",
-          "format": "table",
+          "expr": "max((ALERTS{alertstate=\"firing\", alertname=\"$firing_alert\", severity=~\"critical|page\"} * 2) or (ALERTS{alertstate=\"firing\", alertname=\"$firing_alert\", severity=~\"warning|warn\"} * 1) or (ALERTS{alertstate=\"firing\", alertname=\"$firing_alert\", severity!~\"critical|page|warning|warn\"} * 1.5)) or on() vector(0)",
+          "format": "time_series",
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
           "refId": "A"
         }
       ],
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "Value": true,
-              "__name__": true,
-              "alertstate": true,
-              "alertmanager": true,
-              "container": true,
-              "controller": false,
-              "cluster": false,
-              "customresource_group": true,
-              "customresource_kind": true,
-              "customresource_version": true,
-              "endpoint": true,
-              "instance": false,
-              "job": false,
-              "namespace": false,
-              "node": false,
-              "obj_name": false,
-              "obj_namespace": false,
-              "persistentvolumeclaim": false,
-              "pod": false,
-              "prometheus": true,
-              "reason": false,
-              "role": false,
-              "service": false,
-              "source_pvc": false
-            },
-            "includeByName": {},
-            "indexByName": {
-              "severity": 0,
-              "alertname": 1,
-              "reason": 2,
-              "namespace": 3,
-              "pod": 4,
-              "node": 5,
-              "persistentvolumeclaim": 6
-            },
-            "renameByName": {
-              "alertname": "Alert",
-              "namespace": "Namespace",
-              "node": "Node",
-              "persistentvolumeclaim": "PVC",
-              "pod": "Pod",
-              "reason": "Reason",
-              "severity": "Severity"
-            }
-          }
-        },
-        {
-          "id": "filterFieldsByName",
-          "options": {
-            "include": {
-              "names": [
-                "Severity",
-                "Alert",
-                "Reason",
-                "Namespace",
-                "Pod",
-                "Node",
-                "PVC"
-              ]
-            }
-          }
-        }
-      ],
-      "title": "Active Errors",
-      "type": "table"
+      "title": "${firing_alert}",
+      "type": "stat"
     },
     {
       "datasource": {
@@ -1253,7 +1146,31 @@
     "overview"
   ],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "definition": "label_values(ALERTS{alertstate=\"firing\",alertname!=\"Watchdog\"},alertname)",
+        "hide": 2,
+        "includeAll": false,
+        "multi": true,
+        "name": "firing_alert",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(ALERTS{alertstate=\"firing\",alertname!=\"Watchdog\"},alertname)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
   },
   "time": {
     "from": "now-24h",
