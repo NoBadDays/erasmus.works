@@ -447,20 +447,15 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "All currently firing alerts with routing and workload labels surfaced so the dashboard opens directly on actionable issues.",
+      "description": "All currently firing alerts shown as high-visibility banners. Warning-level alerts render orange and critical/page-level alerts render red.",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "inspect": false
-          },
           "mappings": [],
+          "max": 2,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -469,8 +464,12 @@
                 "value": null
               },
               {
-                "color": "red",
+                "color": "orange",
                 "value": 1
+              },
+              {
+                "color": "red",
+                "value": 2
               }
             ]
           },
@@ -486,27 +485,20 @@
       },
       "id": 7,
       "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "enablePagination": true,
-          "fields": "",
-          "reducer": [
-            "sum"
+        "displayMode": "lcd",
+        "minVizHeight": 36,
+        "minVizWidth": 0,
+        "namePlacement": "left",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
           ],
-          "show": false
+          "fields": "",
+          "values": false
         },
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": false,
-            "displayName": "Severity"
-          },
-          {
-            "desc": false,
-            "displayName": "Alert"
-          }
-        ]
+        "showUnfilled": false,
+        "text": {}
       },
       "pluginVersion": "10.3.3",
       "targets": [
@@ -516,114 +508,16 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "ALERTS{alertstate=\"firing\"}",
-          "format": "table",
+          "expr": "sort_desc(sum by (severity, alertname, namespace, pod, node, persistentvolumeclaim, obj_namespace, obj_name, controller, role, service, instance) ((ALERTS{alertstate=\"firing\", severity=~\"critical|page\"} * 2) or (ALERTS{alertstate=\"firing\", severity=~\"warning|warn\"} * 1) or (ALERTS{alertstate=\"firing\", severity!~\"critical|page|warning|warn\"} * 1.5)))",
+          "format": "time_series",
           "instant": true,
-          "legendFormat": "__auto",
+          "legendFormat": "{{severity}} | {{alertname}} | {{namespace}} {{pod}} {{node}} {{persistentvolumeclaim}} {{obj_namespace}}/{{obj_name}} {{controller}} {{role}} {{service}} {{instance}}",
           "range": false,
           "refId": "A"
         }
       ],
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "Value": true,
-              "__name__": true,
-              "alertstate": true,
-              "alertmanager": true,
-              "container": true,
-              "controller": false,
-              "cluster": false,
-              "customresource_group": true,
-              "customresource_kind": true,
-              "customresource_version": true,
-              "endpoint": true,
-              "instance": false,
-              "job": false,
-              "namespace": false,
-              "node": false,
-              "obj_name": false,
-              "obj_namespace": false,
-              "persistentvolumeclaim": false,
-              "pod": false,
-              "prometheus": true,
-              "role": false,
-              "service": false,
-              "source_pvc": false
-            },
-            "includeByName": {},
-            "indexByName": {
-              "severity": 0,
-              "alertname": 1,
-              "category": 2,
-              "component": 3,
-              "namespace": 4,
-              "pod": 5,
-              "node": 6,
-              "persistentvolumeclaim": 7,
-              "obj_namespace": 8,
-              "obj_name": 9,
-              "controller": 10,
-              "role": 11,
-              "source_pvc": 12,
-              "cluster": 13,
-              "instance": 14,
-              "job": 15,
-              "service": 16
-            },
-            "renameByName": {
-              "alertname": "Alert",
-              "category": "Category",
-              "cluster": "Cluster",
-              "component": "Component",
-              "controller": "Controller",
-              "instance": "Instance",
-              "job": "Job",
-              "namespace": "Namespace",
-              "node": "Node",
-              "obj_name": "Object",
-              "obj_namespace": "Object Namespace",
-              "persistentvolumeclaim": "PVC",
-              "pod": "Pod",
-              "role": "Role",
-              "severity": "Severity",
-              "service": "Service",
-              "source_pvc": "Source PVC"
-            }
-          }
-        },
-        {
-          "id": "filterFieldsByName",
-          "options": {
-            "include": {
-              "names": [
-                "Severity",
-                "Alert",
-                "Category",
-                "Component",
-                "Namespace",
-                "Pod",
-                "Node",
-                "PVC",
-                "Object Namespace",
-                "Object",
-                "Controller",
-                "Role",
-                "Source PVC",
-                "Cluster",
-                "Instance",
-                "Job",
-                "Service"
-              ]
-            }
-          }
-        }
-      ],
       "title": "Active Errors",
-      "type": "table"
+      "type": "bargauge"
     },
     {
       "datasource": {
