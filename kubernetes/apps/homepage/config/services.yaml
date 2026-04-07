@@ -70,6 +70,14 @@
         icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/alertmanager.png
         href: https://alertmanager.erasmus.works
         description: Alert routing
+        widget:
+          type: prometheusmetric
+          url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+          metrics:
+            - label: Firing
+              query: sum(ALERTS{alertstate="firing"}) OR vector(0)
+            - label: Pending
+              query: sum(ALERTS{alertstate="pending"}) OR vector(0)
     - Longhorn:
         icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/longhorn.png
         href: https://longhorn.erasmus.works
