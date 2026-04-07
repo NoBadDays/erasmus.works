@@ -59,7 +59,7 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 0
+        "y": 12
       },
       "id": 1,
       "options": {
@@ -131,7 +131,7 @@
         "h": 4,
         "w": 4,
         "x": 4,
-        "y": 0
+        "y": 12
       },
       "id": 2,
       "options": {
@@ -199,7 +199,7 @@
         "h": 4,
         "w": 4,
         "x": 8,
-        "y": 0
+        "y": 12
       },
       "id": 3,
       "options": {
@@ -271,7 +271,7 @@
         "h": 4,
         "w": 4,
         "x": 12,
-        "y": 0
+        "y": 12
       },
       "id": 4,
       "options": {
@@ -343,7 +343,7 @@
         "h": 4,
         "w": 4,
         "x": 16,
-        "y": 0
+        "y": 12
       },
       "id": 5,
       "options": {
@@ -407,7 +407,7 @@
         "h": 4,
         "w": 4,
         "x": 20,
-        "y": 0
+        "y": 12
       },
       "id": 6,
       "options": {
@@ -447,7 +447,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "All currently firing alerts, sorted by value. This is the first thing to check on the dashboard.",
+      "description": "All currently firing alerts with routing and workload labels surfaced so the dashboard opens directly on actionable issues.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -479,10 +479,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
+        "h": 12,
         "w": 24,
         "x": 0,
-        "y": 4
+        "y": 0
       },
       "id": 7,
       "options": {
@@ -500,11 +500,11 @@
         "sortBy": [
           {
             "desc": false,
-            "displayName": "severity"
+            "displayName": "Severity"
           },
           {
             "desc": false,
-            "displayName": "alertname"
+            "displayName": "Alert"
           }
         ]
       },
@@ -533,35 +533,96 @@
               "Value": true,
               "__name__": true,
               "alertstate": true,
+              "alertmanager": true,
               "container": true,
+              "controller": false,
+              "cluster": false,
+              "customresource_group": true,
+              "customresource_kind": true,
+              "customresource_version": true,
               "endpoint": true,
-              "instance": true,
-              "job": true,
+              "instance": false,
+              "job": false,
+              "namespace": false,
+              "node": false,
+              "obj_name": false,
+              "obj_namespace": false,
+              "persistentvolumeclaim": false,
               "pod": false,
               "prometheus": true,
-              "service": true
+              "role": false,
+              "service": false,
+              "source_pvc": false
             },
             "includeByName": {},
             "indexByName": {
               "severity": 0,
               "alertname": 1,
-              "namespace": 2,
-              "pod": 3,
-              "category": 4,
-              "component": 5
+              "category": 2,
+              "component": 3,
+              "namespace": 4,
+              "pod": 5,
+              "node": 6,
+              "persistentvolumeclaim": 7,
+              "obj_namespace": 8,
+              "obj_name": 9,
+              "controller": 10,
+              "role": 11,
+              "source_pvc": 12,
+              "cluster": 13,
+              "instance": 14,
+              "job": 15,
+              "service": 16
             },
             "renameByName": {
               "alertname": "Alert",
               "category": "Category",
+              "cluster": "Cluster",
               "component": "Component",
+              "controller": "Controller",
+              "instance": "Instance",
+              "job": "Job",
               "namespace": "Namespace",
+              "node": "Node",
+              "obj_name": "Object",
+              "obj_namespace": "Object Namespace",
+              "persistentvolumeclaim": "PVC",
               "pod": "Pod",
-              "severity": "Severity"
+              "role": "Role",
+              "severity": "Severity",
+              "service": "Service",
+              "source_pvc": "Source PVC"
+            }
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "Severity",
+                "Alert",
+                "Category",
+                "Component",
+                "Namespace",
+                "Pod",
+                "Node",
+                "PVC",
+                "Object Namespace",
+                "Object",
+                "Controller",
+                "Role",
+                "Source PVC",
+                "Cluster",
+                "Instance",
+                "Job",
+                "Service"
+              ]
             }
           }
         }
       ],
-      "title": "Active Alerts",
+      "title": "Active Errors",
       "type": "table"
     },
     {
@@ -604,7 +665,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 14
+        "y": 16
       },
       "id": 8,
       "options": {
@@ -679,7 +740,7 @@
         "h": 8,
         "w": 6,
         "x": 6,
-        "y": 14
+        "y": 16
       },
       "id": 9,
       "options": {
@@ -754,7 +815,7 @@
         "h": 8,
         "w": 6,
         "x": 12,
-        "y": 14
+        "y": 16
       },
       "id": 10,
       "options": {
@@ -829,7 +890,7 @@
         "h": 8,
         "w": 6,
         "x": 18,
-        "y": 14
+        "y": 16
       },
       "id": 11,
       "options": {
@@ -900,7 +961,7 @@
         "h": 14,
         "w": 8,
         "x": 0,
-        "y": 22
+        "y": 24
       },
       "id": 12,
       "options": {
@@ -997,7 +1058,7 @@
         "h": 14,
         "w": 8,
         "x": 8,
-        "y": 22
+        "y": 24
       },
       "id": 13,
       "options": {
@@ -1103,7 +1164,7 @@
         "h": 14,
         "w": 8,
         "x": 16,
-        "y": 22
+        "y": 24
       },
       "id": 14,
       "options": {
