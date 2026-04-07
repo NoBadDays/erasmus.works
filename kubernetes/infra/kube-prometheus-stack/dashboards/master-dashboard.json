@@ -526,7 +526,7 @@
         ]
       },
       "gridPos": {
-        "h": 12,
+        "h": 6,
         "w": 24,
         "x": 0,
         "y": 0
@@ -596,6 +596,7 @@
               "persistentvolumeclaim": false,
               "pod": false,
               "prometheus": true,
+              "reason": false,
               "role": false,
               "service": false,
               "source_pvc": false
@@ -604,10 +605,11 @@
             "indexByName": {
               "severity": 0,
               "alertname": 1,
-              "namespace": 2,
-              "pod": 3,
-              "node": 4,
-              "persistentvolumeclaim": 5
+              "reason": 2,
+              "namespace": 3,
+              "pod": 4,
+              "node": 5,
+              "persistentvolumeclaim": 6
             },
             "renameByName": {
               "alertname": "Alert",
@@ -615,6 +617,7 @@
               "node": "Node",
               "persistentvolumeclaim": "PVC",
               "pod": "Pod",
+              "reason": "Reason",
               "severity": "Severity"
             }
           }
@@ -626,6 +629,7 @@
               "names": [
                 "Severity",
                 "Alert",
+                "Reason",
                 "Namespace",
                 "Pod",
                 "Node",
