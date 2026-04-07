@@ -1,0 +1,12 @@
+- kubernetes:
+    cluster:
+      show: true
+      cpu: true
+      memory: true
+      showLabel: true
+      label: homelab
+    nodes:
+      show: true
+      cpu: true
+      memory: true
+      showLabel: true
