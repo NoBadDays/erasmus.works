@@ -536,7 +536,6 @@
         "cellHeight": "sm",
         "footer": {
           "countRows": false,
-          "enablePagination": true,
           "fields": "",
           "reducer": [
             "sum"
@@ -563,7 +562,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "ALERTS{alertstate=\"firing\"}",
+          "expr": "ALERTS{alertstate=\"firing\", alertname!=\"Watchdog\"}",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -605,40 +604,18 @@
             "indexByName": {
               "severity": 0,
               "alertname": 1,
-              "category": 2,
-              "component": 3,
-              "namespace": 4,
-              "pod": 5,
-              "node": 6,
-              "persistentvolumeclaim": 7,
-              "obj_namespace": 8,
-              "obj_name": 9,
-              "controller": 10,
-              "role": 11,
-              "source_pvc": 12,
-              "cluster": 13,
-              "instance": 14,
-              "job": 15,
-              "service": 16
+              "namespace": 2,
+              "pod": 3,
+              "node": 4,
+              "persistentvolumeclaim": 5
             },
             "renameByName": {
               "alertname": "Alert",
-              "category": "Category",
-              "cluster": "Cluster",
-              "component": "Component",
-              "controller": "Controller",
-              "instance": "Instance",
-              "job": "Job",
               "namespace": "Namespace",
               "node": "Node",
-              "obj_name": "Object",
-              "obj_namespace": "Object Namespace",
               "persistentvolumeclaim": "PVC",
               "pod": "Pod",
-              "role": "Role",
-              "severity": "Severity",
-              "service": "Service",
-              "source_pvc": "Source PVC"
+              "severity": "Severity"
             }
           }
         },
@@ -649,21 +626,10 @@
               "names": [
                 "Severity",
                 "Alert",
-                "Category",
-                "Component",
                 "Namespace",
                 "Pod",
                 "Node",
-                "PVC",
-                "Object Namespace",
-                "Object",
-                "Controller",
-                "Role",
-                "Source PVC",
-                "Cluster",
-                "Instance",
-                "Job",
-                "Service"
+                "PVC"
               ]
             }
           }
