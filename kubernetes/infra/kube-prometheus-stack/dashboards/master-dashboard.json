@@ -443,97 +443,35 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "description": "One banner per firing alert name, colored by severity.",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "options": {
-                "1": {
-                  "index": 0,
-                  "text": "Warning"
-                },
-                "1.5": {
-                  "index": 1,
-                  "text": "Active"
-                },
-                "2": {
-                  "index": 2,
-                  "text": "Critical"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 1
-              },
-              {
-                "color": "red",
-                "value": 2
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
+      "description": "List every firing alert instance from Alertmanager instead of collapsing them by alert name.",
       "gridPos": {
-        "h": 2,
+        "h": 12,
         "w": 24,
         "x": 0,
         "y": 0
       },
       "id": 7,
       "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
+        "alertInstanceLabelFilter": "{alertname!=\"Watchdog\"}",
+        "alertName": "",
+        "dashboardAlerts": false,
+        "folder": "",
+        "groupBy": [],
+        "groupMode": "default",
+        "maxItems": 50,
+        "sortOrder": 1,
+        "stateFilter": {
+          "error": true,
+          "firing": true,
+          "noData": false,
+          "normal": false,
+          "pending": true
         },
-        "textMode": "name"
+        "viewMode": "list"
       },
       "pluginVersion": "10.3.3",
-      "repeat": "firing_alert",
-      "repeatDirection": "v",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "editorMode": "code",
-          "expr": "topk(1, (ALERTS{alertstate=\"firing\", alertname=\"$firing_alert\", severity=~\"critical|page\"} * 2) or (ALERTS{alertstate=\"firing\", alertname=\"$firing_alert\", severity=~\"warning|warn\"} * 1) or (ALERTS{alertstate=\"firing\", alertname=\"$firing_alert\", severity!~\"critical|page|warning|warn\"} * 1.5))",
-          "format": "time_series",
-          "instant": true,
-          "legendFormat": "{{alertname}} {{reason}}",
-          "range": false,
-          "refId": "A"
-        }
-      ],
-      "title": "",
-      "type": "stat"
+      "title": "Active Alerts",
+      "type": "alertlist"
     },
     {
       "datasource": {
@@ -1146,31 +1084,7 @@
     "overview"
   ],
   "templating": {
-    "list": [
-      {
-        "current": {},
-        "datasource": {
-          "type": "prometheus",
-          "uid": "prometheus"
-        },
-        "definition": "label_values(ALERTS{alertstate=\"firing\",alertname!=\"Watchdog\"},alertname)",
-        "hide": 2,
-        "includeAll": false,
-        "multi": true,
-        "name": "firing_alert",
-        "options": [],
-        "query": {
-          "qryType": 1,
-          "query": "label_values(ALERTS{alertstate=\"firing\",alertname!=\"Watchdog\"},alertname)",
-          "refId": "PrometheusVariableQueryEditor-VariableQuery"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "type": "query"
-      }
-    ]
+    "list": []
   },
   "time": {
     "from": "now-24h",
@@ -1182,6 +1096,6 @@
   "timezone": "",
   "title": "Master Dashboard",
   "uid": "master-dashboard",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
