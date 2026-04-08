@@ -10,26 +10,26 @@ spec:
     - name: backup-alerts
       rules:
         - alert: VolSyncMissedBackupInterval
-          expr: increase(volsync_missed_intervals_total{role="source"}[30h]) >= 1
+          expr: (increase(volsync_missed_intervals_total{role="source"}[30h]) >= 1) and on (obj_namespace, obj_name, role) (volsync_volume_out_of_sync{role="source"} > 0)
           for: 1h
           labels:
             severity: warning
             category: backup
             component: volsync
           annotations:
-            summary: VolSync source missed a scheduled backup interval
-            description: VolSync source {{ $labels.obj_namespace }}/{{ $labels.obj_name }} has missed at least one scheduled backup interval in the last 30 hours.
+            summary: VolSync source missed a scheduled backup interval and remains out of sync
+            description: VolSync source {{ $labels.obj_namespace }}/{{ $labels.obj_name }} missed at least one scheduled backup interval in the last 30 hours and is still reporting an out-of-sync state.
             runbook_url: https://todo.local/runbooks/backup-alerts
         - alert: VolSyncMultipleMissedBackupIntervals
-          expr: increase(volsync_missed_intervals_total{role="source"}[54h]) >= 2
+          expr: (increase(volsync_missed_intervals_total{role="source"}[54h]) >= 2) and on (obj_namespace, obj_name, role) (volsync_volume_out_of_sync{role="source"} > 0)
           for: 1h
           labels:
             severity: critical
             category: backup
             component: volsync
           annotations:
-            summary: VolSync source missed multiple scheduled backup intervals
-            description: VolSync source {{ $labels.obj_namespace }}/{{ $labels.obj_name }} has missed at least two scheduled backup intervals in the last 54 hours.
+            summary: VolSync source missed multiple scheduled backup intervals and remains out of sync
+            description: VolSync source {{ $labels.obj_namespace }}/{{ $labels.obj_name }} missed at least two scheduled backup intervals in the last 54 hours and is still reporting an out-of-sync state.
             runbook_url: https://todo.local/runbooks/backup-alerts
         - alert: VolSyncVolumeOutOfSync
           expr: volsync_volume_out_of_sync{role="source"} > 0
