@@ -31,8 +31,8 @@ Wait for the workflow commit, then check:
 
 ```bash
 kubectl -n argocd get application docmost
-kubectl -n apps get pvc,replicationdestination,externalsecret,cluster,deployment,service | rg 'docmost-data-restore|docmost-postgres-restore|docmost-restore-test'
-kubectl -n apps rollout status deploy/docmost-restore-test --timeout=10m
+kubectl -n app-docmost get pvc,replicationdestination,externalsecret,cluster,deployment,service | rg 'docmost-data-restore|docmost-postgres-restore|docmost-restore-test'
+kubectl -n app-docmost rollout status deploy/docmost-restore-test --timeout=10m
 ```
 
 Open:
@@ -53,10 +53,10 @@ Minimum pass criteria:
 Optional deeper checks:
 
 ```bash
-kubectl -n apps exec deploy/docmost-restore-test -- ls -lah /app/data/storage
-kubectl -n apps logs deploy/docmost-restore-test --tail=100
-kubectl -n apps logs docmost-postgres-restore-1 --tail=100
-kubectl -n apps exec -it docmost-postgres-restore-1 -- psql -U docmost -d docmost -c '\dt'
+kubectl -n app-docmost exec deploy/docmost-restore-test -- ls -lah /app/data/storage
+kubectl -n app-docmost logs deploy/docmost-restore-test --tail=100
+kubectl -n app-docmost logs docmost-postgres-restore-1 --tail=100
+kubectl -n app-docmost exec -it docmost-postgres-restore-1 -- psql -U docmost -d docmost -c '\dt'
 ```
 
 ## Cleanup
@@ -80,10 +80,10 @@ GitHub Actions then:
 Confirm prune:
 
 ```bash
-kubectl -n apps get pvc docmost-data-restore
-kubectl -n apps get replicationdestination docmost-data-restore
-kubectl -n apps get externalsecret docmost-restore-test-secrets
-kubectl -n apps get cluster docmost-postgres-restore
-kubectl -n apps get deploy docmost-restore-test
-kubectl -n apps get httproute docmost-restore-test
+kubectl -n app-docmost get pvc docmost-data-restore
+kubectl -n app-docmost get replicationdestination docmost-data-restore
+kubectl -n app-docmost get externalsecret docmost-restore-test-secrets
+kubectl -n app-docmost get cluster docmost-postgres-restore
+kubectl -n app-docmost get deploy docmost-restore-test
+kubectl -n app-docmost get httproute docmost-restore-test
 ```

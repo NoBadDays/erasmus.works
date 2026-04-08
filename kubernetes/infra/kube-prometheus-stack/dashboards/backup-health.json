@@ -376,7 +376,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Uses kubelet PVC volume stats for apps/volsync-repository. If this panel shows no data, the PVC exists but the storage driver or kubelet is not exposing kubelet_volume_stats metrics for it.",
+      "description": "Uses kubelet PVC volume stats for the per-app VolSync repository PVCs in app-docmost and app-nextcloud. Each namespace-local repository is shown separately. If this panel shows no data, the PVC exists but the storage driver or kubelet is not exposing kubelet_volume_stats metrics for it.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -435,14 +435,14 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "100 * max(kubelet_volume_stats_used_bytes{namespace=\"apps\", persistentvolumeclaim=\"volsync-repository\"} / kubelet_volume_stats_capacity_bytes{namespace=\"apps\", persistentvolumeclaim=\"volsync-repository\"})",
+          "expr": "100 * max by (namespace, persistentvolumeclaim) (kubelet_volume_stats_used_bytes{namespace=~\"app-docmost|app-nextcloud\", persistentvolumeclaim=\"volsync-repository\"} / kubelet_volume_stats_capacity_bytes{namespace=~\"app-docmost|app-nextcloud\", persistentvolumeclaim=\"volsync-repository\"})",
           "instant": true,
-          "legendFormat": "__auto",
+          "legendFormat": "{{namespace}}/{{persistentvolumeclaim}}",
           "range": false,
           "refId": "A"
         }
       ],
-      "title": "VolSync Repository PVC Usage (kubelet volume stats)",
+      "title": "VolSync Repository PVC Usage By Namespace",
       "type": "stat"
     },
     {

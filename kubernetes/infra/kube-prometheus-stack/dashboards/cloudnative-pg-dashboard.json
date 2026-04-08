@@ -9245,10 +9245,11 @@
         "type": "query"
       },
       {
+        "allValue": ".*",
         "current": {
-          "selected": false,
-          "text": "apps",
-          "value": "apps"
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": {
           "type": "prometheus",
@@ -9257,7 +9258,7 @@
         "definition": "cnpg_collector_up",
         "description": "Namespace where the database cluster is located",
         "hide": 0,
-        "includeAll": false,
+        "includeAll": true,
         "label": "Database Namespace",
         "multi": false,
         "name": "namespace",
