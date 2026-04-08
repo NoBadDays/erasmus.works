@@ -6,6 +6,7 @@ resources:
   - namespace-app-homepage.yaml
   - namespace-app-immich.yaml
   - namespace-app-nextcloud.yaml
+  - namespace-authentik.yaml
   - metallb
   - envoy-gateway
   - external-dns
