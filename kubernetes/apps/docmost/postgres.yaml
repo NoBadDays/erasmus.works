@@ -2,7 +2,6 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: docmost-postgres
-  namespace: apps
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
@@ -42,7 +41,6 @@ apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
   name: docmost-postgres-backup
-  namespace: apps
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:

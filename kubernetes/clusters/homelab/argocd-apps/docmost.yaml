@@ -15,7 +15,7 @@ spec:
     path: kubernetes/apps/docmost
   destination:
     server: https://kubernetes.default.svc
-    namespace: apps
+    namespace: app-docmost
   syncPolicy:
     automated:
       prune: true

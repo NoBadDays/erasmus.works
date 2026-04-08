@@ -5,3 +5,5 @@ resources:
   - application.yaml
   - nfs-backup-pv.yaml
   - nfs-backup-pvc.yaml
+  - nfs-backup-pv-app-docmost.yaml
+  - nfs-backup-pvc-app-docmost.yaml

@@ -2,7 +2,6 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: docmost-data
-  namespace: apps
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
@@ -17,7 +16,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: docmost
-  namespace: apps
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
@@ -39,13 +37,13 @@ spec:
           command:
             - sh
             - -c
-            - until nc -z docmost-postgres-rw.apps.svc.cluster.local 5432; do sleep 2; done
+            - until nc -z docmost-postgres-rw.app-docmost.svc.cluster.local 5432; do sleep 2; done
         - name: wait-for-redis
           image: busybox:1.37
           command:
             - sh
             - -c
-            - until nc -z docmost-redis.apps.svc.cluster.local 6379; do sleep 2; done
+            - until nc -z docmost-redis.app-docmost.svc.cluster.local 6379; do sleep 2; done
       containers:
         - name: docmost
           image: docmost/docmost:0.71.0
@@ -63,7 +61,7 @@ spec:
                   name: docmost-app-secrets
                   key: database-url
             - name: REDIS_URL
-              value: redis://docmost-redis.apps.svc.cluster.local:6379
+              value: redis://docmost-redis.app-docmost.svc.cluster.local:6379
             - name: STORAGE_DRIVER
               value: local
             - name: MAIL_DRIVER
@@ -116,7 +114,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: docmost
-  namespace: apps
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
@@ -131,7 +128,6 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: docmost
-  namespace: apps
   annotations:
     argocd.argoproj.io/sync-wave: "2"
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"

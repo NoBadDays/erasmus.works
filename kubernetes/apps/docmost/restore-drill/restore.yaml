@@ -4,7 +4,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: docmost-data-restore
-  namespace: apps
+  namespace: app-docmost
   annotations:
     argocd.argoproj.io/sync-wave: "4"
 spec:
@@ -19,7 +19,7 @@ apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
   name: docmost-data-restore
-  namespace: apps
+  namespace: app-docmost
   annotations:
     argocd.argoproj.io/sync-wave: "4"
 spec:
