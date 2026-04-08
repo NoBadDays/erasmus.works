@@ -19,11 +19,12 @@ NFS export:
 192.168.20.40:/mnt/tank/k8s-volsync
 ```
 
-Shared backup PVC:
+Per-app backup PVC:
 
 ```text
-volsync-repository
-500Gi
+app-docmost/volsync-repository
+app-nextcloud/volsync-repository
+500Gi each
 ```
 
 Backup schedule:
@@ -72,6 +73,7 @@ Future app backups should reuse the same pattern:
 - one shared Bitwarden secret: `volsync-restic-password`
 - one app-specific `ExternalSecret`
 - one `ReplicationSource`
+- one namespace-local `volsync-repository` PVC backed by the shared NFS export
 - the same retention unless there is a reason to differ
 - keep a given app's related backup window together when needed
 - stagger different apps instead of piling every workload onto `03:00`

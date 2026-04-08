@@ -25,7 +25,7 @@ spec:
       path: kubernetes/apps/nextcloud
   destination:
     server: https://kubernetes.default.svc
-    namespace: apps
+    namespace: app-nextcloud
   syncPolicy:
     automated:
       prune: true
