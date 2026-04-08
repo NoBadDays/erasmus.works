@@ -31,11 +31,27 @@ spec:
         compression: gzip
     retentionPolicy: "30d"
   bootstrap:
-    initdb:
+    recovery:
+      source: nextcloud-postgres
       database: nextcloud
       owner: nextcloud
       secret:
         name: nextcloud-postgres-auth
+  externalClusters:
+    - name: nextcloud-postgres
+      barmanObjectStore:
+        destinationPath: s3://cnpg-nextcloud
+        endpointURL: http://garage.garage.svc.cluster.local:3900
+        serverName: nextcloud-postgres
+        s3Credentials:
+          accessKeyId:
+            name: nextcloud-postgres-backup-s3
+            key: ACCESS_KEY_ID
+          secretAccessKey:
+            name: nextcloud-postgres-backup-s3
+            key: ACCESS_SECRET_KEY
+        wal:
+          compression: gzip
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
