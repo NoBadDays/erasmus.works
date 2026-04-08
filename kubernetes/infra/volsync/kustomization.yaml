@@ -7,5 +7,3 @@ resources:
   - nfs-backup-pvc.yaml
   - nfs-backup-pv-app-docmost.yaml
   - nfs-backup-pvc-app-docmost.yaml
-  - nfs-backup-pv-app-nextcloud.yaml
-  - nfs-backup-pvc-app-nextcloud.yaml

@@ -18,8 +18,6 @@ spec:
       server: https://kubernetes.default.svc
     - namespace: app-homepage
       server: https://kubernetes.default.svc
-    - namespace: app-nextcloud
-      server: https://kubernetes.default.svc
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
