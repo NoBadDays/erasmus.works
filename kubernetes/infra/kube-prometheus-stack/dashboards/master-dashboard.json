@@ -572,7 +572,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "A list of all nodes in the cluster along with their spec. This table helps to get a quick idea about the resources in the cluster.",
+      "description": "A compact per-node view with capacity and current CPU and memory usage.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -602,12 +602,12 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Linux version"
+              "options": "Hostname"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 268
+                "value": 220
               }
             ]
           },
@@ -626,23 +626,24 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "node"
+              "options": "CPU Usage"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 239
+                "value": 110
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "Arch"
+              "options": "Memory Usage"
             },
             "properties": [
               {
-                "id": "custom.width"
+                "id": "custom.width",
+                "value": 125
               }
             ]
           }
@@ -664,7 +665,7 @@
           ],
           "show": false
         },
-        "frameIndex": 2,
+        "frameIndex": 4,
         "showHeader": true,
         "sortBy": []
       },
@@ -714,6 +715,36 @@
           "legendFormat": "Memory",
           "range": false,
           "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "100 - (avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "CPU Usage",
+          "range": false,
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "Memory Usage",
+          "range": false,
+          "refId": "E"
         }
       ],
       "title": "Cluster Nodes",
@@ -746,6 +777,9 @@
             "excludeByName": {
               "Time": true,
               "Time 2": true,
+              "Time 3": true,
+              "Time 4": true,
+              "Time 5": true,
               "Value #A": true,
               "Value #C": true,
               "__name__": true,
@@ -753,26 +787,36 @@
               "app_kubernetes_io_managed_by": true,
               "chart": true,
               "component": true,
+              "container": true,
               "domainname": true,
+              "endpoint": true,
               "heritage": true,
               "instance": true,
               "job": true,
+              "machine": true,
               "namespace": true,
               "node": true,
               "nodename": false,
-              "release": false,
+              "release": true,
               "service": true,
               "sysname": true,
               "version": true
             },
             "indexByName": {
+              "CPU": 1,
+              "CPU Usage": 3,
               "Memory (GB)": 2,
+              "Memory Usage": 4,
               "Time 1": 1,
               "Time 2": 19,
               "Time 3": 21,
+              "Time 4": 23,
+              "Time 5": 25,
               "Value #A": 18,
               "Value #B": 1,
               "Value #C": 22,
+              "Value #D": 3,
+              "Value #E": 4,
               "__name__": 2,
               "app": 3,
               "app_kubernetes_io_managed_by": 4,
@@ -795,13 +839,16 @@
               "Memory (GB)": "",
               "Time": "",
               "Time 2": "",
+              "Time 3": "",
+              "Time 4": "",
+              "Time 5": "",
               "Value #A": "",
               "Value #B": "CPU",
               "Value #C": "",
+              "Value #D": "CPU Usage",
+              "Value #E": "Memory Usage",
               "instance": "",
-              "machine": "Arch",
               "nodename": "Hostname",
-              "release": "Linux version",
               "version": ""
             }
           }
