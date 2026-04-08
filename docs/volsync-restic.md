@@ -24,7 +24,6 @@ Current backup PVCs:
 ```text
 app-docmost/volsync-repository
 app-nextcloud/volsync-repository
-apps/volsync-repository
 500Gi each
 ```
 

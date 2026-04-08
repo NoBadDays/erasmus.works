@@ -12,8 +12,6 @@ spec:
     - ghcr.io/immich-app/immich-charts
     - https://nextcloud.github.io/helm/
   destinations:
-    - namespace: apps
-      server: https://kubernetes.default.svc
     - namespace: app-docmost
       server: https://kubernetes.default.svc
     - namespace: app-homepage
