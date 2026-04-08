@@ -572,7 +572,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "A compact per-node view with capacity and current CPU and memory usage.",
+      "description": "A list of all nodes in the cluster along with their spec. This table helps to get a quick idea about the resources in the cluster.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -664,7 +664,7 @@
           ],
           "show": false
         },
-        "frameIndex": 4,
+        "frameIndex": 2,
         "showHeader": true,
         "sortBy": []
       },
@@ -714,36 +714,6 @@
           "legendFormat": "Memory",
           "range": false,
           "refId": "C"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "100 - (avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "legendFormat": "CPU Usage",
-          "range": false,
-          "refId": "D"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "legendFormat": "Memory Usage",
-          "range": false,
-          "refId": "E"
         }
       ],
       "title": "Cluster Nodes",
@@ -776,14 +746,7 @@
             "excludeByName": {
               "Time": true,
               "Time 2": true,
-              "Time 3": true,
-              "Time 4": true,
-              "Time 5": true,
-              "Pod 1": true,
-              "Pod 2": true,
               "Value #A": true,
-              "Value #D": true,
-              "Value #E": true,
               "Value #C": true,
               "__name__": true,
               "app": true,
@@ -811,13 +774,9 @@
               "Time 1": 1,
               "Time 2": 19,
               "Time 3": 21,
-              "Time 4": 23,
-              "Time 5": 25,
               "Value #A": 18,
               "Value #B": 1,
               "Value #C": 22,
-              "Value #D": 3,
-              "Value #E": 4,
               "__name__": 2,
               "app": 3,
               "app_kubernetes_io_managed_by": 4,
@@ -840,9 +799,6 @@
               "Memory (GB)": "",
               "Time": "",
               "Time 2": "",
-              "Time 3": "",
-              "Time 4": "",
-              "Time 5": "",
               "Value #A": "",
               "Value #B": "CPU",
               "Value #C": "",
