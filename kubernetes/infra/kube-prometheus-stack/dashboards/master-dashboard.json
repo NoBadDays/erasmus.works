@@ -652,7 +652,12 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "footer": {
+              "reducers": []
+            },
             "inspect": false
           },
           "mappings": [],
@@ -661,7 +666,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -728,19 +733,13 @@
       },
       "id": 10,
       "options": {
-        "footer": {
-          "enablePagination": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
+        "cellHeight": "sm",
+        "enablePagination": false,
         "frameIndex": 2,
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.3.3",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
           "datasource": {
@@ -751,7 +750,6 @@
           "exemplar": false,
           "expr": "node_uname_info",
           "format": "table",
-          "hide": false,
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
@@ -766,7 +764,6 @@
           "exemplar": false,
           "expr": "count by (instance) (node_cpu_seconds_total{mode=\"idle\"})",
           "format": "table",
-          "hide": false,
           "instant": true,
           "legendFormat": "CPUs",
           "range": false,
@@ -781,7 +778,6 @@
           "exemplar": false,
           "expr": "sum by (instance) (node_memory_MemTotal_bytes)",
           "format": "table",
-          "hide": false,
           "instant": true,
           "legendFormat": "Memory",
           "range": false,
@@ -801,10 +797,16 @@
           "options": {
             "alias": "Memory (GB)",
             "binary": {
-              "left": "Value #C",
+              "left": {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Value #C"
+                }
+              },
               "operator": "/",
-              "reducer": "sum",
-              "right": "1073741824"
+              "right": {
+                "fixed": "1073741824"
+              }
             },
             "mode": "binary",
             "reduce": {
@@ -837,6 +839,7 @@
               "sysname": true,
               "version": true
             },
+            "includeByName": {},
             "indexByName": {
               "CPU": 1,
               "Memory (GB)": 2,
@@ -864,6 +867,7 @@
               "sysname": 16,
               "version": 17
             },
+            "orderByMode": "manual",
             "renameByName": {
               "Memory (GB)": "",
               "Time": "",
