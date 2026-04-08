@@ -15,7 +15,7 @@ spec:
     path: kubernetes/apps/homepage
   destination:
     server: https://kubernetes.default.svc
-    namespace: apps
+    namespace: app-homepage
   syncPolicy:
     automated:
       prune: true
