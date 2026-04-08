@@ -406,15 +406,24 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Current 5m cluster CPU usage relative to allocatable CPU.",
+      "description": "The memory usage in percentage of all nodes in the cluster.",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "decimals": 1,
-          "mappings": [],
-          "max": 1,
+          "mappings": [
+            {
+              "options": {
+                "null": {
+                  "index": 0,
+                  "text": "N/A"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "max": 100,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -424,30 +433,28 @@
                 "value": null
               },
               {
-                "color": "orange",
-                "value": 0.7
+                "color": "#EAB839",
+                "value": 65
               },
               {
                 "color": "red",
-                "value": 0.9
+                "value": 90
               }
             ]
           },
-          "unit": "percentunit"
+          "unit": "percent"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 8,
-        "w": 6,
+        "w": 4,
         "x": 0,
         "y": 10
       },
       "id": 8,
       "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
+        "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -466,14 +473,13 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(rate(container_cpu_usage_seconds_total{container!=\"\", container!=\"POD\"}[5m])) / clamp_min(sum(kube_node_status_allocatable{resource=\"cpu\", unit=\"core\"}), 0.001)",
-          "instant": true,
+          "expr": "(sum (node_memory_MemTotal_bytes) - sum (node_memory_MemAvailable_bytes)) / sum (node_memory_MemTotal_bytes) * 100",
           "legendFormat": "__auto",
-          "range": false,
+          "range": true,
           "refId": "A"
         }
       ],
-      "title": "CPU Pressure",
+      "title": "Memory Usage",
       "type": "gauge"
     },
     {
@@ -481,15 +487,25 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Current memory working set relative to allocatable memory.",
+      "description": "The average CPU usage of all the nodes in the cluster.",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "decimals": 1,
-          "mappings": [],
-          "max": 1,
+          "links": [],
+          "mappings": [
+            {
+              "options": {
+                "null": {
+                  "index": 0,
+                  "text": "N/A"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "max": 100,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -499,30 +515,28 @@
                 "value": null
               },
               {
-                "color": "orange",
-                "value": 0.75
+                "color": "#EAB839",
+                "value": 65
               },
               {
                 "color": "red",
-                "value": 0.9
+                "value": 90
               }
             ]
           },
-          "unit": "percentunit"
+          "unit": "percent"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 8,
-        "w": 6,
-        "x": 6,
+        "w": 4,
+        "x": 4,
         "y": 10
       },
       "id": 9,
       "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
+        "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -541,14 +555,16 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(container_memory_working_set_bytes{container!=\"\", container!=\"POD\"}) / clamp_min(sum(kube_node_status_allocatable{resource=\"memory\", unit=\"byte\"}), 1)",
-          "instant": true,
+          "exemplar": false,
+          "expr": "avg(100 - (avg by (node) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100))",
+          "format": "time_series",
+          "instant": false,
           "legendFormat": "__auto",
-          "range": false,
+          "range": true,
           "refId": "A"
         }
       ],
-      "title": "Memory Pressure",
+      "title": "CPU Usage",
       "type": "gauge"
     },
     {
@@ -556,16 +572,18 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Highest root filesystem usage across cluster nodes.",
+      "description": "A list of all nodes in the cluster along with their spec. This table helps to get a quick idea about the resources in the cluster.",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "decimals": 1,
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
           "mappings": [],
-          "max": 1,
-          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -574,39 +592,81 @@
                 "value": null
               },
               {
-                "color": "orange",
-                "value": 0.75
-              },
-              {
                 "color": "red",
-                "value": 0.9
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Linux version"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 268
               }
             ]
           },
-          "unit": "percentunit"
-        },
-        "overrides": []
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CPU"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 96
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "node"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 239
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Arch"
+            },
+            "properties": [
+              {
+                "id": "custom.width"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
-        "w": 6,
-        "x": 12,
+        "w": 16,
+        "x": 8,
         "y": 10
       },
       "id": 10,
       "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+        "footer": {
+          "enablePagination": false,
           "fields": "",
-          "values": false
+          "reducer": [
+            "sum"
+          ],
+          "show": false
         },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "frameIndex": 2,
+        "showHeader": true,
+        "sortBy": []
       },
       "pluginVersion": "10.3.3",
       "targets": [
@@ -616,90 +676,138 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "max((node_filesystem_size_bytes{mountpoint=\"/\", fstype!=\"rootfs\"} - node_filesystem_avail_bytes{mountpoint=\"/\", fstype!=\"rootfs\"}) / node_filesystem_size_bytes{mountpoint=\"/\", fstype!=\"rootfs\"})",
+          "exemplar": false,
+          "expr": "node_uname_info",
+          "format": "table",
+          "hide": false,
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
           "refId": "A"
-        }
-      ],
-      "title": "Root FS Pressure",
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "description": "Usage of the VolSync repository PVC used by backup jobs.",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 1,
-          "mappings": [],
-          "max": 1,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 0.8
-              },
-              {
-                "color": "red",
-                "value": 0.9
-              }
-            ]
-          },
-          "unit": "percentunit"
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 18,
-        "y": 10
-      },
-      "id": 11,
-      "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
-      },
-      "pluginVersion": "10.3.3",
-      "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "max(kubelet_volume_stats_used_bytes{namespace=\"apps\", persistentvolumeclaim=\"volsync-repository\"} / kubelet_volume_stats_capacity_bytes{namespace=\"apps\", persistentvolumeclaim=\"volsync-repository\"}) or on() vector(0)",
+          "exemplar": false,
+          "expr": "count by (instance) (node_cpu_seconds_total{mode=\"idle\"})",
+          "format": "table",
+          "hide": false,
           "instant": true,
-          "legendFormat": "__auto",
+          "legendFormat": "CPUs",
           "range": false,
-          "refId": "A"
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum by (instance) (node_memory_MemTotal_bytes)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "Memory",
+          "range": false,
+          "refId": "C"
         }
       ],
-      "title": "VolSync Repo Usage",
-      "type": "gauge"
+      "title": "Cluster Nodes",
+      "transformations": [
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "instance"
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Memory (GB)",
+            "binary": {
+              "left": "Value #C",
+              "operator": "/",
+              "reducer": "sum",
+              "right": "1073741824"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Time 2": true,
+              "Value #A": true,
+              "Value #C": true,
+              "__name__": true,
+              "app": true,
+              "app_kubernetes_io_managed_by": true,
+              "chart": true,
+              "component": true,
+              "domainname": true,
+              "heritage": true,
+              "instance": true,
+              "job": true,
+              "namespace": true,
+              "node": true,
+              "nodename": false,
+              "release": false,
+              "service": true,
+              "sysname": true,
+              "version": true
+            },
+            "indexByName": {
+              "Memory (GB)": 2,
+              "Time 1": 1,
+              "Time 2": 19,
+              "Time 3": 21,
+              "Value #A": 18,
+              "Value #B": 1,
+              "Value #C": 22,
+              "__name__": 2,
+              "app": 3,
+              "app_kubernetes_io_managed_by": 4,
+              "chart": 5,
+              "component": 6,
+              "domainname": 7,
+              "heritage": 8,
+              "instance": 0,
+              "job": 10,
+              "machine": 3,
+              "namespace": 11,
+              "node": 12,
+              "nodename": 0,
+              "release": 4,
+              "service": 15,
+              "sysname": 16,
+              "version": 17
+            },
+            "renameByName": {
+              "Memory (GB)": "",
+              "Time": "",
+              "Time 2": "",
+              "Value #A": "",
+              "Value #B": "CPU",
+              "Value #C": "",
+              "instance": "",
+              "machine": "Arch",
+              "nodename": "Hostname",
+              "release": "Linux version",
+              "version": ""
+            }
+          }
+        }
+      ],
+      "type": "table"
     },
     {
       "datasource": {
