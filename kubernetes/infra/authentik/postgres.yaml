@@ -2,7 +2,7 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: authentik-postgres
-  namespace: apps
+  namespace: authentik
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 spec:
@@ -42,7 +42,7 @@ apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
   name: authentik-postgres-backup
-  namespace: apps
+  namespace: authentik
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 spec:

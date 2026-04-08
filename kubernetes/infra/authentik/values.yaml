@@ -18,7 +18,7 @@ server:
       command:
         - sh
         - -c
-        - until nc -z authentik-postgres-rw.apps.svc.cluster.local 5432; do sleep 2; done
+        - until nc -z authentik-postgres-rw.authentik.svc.cluster.local 5432; do sleep 2; done
   volumes:
     - name: media
       persistentVolumeClaim:
@@ -45,7 +45,7 @@ worker:
       command:
         - sh
         - -c
-        - until nc -z authentik-postgres-rw.apps.svc.cluster.local 5432; do sleep 2; done
+        - until nc -z authentik-postgres-rw.authentik.svc.cluster.local 5432; do sleep 2; done
   volumes:
     - name: media
       persistentVolumeClaim:

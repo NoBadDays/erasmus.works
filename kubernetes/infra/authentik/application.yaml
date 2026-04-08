@@ -22,7 +22,7 @@ spec:
       ref: values
   destination:
     server: https://kubernetes.default.svc
-    namespace: apps
+    namespace: authentik
   syncPolicy:
     automated:
       prune: true

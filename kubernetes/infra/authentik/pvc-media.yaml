@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: authentik-media
-  namespace: apps
+  namespace: authentik
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 spec:

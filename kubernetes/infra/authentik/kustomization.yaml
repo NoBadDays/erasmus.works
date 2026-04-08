@@ -6,19 +6,19 @@ generatorOptions:
   disableNameSuffixHash: true
 configMapGenerator:
   - name: authentik-blueprint-argocd
-    namespace: apps
+    namespace: authentik
     files:
       - blueprints/argocd.yaml
   - name: authentik-blueprint-envoy-gateway
-    namespace: apps
+    namespace: authentik
     files:
       - blueprints/envoy-gateway.yaml
   - name: authentik-blueprint-grafana
-    namespace: apps
+    namespace: authentik
     files:
       - blueprints/grafana.yaml
   - name: authentik-blueprint-nextcloud
-    namespace: apps
+    namespace: authentik
     files:
       - blueprints/nextcloud.yaml
 resources:
