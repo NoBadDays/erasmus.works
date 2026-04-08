@@ -2,7 +2,7 @@ apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: SecurityPolicy
 metadata:
   name: oidc-authentik
-  namespace: garage-ui
+  namespace: garage
   annotations:
     security.erasmus.works/issuer: homelab-edge
 spec:
