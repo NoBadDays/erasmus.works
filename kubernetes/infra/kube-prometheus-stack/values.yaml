@@ -53,6 +53,7 @@ kube-state-metrics:
 grafana:
   deploymentStrategy:
     type: Recreate
+    rollingUpdate: null
   admin:
     existingSecret: kube-prometheus-stack-grafana
     userKey: admin-user
