@@ -63,6 +63,66 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "cores"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 10,
+        "x": 0,
+        "y": 24
+      },
+      "id": 20,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "right",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "exemplar": true,
+          "expr": "sum(rate(container_cpu_usage_seconds_total{image!=\"\"}[$__rate_interval])) by (namespace)",
+          "interval": "$resolution",
+          "legendFormat": "{{ namespace }}",
+          "refId": "A"
+        }
+      ],
+      "title": "CPU Utilization (Namespace)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "description": "CPU usage percentage for each node.",
       "fieldConfig": {
         "defaults": {
@@ -93,8 +153,8 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 20,
-        "x": 0,
+        "w": 10,
+        "x": 10,
         "y": 24
       },
       "id": 18,
@@ -133,6 +193,66 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 10,
+        "x": 0,
+        "y": 30
+      },
+      "id": 21,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "right",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "exemplar": true,
+          "expr": "sum(container_memory_working_set_bytes{image!=\"\"}) by (namespace)",
+          "interval": "$resolution",
+          "legendFormat": "{{ namespace }}",
+          "refId": "A"
+        }
+      ],
+      "title": "Memory Utilization (Namespace)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "description": "Memory usage percentage for each node.",
       "fieldConfig": {
         "defaults": {
@@ -163,8 +283,8 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 20,
-        "x": 0,
+        "w": 10,
+        "x": 10,
         "y": 30
       },
       "id": 19,
