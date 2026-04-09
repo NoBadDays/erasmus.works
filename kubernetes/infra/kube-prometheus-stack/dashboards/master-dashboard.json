@@ -1213,7 +1213,7 @@
         "h": 14,
         "w": 12,
         "x": 12,
-        "y": 50
+        "y": 58
       },
       "id": 10,
       "options": {
@@ -1378,6 +1378,219 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
+      "description": "Latest VolSync replication status across namespaces.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 36
+      },
+      "id": 24,
+      "options": {
+        "cellHeight": "sm",
+        "enablePagination": false,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "Namespace"
+          }
+        ]
+      },
+      "pluginVersion": "12.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "volsync_replicationsource_info{obj_namespace!=\"\",latest_result!=\"\"}",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "VolSync Backup Status",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Value": true,
+              "__name__": true,
+              "container": true,
+              "customresource_group": true,
+              "customresource_kind": true,
+              "customresource_version": true,
+              "endpoint": true,
+              "instance": true,
+              "job": true,
+              "namespace": true,
+              "pod": true,
+              "service": true
+            },
+            "indexByName": {
+              "obj_namespace": 0,
+              "obj_name": 1,
+              "source_pvc": 2,
+              "latest_result": 3,
+              "last_sync_time": 4,
+              "next_sync_time": 5,
+              "last_sync_duration": 6
+            },
+            "renameByName": {
+              "last_sync_duration": "Last Duration",
+              "last_sync_time": "Last Backup",
+              "latest_result": "Latest Result",
+              "obj_name": "ReplicationSource",
+              "obj_namespace": "Namespace",
+              "next_sync_time": "Next Backup",
+              "source_pvc": "PVC"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Age of the last available CloudNativePG base backup for each cluster.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 129600
+              },
+              {
+                "color": "red",
+                "value": 216000
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 36
+      },
+      "id": 25,
+      "options": {
+        "cellHeight": "sm",
+        "enablePagination": false,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Last Backup Age"
+          }
+        ]
+      },
+      "pluginVersion": "12.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "time() - max by (namespace, pod) (cnpg_collector_last_available_backup_timestamp)",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "CNPG Backup Status",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true
+            },
+            "indexByName": {
+              "namespace": 0,
+              "pod": 1,
+              "Value": 2
+            },
+            "renameByName": {
+              "Value": "Last Backup Age",
+              "namespace": "Namespace",
+              "pod": "Cluster"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "description": "The CPU usage in a cluster grouped by Kubernetes namespace",
       "fieldConfig": {
         "defaults": {
@@ -1403,7 +1616,7 @@
         "h": 14,
         "w": 8,
         "x": 0,
-        "y": 36
+        "y": 44
       },
       "id": 12,
       "options": {
@@ -1470,7 +1683,7 @@
         "h": 14,
         "w": 8,
         "x": 8,
-        "y": 36
+        "y": 44
       },
       "id": 13,
       "options": {
@@ -1538,7 +1751,7 @@
         "h": 14,
         "w": 8,
         "x": 16,
-        "y": 36
+        "y": 44
       },
       "id": 14,
       "options": {
@@ -1624,7 +1837,7 @@
         "h": 14,
         "w": 12,
         "x": 0,
-        "y": 50
+        "y": 58
       },
       "id": 15,
       "options": {
@@ -1739,7 +1952,7 @@
         "h": 16,
         "w": 12,
         "x": 0,
-        "y": 64
+        "y": 72
       },
       "id": 22,
       "options": {
@@ -1835,7 +2048,7 @@
         "h": 16,
         "w": 12,
         "x": 12,
-        "y": 64
+        "y": 72
       },
       "id": 23,
       "options": {
@@ -1892,6 +2105,6 @@
   "timezone": "browser",
   "title": "Master Dashboard",
   "uid": "master-dashboard",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }
