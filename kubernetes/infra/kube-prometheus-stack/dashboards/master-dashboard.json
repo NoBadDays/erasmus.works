@@ -923,21 +923,11 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Namespaces using the most CPU over the last 5 minutes.",
+      "description": "The CPU usage in a cluster grouped by Kubernetes namespace",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "footer": {
-              "reducers": []
-            },
-            "inspect": false
+            "mode": "continuous-YlRd"
           },
           "mappings": [],
           "thresholds": {
@@ -945,7 +935,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": 0
+                "value": null
               }
             ]
           },
@@ -961,15 +951,18 @@
       },
       "id": 12,
       "options": {
-        "cellHeight": "sm",
-        "enablePagination": false,
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "Value"
-          }
-        ]
+        "displayMode": "gradient",
+        "minVizHeight": 20,
+        "minVizWidth": 0,
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
       },
       "pluginVersion": "12.4.2",
       "targets": [
@@ -979,57 +972,29 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
+          "exemplar": false,
           "expr": "sort_desc(sum by (namespace) (rate(container_cpu_usage_seconds_total{container!=\"\", container!=\"POD\"}[5m])))",
-          "format": "table",
+          "format": "time_series",
           "instant": true,
-          "legendFormat": "__auto",
+          "legendFormat": "{{ namespace }}",
           "range": false,
           "refId": "A"
         }
       ],
-      "title": "Top Namespaces by CPU",
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "__name__": true
-            },
-            "includeByName": {},
-            "indexByName": {
-              "Value": 1,
-              "namespace": 0
-            },
-            "renameByName": {
-              "Value": "CPU Cores",
-              "namespace": "Namespace"
-            }
-          }
-        }
-      ],
-      "type": "table"
+      "title": "CPU Usage by namespace",
+      "transformations": [],
+      "type": "bargauge"
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Namespaces using the most memory right now.",
+      "description": "The memory usage in a cluster grouped by Kubernetes namespace",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "footer": {
-              "reducers": []
-            },
-            "inspect": false
+            "mode": "continuous-YlRd"
           },
           "mappings": [],
           "thresholds": {
@@ -1037,7 +1002,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": 0
+                "value": null
               }
             ]
           },
@@ -1053,15 +1018,19 @@
       },
       "id": 13,
       "options": {
-        "cellHeight": "sm",
-        "enablePagination": false,
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "Value"
-          }
-        ]
+        "displayMode": "gradient",
+        "minVizHeight": 20,
+        "minVizWidth": 0,
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "text": {}
       },
       "pluginVersion": "12.4.2",
       "targets": [
@@ -1071,36 +1040,18 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sort_desc(sum by (namespace) (container_memory_working_set_bytes{container!=\"\", container!=\"POD\"}))",
-          "format": "table",
+          "exemplar": false,
+          "expr": "sort_desc(sum by (namespace) (container_memory_working_set_bytes{pod!=\"\",container!=\"POD\", container!=\"\"}))",
+          "format": "time_series",
           "instant": true,
-          "legendFormat": "__auto",
+          "legendFormat": "{{ namespace }}",
           "range": false,
           "refId": "A"
         }
       ],
-      "title": "Top Namespaces by Memory",
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "__name__": true
-            },
-            "includeByName": {},
-            "indexByName": {
-              "Value": 1,
-              "namespace": 0
-            },
-            "renameByName": {
-              "Value": "Memory",
-              "namespace": "Namespace"
-            }
-          }
-        }
-      ],
-      "type": "table"
+      "title": "Memory usage by namespace",
+      "transformations": [],
+      "type": "bargauge"
     },
     {
       "datasource": {
