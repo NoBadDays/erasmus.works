@@ -101,9 +101,9 @@
       "options": {
         "legend": {
           "calcs": [],
-          "displayMode": "table",
+          "displayMode": "hidden",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": false
         },
         "tooltip": {
           "mode": "multi",
@@ -118,9 +118,9 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "100 - (avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+          "expr": "100 - (avg by (nodename) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m]) * on(instance) group_left(nodename) node_uname_info) * 100)",
           "format": "time_series",
-          "legendFormat": "{{ instance }}",
+          "legendFormat": "{{ nodename }}",
           "range": true,
           "refId": "A"
         }
@@ -171,9 +171,9 @@
       "options": {
         "legend": {
           "calcs": [],
-          "displayMode": "table",
+          "displayMode": "hidden",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": false
         },
         "tooltip": {
           "mode": "multi",
@@ -188,9 +188,9 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100",
+          "expr": "max by (nodename) (((1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100) * on(instance) group_left(nodename) node_uname_info)",
           "format": "time_series",
-          "legendFormat": "{{ instance }}",
+          "legendFormat": "{{ nodename }}",
           "range": true,
           "refId": "A"
         }
