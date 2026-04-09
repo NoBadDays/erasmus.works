@@ -1378,51 +1378,70 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "VolSync backup status in a compact bar view. Fresh vs stale is shown from the current health metrics VolSync exposes.",
+      "description": "Latest VolSync replication status across namespaces.",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "color": "red",
-                  "index": 0,
-                  "text": "Stale"
-                },
-                "1": {
-                  "color": "green",
-                  "index": 1,
-                  "text": "Fresh"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "max": 1,
-          "min": 0,
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false
+          },
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 0.5
-              },
-              {
                 "color": "green",
-                "value": 0.99
+                "value": null
               }
             ]
           },
           "unit": "none"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Last Result"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "Successful": {
+                        "color": "green",
+                        "index": 0,
+                        "text": "Successful"
+                      },
+                      "Failed": {
+                        "color": "red",
+                        "index": 1,
+                        "text": "Failed"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -1432,18 +1451,15 @@
       },
       "id": 24,
       "options": {
-        "displayMode": "basic",
-        "namePlacement": "left",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true,
-        "text": {}
+        "cellHeight": "sm",
+        "enablePagination": false,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "Namespace"
+          }
+        ]
       },
       "pluginVersion": "12.4.2",
       "targets": [
@@ -1453,16 +1469,52 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "clamp_min(max by (obj_namespace, obj_name) (volsync_replicationsource_info{obj_namespace!=\"\",last_sync_time!=\"\",latest_result=\"Successful\"}) - max by (obj_namespace, obj_name) (volsync_volume_out_of_sync{role=\"source\"}), 0)",
-          "format": "time_series",
+          "expr": "volsync_replicationsource_info{obj_namespace!=\"\",latest_result!=\"\"}",
+          "format": "table",
           "instant": true,
-          "legendFormat": "{{obj_namespace}} / {{obj_name}}",
+          "legendFormat": "__auto",
           "range": false,
           "refId": "A"
         }
       ],
       "title": "VolSync Backup Status",
-      "type": "bargauge"
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Value": true,
+              "__name__": true,
+              "container": true,
+              "customresource_group": true,
+              "customresource_kind": true,
+              "customresource_version": true,
+              "endpoint": true,
+              "instance": true,
+              "job": true,
+              "namespace": true,
+              "pod": true,
+              "service": true
+            },
+            "indexByName": {
+              "obj_namespace": 0,
+              "obj_name": 1,
+              "latest_result": 2,
+              "last_sync_time": 3,
+              "next_sync_time": 4
+            },
+            "renameByName": {
+              "last_sync_time": "Last Backup",
+              "latest_result": "Last Result",
+              "obj_name": "ReplicationSource",
+              "obj_namespace": "Namespace",
+              "next_sync_time": "Next Backup"
+            }
+          }
+        }
+      ],
+      "type": "table"
     },
     {
       "datasource": {
