@@ -6,10 +6,10 @@ Short reference for what is deployed in this repo.
 
 | App | Type | Database | Volume Backup | Database Backup | Prometheus | SSO | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `docmost` | Plain manifests | CNPG | VolSync | CNPG | Yes | No | CNPG PodMonitor |
+| `docmost` | Plain manifests | CNPG | VolSync | CNPG | Yes | No |  |
 | `homepage` | Plain manifests | N/A | N/A | N/A | N/A | N/A |  |
 | `immich` | Helm based | CNPG | None | CNPG | Yes | Yes | Media stored on NAS |
-| `nextcloud` | Helm based | CNPG | VolSync | CNPG | Yes | Yes | CNPG PodMonitor |
+| `nextcloud` | Helm based | CNPG | VolSync | CNPG | Yes | Yes |  |
 
 ## Infra
 
@@ -26,8 +26,8 @@ Short reference for what is deployed in this repo.
 | `garage-ui` | Helm based | N/A | Yes |  |
 | `kube-prometheus-stack` | Helm based | Yes | Yes |  |
 | `longhorn` | Helm based | Yes | Yes |  |
+| `metallb` | Plain manifests | No | N/A |  |
+| `status` | Plain manifests | N/A | No | Intentionally not behind SSO |
 | `victorialogs` | Helm based | N/A | N/A |  |
 | `volsync` | Helm based | Yes | N/A |  |
 | `volume-snapshots` | Helm based | N/A | N/A |  |
-| `metallb` | Plain manifests | No | N/A |  |
-| `status` | Plain manifests | N/A | No | Intentionally not behind SSO |
