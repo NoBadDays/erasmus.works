@@ -110,7 +110,6 @@
           },
           "exemplar": true,
           "expr": "sum(rate(container_cpu_usage_seconds_total{image!=\"\"}[$__rate_interval])) by (namespace)",
-          "interval": "$resolution",
           "legendFormat": "{{ namespace }}",
           "refId": "A"
         }
@@ -240,7 +239,6 @@
           },
           "exemplar": true,
           "expr": "sum(container_memory_working_set_bytes{image!=\"\"}) by (namespace)",
-          "interval": "$resolution",
           "legendFormat": "{{ namespace }}",
           "refId": "A"
         }
