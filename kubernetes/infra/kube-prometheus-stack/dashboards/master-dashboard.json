@@ -91,7 +91,6 @@
         },
         "overrides": []
       },
-      "description": "Per-pod CPU usage divided by the configured CPU request over time, smoothed with a 15 minute moving average so brief bursts do not dominate the chart scale.",
       "gridPos": {
         "h": 4,
         "w": 4,
@@ -1917,7 +1916,7 @@
         "h": 14,
         "w": 12,
         "x": 0,
-        "y": 50
+        "y": 80
       },
       "id": 26,
       "options": {
@@ -2062,7 +2061,7 @@
         "h": 14,
         "w": 12,
         "x": 12,
-        "y": 50
+        "y": 80
       },
       "id": 10,
       "options": {
