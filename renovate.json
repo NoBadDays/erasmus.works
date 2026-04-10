@@ -9,7 +9,6 @@
     ":timezone(Europe/Amsterdam)",
     "local>ErasmusAndre/erasmus.works//.renovate/autoMerge.json",
     "local>ErasmusAndre/erasmus.works//.renovate/groups.json",
-    "local>ErasmusAndre/erasmus.works//.renovate/customManagers.json",
     "local>ErasmusAndre/erasmus.works//.renovate/overrides.json"
   ],
   "dependencyDashboardTitle": "Renovate Dashboard",
@@ -30,6 +29,42 @@
       "/(^|/)kubernetes/.+/application\\.ya?ml$/"
     ]
   },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Track Talos image references outside Kubernetes manifests",
+      "managerFilePatterns": [
+        "/(^|/)talos/.+\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "image:\\s+(?<depName>ghcr\\.io\\/siderolabs\\/kubelet):(?<currentValue>[^\\s#]+)",
+        "image:\\s+(?<depName>factory\\.talos\\.dev\\/installer\\/[^:]+):(?<currentValue>[^\\s#]+)"
+      ],
+      "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "description": "Track Helm chart versions for split chart apps under argocd-apps",
+      "managerFilePatterns": [
+        "/(^|/)kubernetes/clusters/homelab/argocd-apps/.+/chart/application\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "repoURL:\\s+(?<registryUrl>https:\\/\\/[^\\s]+)\\s+chart:\\s+(?<depName>[^\\s]+)\\s+targetRevision:\\s+(?<currentValue>[^\\s]+)"
+      ],
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "description": "Track app image repository and tag pairs in app Helm values",
+      "managerFilePatterns": [
+        "/(^|/)kubernetes/apps/.+/values\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "image:\\s+repository:\\s+(?<depName>[^\\s#]+)\\s+tag:\\s+(?<currentValue>[^\\s#]+)"
+      ],
+      "datasourceTemplate": "docker"
+    }
+  ],
   "github-actions": {
     "managerFilePatterns": [
       "/(^|/)\\.github/workflows/.+\\.ya?ml$/"
