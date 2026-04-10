@@ -1,31 +1,28 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: immich
+  name: argocd
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "10"
+    argocd.argoproj.io/sync-wave: "-1"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: apps
+  project: default
   sources:
-    - repoURL: https://immich-app.github.io/immich-charts
-      chart: immich
-      targetRevision: 0.11.0
+    - repoURL: https://argoproj.github.io/argo-helm
+      chart: argo-cd
+      targetRevision: 9.4.10
       helm:
-        releaseName: immich
+        releaseName: argocd
         valueFiles:
-          - $values/kubernetes/apps/immich/values.yaml
+          - $values/kubernetes/infra/argocd/values.yaml
     - repoURL: https://github.com/ErasmusAndre/erasmus.works.git
       targetRevision: main
       ref: values
-    - repoURL: https://github.com/ErasmusAndre/erasmus.works.git
-      targetRevision: main
-      path: kubernetes/apps/immich
   destination:
     server: https://kubernetes.default.svc
-    namespace: app-immich
+    namespace: argocd
   syncPolicy:
     automated:
       prune: true

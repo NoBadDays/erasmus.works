@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nextcloud
+  name: nextcloud-config
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "10"
+    argocd.argoproj.io/sync-wave: "9"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -22,20 +22,10 @@ spec:
       namespace: app-nextcloud
       jsonPointers:
         - /spec/bootstrap
-  sources:
-    - repoURL: https://nextcloud.github.io/helm/
-      chart: nextcloud
-      targetRevision: 9.0.3
-      helm:
-        releaseName: nextcloud
-        valueFiles:
-          - $values/kubernetes/apps/nextcloud/values.yaml
-    - repoURL: https://github.com/ErasmusAndre/erasmus.works.git
-      targetRevision: main
-      ref: values
-    - repoURL: https://github.com/ErasmusAndre/erasmus.works.git
-      targetRevision: main
-      path: kubernetes/apps/nextcloud
+  source:
+    repoURL: https://github.com/ErasmusAndre/erasmus.works.git
+    targetRevision: main
+    path: kubernetes/apps/nextcloud
   destination:
     server: https://kubernetes.default.svc
     namespace: app-nextcloud
