@@ -44,28 +44,6 @@ spec:
       wal:
         compression: gzip
     retentionPolicy: "30d"
-  bootstrap:
-    recovery:
-      source: immich-postgres
-      database: immich
-      owner: immich
-      secret:
-        name: immich-postgres-auth
-  externalClusters:
-    - name: immich-postgres
-      barmanObjectStore:
-        destinationPath: s3://cnpg-immich
-        endpointURL: http://garage.garage.svc.cluster.local:3900
-        serverName: app-immich-postgres
-        s3Credentials:
-          accessKeyId:
-            name: immich-postgres-backup-s3
-            key: ACCESS_KEY_ID
-          secretAccessKey:
-            name: immich-postgres-backup-s3
-            key: ACCESS_SECRET_KEY
-        wal:
-          compression: gzip
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
